@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1055</width>
+    <width>1225</width>
     <height>789</height>
    </rect>
   </property>
@@ -63,14 +63,47 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="manu_layout">
+       <layout class="QHBoxLayout" name="manu_layout" stretch="1,1,1,1,1,1,40">
         <property name="spacing">
          <number>0</number>
         </property>
         <item>
          <widget class="QPushButton" name="file_btn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>import file</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/menu/文件.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="folder_btn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -83,7 +116,7 @@
            </font>
           </property>
           <property name="toolTip">
-           <string>file</string>
+           <string>import folder</string>
           </property>
           <property name="styleSheet">
            <string notr="true">image: url(:/menu/文件夹_1.png);</string>
@@ -92,14 +125,41 @@
            <string/>
           </property>
           <property name="flat">
-           <bool>false</bool>
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="save_all_btn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>save all</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/menu/保存.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="setting_btn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -127,14 +187,14 @@
            <bool>false</bool>
           </property>
           <property name="flat">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="help_btn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -156,7 +216,31 @@
            <string/>
           </property>
           <property name="flat">
-           <bool>false</bool>
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="quit_btn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/menu/退出.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -176,7 +260,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="widget_layout" stretch="4,15">
+       <layout class="QHBoxLayout" name="widget_layout" stretch="5,15">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -530,7 +614,7 @@ border:none;</string>
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>3</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -551,7 +635,10 @@ border:none;</string>
              <attribute name="title">
               <string>Dicom</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_4">
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="spacing">
+               <number>0</number>
+              </property>
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -564,10 +651,7 @@ border:none;</string>
               <property name="bottomMargin">
                <number>0</number>
               </property>
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <item row="0" column="0">
+              <item>
                <widget class="QTableWidget" name="tableWidget"/>
               </item>
              </layout>
@@ -641,6 +725,31 @@ border:none;</string>
               </property>
               <item row="0" column="0">
                <widget class="QTableWidget" name="implant_tab"/>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="landmark_tw">
+             <attribute name="title">
+              <string>Landmark</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTableWidget" name="landmarks_tab"/>
               </item>
              </layout>
             </widget>
@@ -864,7 +973,7 @@ color: rgb(0, 0, 0);</string>
            <number>0</number>
           </property>
           <item row="0" column="1">
-           <widget class="QGroupBox" name="box3D">
+           <widget class="QGroupBox" name="view_box1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -880,7 +989,7 @@ color: rgb(0, 0, 0);</string>
             <property name="flat">
              <bool>false</bool>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,19">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -896,73 +1005,11 @@ color: rgb(0, 0, 0);</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QGroupBox" name="edit3D_box">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border:None;</string>
-               </property>
-               <property name="title">
-                <string/>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QSlider" name="horizontalSlider_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QVTKWidget" name="widget_3D" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Times New Roman</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 0);border:none;</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QGroupBox" name="box_coronal">
+           <widget class="QGroupBox" name="view_box0">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -975,7 +1022,7 @@ color: rgb(0, 0, 0);</string>
             <property name="title">
              <string/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,19">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -991,67 +1038,11 @@ color: rgb(0, 0, 0);</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QGroupBox" name="edit_coronal_box">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border:None;</string>
-               </property>
-               <property name="title">
-                <string/>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QSlider" name="horizontalSlider">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QVTKWidget" name="widget_coron" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 0);border:none;</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QGroupBox" name="box_sagittal">
+           <widget class="QGroupBox" name="view_box3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1070,7 +1061,7 @@ color: rgb(0, 0, 0);</string>
             <property name="checkable">
              <bool>false</bool>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,19">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1086,67 +1077,11 @@ color: rgb(0, 0, 0);</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QGroupBox" name="edit_sagittal_box">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border:None;</string>
-               </property>
-               <property name="title">
-                <string/>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_8">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QSlider" name="horizontalSlider_4">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QVTKWidget" name="widget_sagit" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 0);border:none;</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QGroupBox" name="box_transverse">
+           <widget class="QGroupBox" name="view_box2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1159,7 +1094,7 @@ color: rgb(0, 0, 0);</string>
             <property name="title">
              <string/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,19">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -1175,62 +1110,6 @@ color: rgb(0, 0, 0);</string>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
-              <widget class="QGroupBox" name="edit_transverse_box">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border:None;</string>
-               </property>
-               <property name="title">
-                <string/>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="QSlider" name="horizontalSlider_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QVTKWidget" name="widget_trans" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 0);border:none;</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -1245,7 +1124,7 @@ color: rgb(0, 0, 0);</string>
   <action name="action_open_folder">
    <property name="icon">
     <iconset>
-     <normaloff>resource/文件夹_1.png</normaloff>resource/文件夹_1.png</iconset>
+     <normaloff>../../../../../Users/hunte/.designer/backup/resource/文件夹_1.png</normaloff>../../../../../Users/hunte/.designer/backup/resource/文件夹_1.png</iconset>
    </property>
    <property name="text">
     <string>open folder</string>
@@ -1261,7 +1140,7 @@ color: rgb(0, 0, 0);</string>
   <action name="action_close">
    <property name="icon">
     <iconset>
-     <normaloff>resource/退出.png</normaloff>resource/退出.png</iconset>
+     <normaloff>../../../../../Users/hunte/.designer/backup/resource/退出.png</normaloff>../../../../../Users/hunte/.designer/backup/resource/退出.png</iconset>
    </property>
    <property name="text">
     <string>quit</string>
@@ -1276,7 +1155,7 @@ color: rgb(0, 0, 0);</string>
   <action name="actionopen_file">
    <property name="icon">
     <iconset>
-     <normaloff>resource/文件.png</normaloff>resource/文件.png</iconset>
+     <normaloff>../../../../../Users/hunte/.designer/backup/resource/文件.png</normaloff>../../../../../Users/hunte/.designer/backup/resource/文件.png</iconset>
    </property>
    <property name="text">
     <string>open file</string>
@@ -1289,13 +1168,6 @@ color: rgb(0, 0, 0);</string>
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QVTKWidget</class>
-   <extends>QWidget</extends>
-   <header>QVTKWidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="resource/navigation.qrc"/>
  </resources>

@@ -71,7 +71,7 @@
       <property name="flat">
        <bool>false</bool>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,19">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,29">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -104,7 +104,7 @@
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,19">
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,29">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -134,6 +134,9 @@
             <property name="text">
              <string>PushButton</string>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -146,6 +149,9 @@
             </property>
             <property name="maximum">
              <number>100</number>
+            </property>
+            <property name="tracking">
+             <bool>false</bool>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -168,7 +174,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QVTKWidget" name="widget" native="true">
+        <widget class="QVTKRenderWindowInteractor" name="view" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -240,9 +246,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QVTKWidget</class>
+   <class>QVTKRenderWindowInteractor</class>
    <extends>QWidget</extends>
-   <header>QVTKWidget.h</header>
+   <header>QVTKRenderWindowInteractor.h</header>
   </customwidget>
  </customwidgets>
  <resources>

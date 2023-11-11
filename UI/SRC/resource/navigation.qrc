@@ -2,6 +2,14 @@
   <qresource lang="mode" prefix="init">
     <file>6-6系统.png</file>
   </qresource>
+  <qresource lang="save_all" prefix="menu">
+    <file>保存(1).png</file>
+    <file>保存.png</file>
+  </qresource>
+  <qresource lang="test" prefix="menu">
+    <file>退出.png</file>
+    <file>属性.png</file>
+  </qresource>
   <qresource lang="show3D" prefix="init">
     <file>3D.png</file>
   </qresource>
@@ -14,10 +22,13 @@
   <qresource lang="help" prefix="menu">
     <file>帮助_1.png</file>
   </qresource>
+  <qresource lang="file" prefix="menu">
+    <file>文件.png</file>
+  </qresource>
   <qresource lang="setting" prefix="menu">
     <file>205设置.png</file>
   </qresource>
-  <qresource lang="file" prefix="menu">
+  <qresource lang="folder" prefix="menu">
     <file>文件夹_1.png</file>
   </qresource>
   <qresource lang="cut" prefix="init">
