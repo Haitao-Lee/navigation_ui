@@ -1,0 +1,155 @@
+# coding = utf-8
+import sys
+import vtk
+import numpy as np
+import os
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QMainWindow
+from UI.interface_v1_ui import Ui_MainWindow as ui_interface
+from config import ALLWIN, TRANSS, SAGITA, VIEW3D
+from UI.make_display_ui import display_ui
+from UI.make_adjustment_ui import adjustment_ui
+import copy
+#from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor as QVTKWidget
+#import resource.navigation_rc
+
+
+class ui_all(QMainWindow, ui_interface):
+    def __init__(self):
+        super(ui_all, self).__init__()
+        self.setupUi(self)
+        self.setupSplitters()
+        self.initVTKview()
+        # self.initAdjustment()
+        QApplication.processEvents()
+    
+    def initVTKview(self):
+        self.dlsplay_status = ALLWIN            #当前显示状态，widget显示四个窗口还是某一个窗口
+        self.views_layout = [self.view_box0.layout(), self.view_box1.layout(), self.view_box2.layout(), self.view_box3.layout()]
+        self.ui_displays = [display_ui(), display_ui(), display_ui(), display_ui()]#,display_ui(), display_ui(), display_ui(), display_ui()] 
+        self.vtk_renderWinbdows = []
+        self.renderers = []
+        self.styles = []
+        self.irens = []
+        self.bot_color = np.array([1, 1, 1])
+        self.top_color = np.array([0.529, 0.8078, 0.92157])
+        self.box_color = self.top_color*255
+        # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
+        for i in range(4):
+            self.vtk_renderWinbdows.append(self.ui_displays[i].view.GetRenderWindow())
+            self.renderers.append(vtk.vtkRenderer())
+            self.irens.append(vtk.vtkRenderWindowInteractor())
+            self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
+            # 3d窗口设置渐变色
+            if i == 1:# or i==5:
+                self.ui_displays[i].box.setStyleSheet("border:None;\n"
+                                                      f"background-color: rgb({self.box_color[0]}, {self.box_color[1]}, {self.box_color[2]});")
+                # print(f"background-color: rgb({box_color[0]}, {box_color[1]}, {box_color[2]});")
+                self.renderers[i].SetBackground(self.bot_color)              # 设置页面底部颜色值
+                self.renderers[i].SetBackground2(self.top_color)    # 设置页面顶部颜色值
+                self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
+            else: 
+                self.renderers[i].SetBackground(0, 0, 0)
+            self.irens[i].SetInteractorStyle(self.styles[i])
+            self.irens[i].SetRenderWindow(self.vtk_renderWinbdows[i])
+            self.vtk_renderWinbdows[i].AddRenderer(self.renderers[i])
+            # self.irens[i].Initialize()   
+            # self.irens[i].Start()
+            if i < 4:
+                self.views_layout[i].addWidget(self.ui_displays[i].box)
+            self.vtk_renderWinbdows[i].Render()
+        self.update()
+            
+    def initAdjustment(self):
+        self.adjustment_ui = adjustment_ui()
+        self.adjustment_ui.setFixedSize(900, 600)
+        # 确保没有设置最小/最大大小
+        self.adjustment_ui.setMinimumSize(900, 600)
+        self.adjustment_ui.setMaximumSize(900, 600)
+        
+        self.adjustment_ui.box2D0.layout().removeWidget(self.adjustment_ui.box2D0)
+        self.ui_displays[4].view.resize(299,249)
+        self.adjustment_ui.box2D0.layout().addWidget(self.ui_displays[4].view)
+        self.adjustment_ui.box3D.layout().removeWidget(self.adjustment_ui.box3D)
+        self.ui_displays[5].view.resize(448,288)
+        self.adjustment_ui.box3D.layout().addWidget(self.ui_displays[5].view)
+        self.adjustment_ui.box2D1.layout().removeWidget(self.adjustment_ui.box2D1)
+        self.ui_displays[6].view.resize(299,249)
+        self.adjustment_ui.box2D1.layout().addWidget(self.ui_displays[6].view)
+        self.adjustment_ui.box2D2.layout().removeWidget(self.adjustment_ui.box2D2)
+        self.ui_displays[7].view.resize(299,249)
+        self.adjustment_ui.box2D2.layout().addWidget(self.ui_displays[7].view)
+        # self.adjustment_ui.box3D.layout().removeWidget(self.adjustment_ui.box3D)
+        # self.adjustment_ui.box3D.layout().addWidget(self.ui_displays[5].view)
+        # self.adjustment_ui.view3D_layout.addWidget(self.ui_displays[5].view)
+        # self.adjustment_ui.views2D_layout.addWidget(self.ui_displays[6].view)
+        # self.adjustment_ui.views2D_layout.addWidget(self.ui_displays[7].view)
+        # self.adjustment_ui.views2D_layout.setStretch(0, 1)
+        # self.adjustment_ui.views2D_layout.setStretch(1, 1)
+        # self.adjustment_ui.views2D_layout.setStretch(2, 1)
+                
+    def setVTKview(self):
+        pass
+            
+    def setupDisplay(self):
+        pass
+    
+    def setupButton(self):
+        pass
+        # setStyleSheet(
+        #     "QPushButton{color: black}"
+        #     "QPushButton{font: 22pt \"Agency FB\";\n}"
+        #     "QPushButton{border-image: url(image/blue_label.png)}"
+        #     "QPushButton:hover{border-image: url(image/blue_label_3.png)}"
+        #     "QPushButton:pressed{border-image: url(image/blue_label_2.png)}"
+        #     "QPushButton{border-radius:20px;}")
+        # self.visual.setStyleSheet("QPushButton{border-radius:20px;background-color: rgb(80, 80, 80);}")
+        # self.isolate.setStyleSheet("QPushButton{border-radius:20px;background-color: rgb(80, 80, 80);}")
+        # self.predict.setStyleSheet("QPushButton{border-radius:20px;background-color: rgb(80, 80, 80);}")
+        # self.model_select.setEditable(True)
+        # self.model_select.lineEdit().setReadOnly(True)
+        # self.model_select.lineEdit().setAlignment(Qt.AlignCenter)
+        # self.modelIdx = 0
+        # font = QFont()
+        # items = ['finalNet_mean','ResNet18_reg','ResNet18_seg','ResNet34_reg','ResNet34_seg','DenseNet121_reg','DenseNet121_seg', 'DenseNet169_reg','DenseNet169_seg',
+        #          'UNet_reg', 'UNet_seg','DenseRegNet_mean', "stRegNet_mean"]
+        # # font.setFamily("Times New Roman")
+        # # font.setPointSize(16)
+        # # font.setBold(True)
+        # # font.setWeight(75)
+        # self.model_select.addItems(items)
+        # self.model_select.setStyleSheet("background-color: rgb(80, 80, 80);\n""font: 75 16pt \"Times New Roman\";\n""font-weight: bold;")
+        # # self.model_select.setFont(font)
+        # self.model_select.setItemData(self.model_select.currentIndex(), font, role=Qt.FontRole)
+        # #self.model_select.setStyleSheet("QCombobox{background-color: rgb(80, 80, 80);}")
+        
+    def setupSplitters(self):
+        pass
+        # self.horizonSplitter.setStyleSheet("background-color:rgb(180, 180, 180);border:0px solid green")
+        # self.verticalSplitter.setStyleSheet("background-color:rgb(180, 180, 180);border:0px solid green")
+        # self.verticalSplitter.setHandleWidth(0)
+        # self.verticalSplitter.setChildrenCollapsible(1)
+        # self.horizonSplitter.setHandleWidth(0)
+        # self.horizonSplitter.setChildrenCollapsible(1)
+        # self.verticalSplitter.addWidget(self.working_tree) 
+        # self.verticalSplitter.addWidget(self.label_4)
+        # self.verticalSplitter.addWidget(self.groupBox_4)
+        # self.verticalSplitter.addWidget(self.groupBox)
+        # self.verticalSplitter.addWidget(self.groupBox_3)
+        # self.working_tree.setColumnWidth(0, 800)
+        # self.groupBox_2.hide()
+        # self.horizonSplitter.addWidget(self.verticalSplitter)
+        # self.horizonSplitter.addWidget(self.main_widget)
+        # self.widget.layout().replaceWidget(self.groupBox_5, self.horizonSplitter)
+        # self.groupBox_5.hide()
+        # self.horizonSplitter.setMouseTracking(True)
+        # self.horizonSplitter.setStretchFactor(0, 6)
+        # self.horizonSplitter.setStretchFactor(1, 4)
+        
+    def setupCache(self, direc):
+        if not os.path.exists(direc):  
+            os.makedirs(direc)
+        
