@@ -877,4 +877,4 @@ class Ui_MainWindow(object):
         self.action_open_folder.setText(_translate("MainWindow", "open folder"))
         self.action_close.setText(_translate("MainWindow", "quit"))
         self.actionopen_file.setText(_translate("MainWindow", "open file"))
-import navigation_rc
+import UI.resource.navigation_rc
