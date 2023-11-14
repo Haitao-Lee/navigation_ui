@@ -10,24 +10,54 @@ class slot_functions():
     def __init__(self):
         super(slot_functions, self).__init__()
 
-    def import_file(self, ui, file_type=None): 
+    @staticmethod
+    def import_file(sysman, file_type=None): 
         file_name = None
         if file_type:
-            file_name, _ = QFileDialog.getOpenFileName(ui, f'select a {file_type} file', "C:/", f"{file_type}(*.{file_type});All Files(*)")
+            file_name, _ = QFileDialog.getOpenFileName(sysman.ui, f'select a {file_type} file', "C:/", f"{file_type}(*.{file_type});All Files(*)")
         else: 
-            file_name, _ = QFileDialog.getOpenFileName(ui, f'select a file', "C:/", f"All Files(*)")
+            file_name, _ = QFileDialog.getOpenFileName(sysman.ui, f'select a file', "C:/", f"All Files(*)")
         pass
-                                   
-    def import_folder(self, ui):
-        path = QFileDialog.getExistingDirectory(ui, 'select a folder', os.getcwd())
-        pass
-    
-    def open_setting(self, ui):
+           
+    @staticmethod                        
+    def import_folder(sysman):
+        path = QFileDialog.getExistingDirectory(sysman.ui, 'select a folder', os.getcwd())
         pass
     
-    def open_help(self, ui):
+    def save_all(sysman):
         pass
     
+    @staticmethod
+    def open_setting(sysman):
+        pass
+    
+    @staticmethod
+    def open_help(sysman):
+        pass
+    
+    @staticmethod
+    def conect2ndi(sysman):
+        pass
+    
+    @staticmethod
+    def registration(sysman):
+        pass
+    
+    @staticmethod
+    def calibration(sysman):
+        pass
+    
+    @staticmethod
+    def conect2robo(sysman):
+        pass
+    
+    @staticmethod
+    def localization(sysman):
+        pass
+        
+    
+        
+        
     def adjust(self, sys_man):
         sys_man.ui.adjustment_ui.show()
     
@@ -44,9 +74,6 @@ class slot_functions():
     def quit(self):
         app = QApplication.instance()
         app.quit()
-        
-    def conection2ndi(self):
-        pass
     
     @staticmethod
     def setColor(self):

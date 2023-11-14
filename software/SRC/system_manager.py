@@ -12,12 +12,12 @@ class system_manager():
         self.setupConnections()       
         
     def setupConnections(self):
-        self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self.ui))
-        self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self.ui))
-        self.ui.setting_btn.clicked.connect(partial(self.slot_fs.open_setting, self.ui))
-        self.ui.help_btn.clicked.connect(partial(self.slot_fs.open_help, self.ui))
+        self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
+        self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
+        self.ui.setting_btn.clicked.connect(partial(self.slot_fs.open_setting, self))
+        self.ui.help_btn.clicked.connect(partial(self.slot_fs.open_help, self))
         # self.ui.adjust_btn.clicked.connect(partial(self.slot_fs.adjust, self))
-        self.ui.connect_btn.clicked.connect(self.slot_fs.conection2ndi)
+        self.ui.connect_btn.clicked.connect(self.slot_fs.conect2ndi)
         pass
         # self.QFile.triggered.connect(self.slot_fs.import_file_slot)
         # self.QFolder.triggered.connect(self.slot_fs.import_folder_slot)

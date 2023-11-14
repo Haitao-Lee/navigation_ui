@@ -430,6 +430,31 @@ border-color: rgb(100, 100, 100);</string>
              <property name="spacing">
               <number>0</number>
              </property>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="reset_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>reset</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/重置.png);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="1">
               <widget class="QPushButton" name="connect_btn">
                <property name="sizePolicy">
@@ -445,7 +470,7 @@ border-color: rgb(100, 100, 100);</string>
                 </font>
                </property>
                <property name="toolTip">
-                <string>connect</string>
+                <string>connect to NDI tracker</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/连接.png);</string>
@@ -453,97 +478,12 @@ border-color: rgb(100, 100, 100);</string>
                <property name="text">
                 <string/>
                </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QPushButton" name="registration_btn">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Times New Roman</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>registration</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
-image: url(:/init/靶心,对准,准心,环形.png);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4">
-              <widget class="QPushButton" name="callibration_btn">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Times New Roman</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>callibration</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
-image: url(:/init/探针管理.png);
-</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
                <property name="checkable">
-                <bool>false</bool>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-               <property name="default">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="adjust_btn">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Times New Roman</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>adjustment</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/调节.png);
-</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
+             <item row="2" column="1">
               <widget class="QPushButton" name="undo_btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -570,6 +510,74 @@ image: url(:/init/探针管理.png);
               </widget>
              </item>
              <item row="0" column="2">
+              <widget class="QPushButton" name="registration_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>registration</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/靶心,对准,准心,环形.png);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QPushButton" name="callibration_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>callibration</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/探针管理.png);
+</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
               <widget class="QPushButton" name="robotics_btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -584,7 +592,7 @@ image: url(:/init/探针管理.png);
                 </font>
                </property>
                <property name="toolTip">
-                <string>robotics</string>
+                <string>connect to robotics</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/机械制造.png);</string>
@@ -592,34 +600,12 @@ image: url(:/init/探针管理.png);
                <property name="text">
                 <string/>
                </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QPushButton" name="reset_btn">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Times New Roman</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>reset</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/重置.png);</string>
-               </property>
-               <property name="text">
-                <string/>
+               <property name="checkable">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
+             <item row="0" column="5">
               <widget class="QPushButton" name="location_btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -641,6 +627,9 @@ image: url(:/init/探针管理.png);
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -695,6 +684,35 @@ image: url(:/init/3D.png);</string>
                </property>
               </widget>
              </item>
+             <item row="2" column="5">
+              <widget class="QPushButton" name="project_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>projection</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/剪切.png);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -728,14 +746,14 @@ border:none;</string>
             <property name="tabBarAutoHide">
              <bool>true</bool>
             </property>
-            <widget class="QWidget" name="dicom_tw">
+            <widget class="QWidget" name="dicom_w">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
              </property>
              <attribute name="title">
               <string>Dicom</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout">
+             <layout class="QVBoxLayout" name="verticalLayout" stretch="8,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -752,11 +770,164 @@ border:none;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="tableWidget"/>
+               <widget class="QTableWidget" name="dicom_tw">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                 <property name="background">
+                  <color>
+                   <red>85</red>
+                   <green>170</green>
+                   <blue>255</blue>
+                  </color>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Gender</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Age</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Path</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Serial Num</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,2,1,2,1">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="stl_tw">
+            <widget class="QWidget" name="mesh_w">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
              </property>
@@ -774,13 +945,13 @@ border:none;</string>
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>10</number>
               </property>
               <property name="spacing">
                <number>0</number>
               </property>
               <item row="0" column="0">
-               <widget class="QTableWidget" name="stl_tab">
+               <widget class="QTableWidget" name="mesh_tw">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
                 </property>
@@ -803,7 +974,7 @@ border:none;</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="implant_tw">
+            <widget class="QWidget" name="implant_w">
              <attribute name="title">
               <string>Implant</string>
              </attribute>
@@ -824,11 +995,11 @@ border:none;</string>
                <number>0</number>
               </property>
               <item row="0" column="0">
-               <widget class="QTableWidget" name="implant_tab"/>
+               <widget class="QTableWidget" name="implant_tw"/>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="landmark_tw">
+            <widget class="QWidget" name="landmark_w">
              <attribute name="title">
               <string>Landmark</string>
              </attribute>
@@ -849,7 +1020,7 @@ border:none;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="landmarks_tab"/>
+               <widget class="QTableWidget" name="landmarks_tw"/>
               </item>
              </layout>
             </widget>
@@ -878,7 +1049,7 @@ border:none;</string>
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <property name="documentMode">
              <bool>true</bool>
@@ -923,7 +1094,8 @@ border:none;</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+                 <string notr="true">background-color: rgb(100, 100, 100);border:none;
+color: rgb(255, 255, 255);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>
@@ -1023,7 +1195,7 @@ border:none;</string>
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(18, 150, 219);</string>
+                      <string notr="true">background-color: rgb(0, 0, 102);</string>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1063,7 +1235,7 @@ border:none;</string>
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(18, 150, 219);</string>
+                      <string notr="true">background-color: rgb(0, 0, 102);</string>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1137,7 +1309,7 @@ border:none;</string>
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(18, 150, 219);</string>
+                      <string notr="true">background-color: rgb(0, 0, 102);</string>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1180,7 +1352,7 @@ border:none;</string>
                       </sizepolicy>
                      </property>
                      <property name="styleSheet">
-                      <string notr="true">background-color: rgb(18, 150, 219);</string>
+                      <string notr="true">background-color: rgb(0, 0, 102);</string>
                      </property>
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1240,6 +1412,11 @@ border:none;</string>
                </widget>
               </item>
              </layout>
+            </widget>
+            <widget class="QWidget" name="tab_2">
+             <attribute name="title">
+              <string>New</string>
+             </attribute>
             </widget>
            </widget>
           </item>
