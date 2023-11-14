@@ -8,7 +8,13 @@ class system_manager():
         super(system_manager, self).__init__()
         self.ui = ui_all.ui_all()
         self.slot_fs = slot_functions.slot_functions()
-        #self.core = 
+        #self.connections = 
+        #self.robotics =
+        self.dicoms = []
+        self.meshs =[]
+        self.implants =[]
+        self.tools = []
+        self.landmarks =[]
         self.setupConnections()       
         
     def setupConnections(self):

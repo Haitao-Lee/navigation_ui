@@ -377,7 +377,7 @@ text-align: center;</string>
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="function_layout" stretch="20,60,60,5">
+         <layout class="QVBoxLayout" name="function_layout" stretch="20,80,60,5">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -725,14 +725,13 @@ image: url(:/init/剪切.png);</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);
-border:none;</string>
+             <string notr="true">background-color: rgb(100, 100, 100);</string>
             </property>
             <property name="tabShape">
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>4</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -747,6 +746,11 @@ border:none;</string>
              <bool>true</bool>
             </property>
             <widget class="QWidget" name="dicom_w">
+             <property name="font">
+              <font>
+               <family>Times New Roman</family>
+              </font>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
              </property>
@@ -770,20 +774,10 @@ border:none;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="dicom_tw">
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
+               <widget class="QTableWidget" name="tableWidget">
                 <column>
                  <property name="text">
                   <string>Name</string>
-                 </property>
-                 <property name="background">
-                  <color>
-                   <red>85</red>
-                   <green>170</green>
-                   <blue>255</blue>
-                  </color>
                  </property>
                 </column>
                 <column>
@@ -798,12 +792,12 @@ border:none;</string>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Path</string>
+                  <string>Serial Num</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Serial Num</string>
+                  <string>Path</string>
                  </property>
                 </column>
                </widget>
@@ -839,7 +833,7 @@ border:none;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_2">
+                 <widget class="QPushButton" name="deleteDicom_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -883,7 +877,7 @@ border-radius: 4px;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="addDicom_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -934,7 +928,7 @@ border-radius: 4px;</string>
              <attribute name="title">
               <string>Mesh</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_2" rowstretch="0">
+             <layout class="QGridLayout" name="gridLayout_2" rowstretch="8,1" rowminimumheight="8,1">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -945,7 +939,7 @@ border-radius: 4px;</string>
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>10</number>
+               <number>0</number>
               </property>
               <property name="spacing">
                <number>0</number>
@@ -953,7 +947,7 @@ border-radius: 4px;</string>
               <item row="0" column="0">
                <widget class="QTableWidget" name="mesh_tw">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+                 <string notr="true">background-color: rgb(100, 100, 100);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -970,7 +964,141 @@ border-radius: 4px;</string>
                 <property name="gridStyle">
                  <enum>Qt::SolidLine</enum>
                 </property>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Path</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Visible</string>
+                 </property>
+                </column>
                </widget>
+              </item>
+              <item row="1" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,1,2,1">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="addMesh_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="deleteMesh_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_7">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -978,32 +1106,7 @@ border-radius: 4px;</string>
              <attribute name="title">
               <string>Implant</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <item row="0" column="0">
-               <widget class="QTableWidget" name="implant_tw"/>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="landmark_w">
-             <attribute name="title">
-              <string>Landmark</string>
-             </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
+             <layout class="QVBoxLayout" name="verticalLayout_11" stretch="8,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1020,14 +1123,470 @@ border-radius: 4px;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="landmarks_tw"/>
+               <widget class="QTableWidget" name="tableWidget_2">
+                <property name="styleSheet">
+                 <string notr="true">border:none;</string>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Path</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Visible</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Size</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,2,1,2,1">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_8">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="addImplant_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>9</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_9">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="deleteImplant_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>9</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_10">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab">
+            <widget class="QWidget" name="landmark_w">
+             <attribute name="title">
+              <string>Landmark</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_6" stretch="8,1">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTableWidget" name="landmarks_tw">
+                <property name="styleSheet">
+                 <string notr="true">border:none;</string>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Scalar</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Visible</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,2,1,2,1">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_11">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_13">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tool_w">
              <attribute name="title">
               <string>Tool</string>
              </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_10" stretch="8,1">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTableWidget" name="tool_tw">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Path</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,2,1,2,1">
+                <property name="spacing">
+                 <number>20</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_14">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_4">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_16">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 4px;</string>
+                  </property>
+                  <property name="text">
+                   <string>delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_15">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+             </layout>
             </widget>
            </widget>
           </item>
@@ -1049,7 +1608,7 @@ border-radius: 4px;</string>
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <property name="documentMode">
              <bool>true</bool>
