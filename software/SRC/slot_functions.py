@@ -54,9 +54,7 @@ class slot_functions():
     @staticmethod
     def localization(sysman):
         pass
-        
-    
-        
+         
         
     def adjust(self, sys_man):
         sys_man.ui.adjustment_ui.show()

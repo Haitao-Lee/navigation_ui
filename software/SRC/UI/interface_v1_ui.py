@@ -795,21 +795,21 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.info)
+        self.info_te = QtWidgets.QPlainTextEdit(self.info)
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
-        self.plainTextEdit.setFont(font)
-        self.plainTextEdit.setStyleSheet("background-color: rgb(100, 100, 100);border:none;\n"
+        self.info_te.setFont(font)
+        self.info_te.setStyleSheet("background-color: rgb(100, 100, 100);border:none;\n"
 "color: rgb(255, 255, 255);")
-        self.plainTextEdit.setFrameShape(QtWidgets.QFrame.Box)
-        self.plainTextEdit.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.plainTextEdit.setLineWidth(10)
-        self.plainTextEdit.setMidLineWidth(0)
-        self.plainTextEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.plainTextEdit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.plainTextEdit.setCursorWidth(0)
-        self.plainTextEdit.setObjectName("plainTextEdit")
-        self.horizontalLayout_2.addWidget(self.plainTextEdit)
+        self.info_te.setFrameShape(QtWidgets.QFrame.Box)
+        self.info_te.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.info_te.setLineWidth(10)
+        self.info_te.setMidLineWidth(0)
+        self.info_te.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.info_te.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.info_te.setCursorWidth(0)
+        self.info_te.setObjectName("info_te")
+        self.horizontalLayout_2.addWidget(self.info_te)
         self.information.addTab(self.info, "")
         self.tab_4 = QtWidgets.QWidget()
         self.tab_4.setStyleSheet("background-color: rgb(100, 100, 100);border:none;")
@@ -1156,8 +1156,8 @@ class Ui_MainWindow(object):
         self.actionopen_file.setObjectName("actionopen_file")
 
         self.retranslateUi(MainWindow)
-        self.dataWidget.setCurrentIndex(4)
-        self.information.setCurrentIndex(2)
+        self.dataWidget.setCurrentIndex(1)
+        self.information.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1251,4 +1251,4 @@ class Ui_MainWindow(object):
         self.action_open_folder.setText(_translate("MainWindow", "open folder"))
         self.action_close.setText(_translate("MainWindow", "quit"))
         self.actionopen_file.setText(_translate("MainWindow", "open file"))
-import navigation_rc
+import UI.resource.navigation_rc
