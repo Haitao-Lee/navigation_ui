@@ -34,18 +34,18 @@ class landmark():
         self.actor.GetProperty().SetOptical(self.opacity)
         self.actor.SetVisibility(self.visible) 
         
-    def changeActorVisible(self):
+    def changeVisible(self):
         self.visible = 1 - self.visible
         if self.actor is not None:
             self.actor.SetVisibility(self.visible)  
             
-    def setActorVisible(self, visible):
+    def setVisible(self, visible):
         assert visible==0 or visible == 1
         self.visible = visible
         if self.actor is not None:
             self.actor.SetVisibility(self.visible) 
             
-    def setActorOpacity(self, opacity):
+    def setOpacity(self, opacity):
         if opacity > 1:
             opacity = 1
         if opacity < 0:
