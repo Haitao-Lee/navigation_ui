@@ -3,8 +3,9 @@ import vtk
 import config
 
 class tool():
-    def __init__(self, data, Name=None, filePath=None, polydata=None, opacity=config.to_opcaity, visible=config.to_visible, color=config.to_color):
+    def __init__(self, data, matrix, Name=None, filePath=None, polydata=None, opacity=config.to_opcaity, visible=config.to_visible, color=config.to_color):
         self.data = data
+        self.matrix = matrix
         self.name = Name
         self.color = color
         self.path = filePath
@@ -28,6 +29,8 @@ class tool():
        
     def setActor(self, actor):
         self.actor = actor
+        self.actor.GetProperty().SetOptical(self.opacity)
+        self.actor.SetVisibility(self.visible) 
             
     def setOpacity(self, opacity):
         if opacity > 1:
@@ -64,3 +67,6 @@ class tool():
     
     def getPath(self):
         return self.path
+    
+    def getMatrix(self):
+        return self.matrix

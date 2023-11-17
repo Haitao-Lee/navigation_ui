@@ -38,12 +38,6 @@ class dicom():
     def getColor(self):
         return self.color
     
-    def getOpacity(self):
-        return self.opacity
-    
-    def getVisible(self):
-        return self.visible
-    
     def getName(self):
         return self.name
     

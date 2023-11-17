@@ -5,6 +5,14 @@ SAGITA = 3
 VIEW3D = 4
 
 
+## init value setting
+
+# system manager
+lower2Dvalue = 0
+upper2Dvalue = 100
+lower3Dvalue = 0
+upper3Dvalue = 100
+
 # landmarks
 lm_color = [255, 0, 0] #red
 lm_radius = 10
@@ -20,5 +28,14 @@ mesh_opacity = 1
 ip_radius = 5
 ip_colors = [[0,255,0], [0,0,255], [0,255,255]]
 ip_opacity = 0.5
-ip_visible = 1
+ip_visible = 2
+ip_dash_length = 8
+ip_line_rate = 2
+ip_cylinder_res = 36
+
+# tool 
+to_color = [0, 255, 255]
+to_visible = 1
+to_opcaity = 1
+
 
