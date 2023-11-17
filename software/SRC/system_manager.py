@@ -55,6 +55,7 @@ class system_manager():
         self.ui.reset_btn.clicked.connect(partial(self.slot_fs.reset,self))
         self.ui.measure_btn.clicked.connect(partial(self.slot_fs.measure, self))
         self.ui.show3d_btn.clicked.connect(partial(self.slot_fs.show3D, self))
+        self.ui.project_btn.clicked.connect(partial(self.slot_fs.project2D, self))
         
         pass
         # self.QFile.triggered.connect(self.slot_fs.import_file_slot)
