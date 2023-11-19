@@ -8,7 +8,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QApplication, QMainWindow
 import system_manager
-import UI.make_adjustment_ui
+# import UI.make_adjustment_ui
 
 #解决屏幕比例不一致的变形问题
 QtGui.QGuiApplication.setAttribute(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
@@ -18,6 +18,8 @@ QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 #不同屏幕分辨率自适应
 QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+# 禁用 VTK 警告信息的显示
+vtk.vtkObject.GlobalWarningDisplayOff() 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

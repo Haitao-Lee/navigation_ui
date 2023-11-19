@@ -81,7 +81,7 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="manu_layout" stretch="4,4,4,4,4,4,60,2,2,2,5">
+       <layout class="QHBoxLayout" name="manu_layout" stretch="2,2,2,2,2,74,2,2,2,5">
         <property name="spacing">
          <number>8</number>
         </property>
@@ -105,7 +105,7 @@
            <string>import file</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/menu/文件.png);</string>
+           <string notr="true">image: url(:/menu/文本.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -140,7 +140,7 @@
            <string>import folder</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/menu/文件夹_1.png);</string>
+           <string notr="true">image: url(:/menu/文件夹.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -196,7 +196,7 @@
            <string>setting</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/menu/205设置.png);</string>
+           <string notr="true">image: url(:/menu/138设置、系统设置、功能设置、属性.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -206,35 +206,6 @@
           </property>
           <property name="default">
            <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="help_btn">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Times New Roman</family>
-            <pointsize>9</pointsize>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="toolTip">
-           <string>help</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">image: url(:/menu/帮助_1.png);</string>
-          </property>
-          <property name="text">
-           <string/>
           </property>
           <property name="flat">
            <bool>true</bool>
@@ -258,7 +229,7 @@
            <string>quit</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/menu/退出.png);</string>
+           <string notr="true">image: url(:/menu/结束.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -290,7 +261,7 @@
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/signal/圆.png);</string>
+           <string notr="true">image: url(:/signal/red.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -306,7 +277,7 @@
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/signal/圆.png);</string>
+           <string notr="true">image: url(:/signal/red.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -322,7 +293,7 @@
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">image: url(:/signal/圆.png);</string>
+           <string notr="true">image: url(:/signal/red.png);</string>
           </property>
           <property name="text">
            <string/>
@@ -350,7 +321,7 @@
 text-align: center;</string>
           </property>
           <property name="text">
-           <string>0</string>
+           <string/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -377,7 +348,7 @@ text-align: center;</string>
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="function_layout" stretch="20,80,60,5">
+         <layout class="QVBoxLayout" name="function_layout" stretch="20,80,60,6">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -448,7 +419,8 @@ border-color: rgb(100, 100, 100);</string>
                 <string>reset</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/重置.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/体质辨别-重新测试.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -473,7 +445,8 @@ border-color: rgb(100, 100, 100);</string>
                 <string>connect to NDI tracker</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/连接.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/连接 (1).png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -502,7 +475,8 @@ border-color: rgb(100, 100, 100);</string>
                 <string>undo</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/撤回.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/撤回.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -528,7 +502,7 @@ border-color: rgb(100, 100, 100);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(80, 80, 80);
-image: url(:/init/靶心,对准,准心,环形.png);</string>
+image: url(:/init/标定.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -560,7 +534,7 @@ image: url(:/init/靶心,对准,准心,环形.png);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(80, 80, 80);
-image: url(:/init/探针管理.png);
+image: url(:/init/anzhuangguanli.png);
 </string>
                </property>
                <property name="text">
@@ -595,7 +569,8 @@ image: url(:/init/探针管理.png);
                 <string>connect to robotics</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/机械制造.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/冷金属过渡焊接（CMT）0.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -623,7 +598,8 @@ image: url(:/init/探针管理.png);
                 <string>localization</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/定位小.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/_定位小.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -651,7 +627,8 @@ image: url(:/init/探针管理.png);
                 <string>measure</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);image: url(:/init/测量.png);</string>
+                <string notr="true">background-color: rgb(80, 80, 80);
+image: url(:/init/测长度.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -703,7 +680,7 @@ image: url(:/init/3D.png);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(80, 80, 80);
-image: url(:/init/剪切.png);</string>
+image: url(:/init/切片2.png);</string>
                </property>
                <property name="text">
                 <string/>
@@ -725,13 +702,14 @@ image: url(:/init/剪切.png);</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);</string>
+             <string notr="true">background-color: rgb(100, 100, 100);
+color: rgb(255,255,255);</string>
             </property>
             <property name="tabShape">
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -775,6 +753,9 @@ image: url(:/init/剪切.png);</string>
               </property>
               <item>
                <widget class="QTableWidget" name="tableWidget">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -803,24 +784,62 @@ image: url(:/init/剪切.png);</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,2,1,2,1">
+               <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="4,1,4,1,4">
                 <property name="spacing">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_3">
+                 <widget class="QPushButton" name="addDicom_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add  </string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_2">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -843,60 +862,17 @@ image: url(:/init/剪切.png);</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>  add</string>
-                  </property>
-                  <property name="icon">
-                   <iconset>
-                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
-                  </property>
-                  <property name="flat">
-                   <bool>false</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="addDicom_btn">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>Times New Roman</family>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
-                  </property>
-                  <property name="text">
-                   <string>delete</string>
+                   <string> delete</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -916,6 +892,35 @@ border-radius: 4px;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="deleteDicom_btn_3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -947,7 +952,7 @@ border-radius: 4px;</string>
               <item row="0" column="0">
                <widget class="QTableWidget" name="mesh_tw">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);</string>
+                 <string notr="true">background-color: rgb(100, 100, 100);color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -987,35 +992,22 @@ border-radius: 4px;</string>
                </widget>
               </item>
               <item row="1" column="0">
-               <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,2,1,2,1">
+               <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="4,1,4,1,4">
                 <property name="spacing">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
                 </property>
-                <item>
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
                 <item>
                  <widget class="QPushButton" name="addMesh_btn">
                   <property name="sizePolicy">
@@ -1027,16 +1019,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>  add</string>
+                   <string>  add  </string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1068,16 +1061,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>delete</string>
+                   <string> delete</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1097,6 +1091,35 @@ border-radius: 4px;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="exportMesh_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1125,7 +1148,8 @@ border-radius: 4px;</string>
               <item>
                <widget class="QTableWidget" name="tableWidget_2">
                 <property name="styleSheet">
-                 <string notr="true">border:none;</string>
+                 <string notr="true">border:none;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <column>
                  <property name="text">
@@ -1160,35 +1184,22 @@ border-radius: 4px;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,2,1,2,1">
+               <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="4,1,4,1,4">
                 <property name="spacing">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
                 </property>
-                <item>
-                 <spacer name="horizontalSpacer_8">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
                 <item>
                  <widget class="QPushButton" name="addImplant_btn">
                   <property name="sizePolicy">
@@ -1200,17 +1211,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
-                    <pointsize>9</pointsize>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>  add</string>
+                   <string>  add  </string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1242,17 +1253,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
-                    <pointsize>9</pointsize>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>delete</string>
+                   <string> delete</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1261,7 +1272,7 @@ border-radius: 4px;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_10">
+                 <spacer name="horizontalSpacer_21">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1272,6 +1283,35 @@ border-radius: 4px;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="exportImplant_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1300,7 +1340,8 @@ border-radius: 4px;</string>
               <item>
                <widget class="QTableWidget" name="landmarks_tw">
                 <property name="styleSheet">
-                 <string notr="true">border:none;</string>
+                 <string notr="true">border:none;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <column>
                  <property name="text">
@@ -1325,37 +1366,24 @@ border-radius: 4px;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,2,1,2,1">
+               <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="4,1,4,1,4">
                 <property name="spacing">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_11">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_2">
+                 <widget class="QPushButton" name="addlandmark_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1365,16 +1393,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>  add</string>
+                   <string>  add  </string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1396,7 +1425,7 @@ border-radius: 4px;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="deleteLandmark_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1406,16 +1435,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>delete</string>
+                   <string> delete</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1424,7 +1454,7 @@ border-radius: 4px;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_12">
+                 <spacer name="horizontalSpacer_22">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1435,6 +1465,35 @@ border-radius: 4px;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="exportLandmark_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1463,7 +1522,8 @@ border-radius: 4px;</string>
               <item>
                <widget class="QTableWidget" name="tool_tw">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+                 <string notr="true">border:none;
+color: rgb(0, 0, 0);</string>
                 </property>
                 <column>
                  <property name="text">
@@ -1478,37 +1538,24 @@ border-radius: 4px;</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,2,1,2,1">
+               <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="4,1,4,1,4">
                 <property name="spacing">
-                 <number>20</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="topMargin">
                  <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>20</number>
+                 <number>25</number>
                 </property>
                 <property name="bottomMargin">
                  <number>10</number>
                 </property>
                 <item>
-                 <spacer name="horizontalSpacer_14">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_4">
+                 <widget class="QPushButton" name="addTool_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1518,16 +1565,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>  add</string>
+                   <string>  add  </string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1549,7 +1597,7 @@ border-radius: 4px;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_3">
+                 <widget class="QPushButton" name="deleteTool_btn">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1559,16 +1607,17 @@ border-radius: 4px;</string>
                   <property name="font">
                    <font>
                     <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(150, 150, 150);
-border-radius: 4px;</string>
+border-radius: 8px;</string>
                   </property>
                   <property name="text">
-                   <string>delete</string>
+                   <string> delete</string>
                   </property>
                   <property name="icon">
                    <iconset>
@@ -1577,7 +1626,7 @@ border-radius: 4px;</string>
                  </widget>
                 </item>
                 <item>
-                 <spacer name="horizontalSpacer_15">
+                 <spacer name="horizontalSpacer_23">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
                   </property>
@@ -1588,6 +1637,35 @@ border-radius: 4px;</string>
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="exportTool_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -1607,13 +1685,14 @@ border-radius: 4px;</string>
              <enum>Qt::TabFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+             <string notr="true">background-color: rgb(100, 100, 100);border:none;
+color: rgb(255, 255, 255);</string>
             </property>
             <property name="tabShape">
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <property name="documentMode">
              <bool>true</bool>
@@ -1731,7 +1810,7 @@ color: rgb(255, 255, 255);</string>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
                    <item>
-                    <widget class="QSpinBox" name="spinBox">
+                    <widget class="QSpinBox" name="lower2Dbox">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1751,7 +1830,7 @@ color: rgb(255, 255, 255);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="horizontalScrollBar_2">
+                    <widget class="QScrollBar" name="lower2Dslider">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1771,7 +1850,7 @@ color: rgb(255, 255, 255);</string>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,4">
                    <item>
-                    <widget class="QSpinBox" name="spinBox_2">
+                    <widget class="QSpinBox" name="upper2Dbox">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1791,7 +1870,7 @@ color: rgb(255, 255, 255);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="horizontalScrollBar">
+                    <widget class="QScrollBar" name="upper2Dslider">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1845,7 +1924,7 @@ color: rgb(255, 255, 255);</string>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,4">
                    <item>
-                    <widget class="QSpinBox" name="spinBox_3">
+                    <widget class="QSpinBox" name="lower3Dbox">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1865,7 +1944,7 @@ color: rgb(255, 255, 255);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="horizontalScrollBar_3">
+                    <widget class="QScrollBar" name="lower3Dslider">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1888,7 +1967,7 @@ color: rgb(255, 255, 255);</string>
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QSpinBox" name="spinBox_4">
+                    <widget class="QSpinBox" name="upper3Dbox">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1908,7 +1987,7 @@ color: rgb(255, 255, 255);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="horizontalScrollBar_4">
+                    <widget class="QScrollBar" name="upper3Dslider">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                        <horstretch>0</horstretch>
@@ -1926,23 +2005,35 @@ color: rgb(255, 255, 255);</string>
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,1,1">
+                   <property name="spacing">
+                    <number>30</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>20</number>
+                   </property>
                    <property name="topMargin">
                     <number>10</number>
                    </property>
                    <property name="rightMargin">
-                    <number>60</number>
+                    <number>20</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QCheckBox" name="checkBox_2">
+                    <widget class="QCheckBox" name="volume_cbox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="font">
                       <font>
                        <family>Times New Roman</family>
                        <pointsize>16</pointsize>
-                       <bold>false</bold>
+                       <bold>true</bold>
                       </font>
                      </property>
                      <property name="layoutDirection">
@@ -1954,7 +2045,13 @@ color: rgb(255, 255, 255);</string>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QCheckBox" name="checkBox">
+                    <widget class="QCheckBox" name="mesh_cbox">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="font">
                       <font>
                        <family>Times New Roman</family>
@@ -1967,6 +2064,29 @@ color: rgb(255, 255, 255);</string>
                      </property>
                      <property name="text">
                       <string>Mesh</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="color3D_btn">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Times New Roman</family>
+                       <pointsize>16</pointsize>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(135, 206, 235);</string>
+                     </property>
+                     <property name="text">
+                      <string/>
                      </property>
                     </widget>
                    </item>
@@ -2001,7 +2121,7 @@ color: rgb(255, 255, 255);</string>
             <property name="title">
              <string/>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,1,1,6">
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,1,1,7">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -2018,50 +2138,89 @@ color: rgb(255, 255, 255);</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="l1">
+              <widget class="QPushButton" name="l1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="toolTip">
                 <string>probe</string>
                </property>
-               <property name="statusTip">
-                <string>probe</string>
-               </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/圆.png);</string>
+                <string notr="true">image: url(:/signal/green.png);
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="l2">
-               <property name="toolTip">
-                <string>model</string>
+              <widget class="QPushButton" name="l2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <property name="statusTip">
-                <string>model</string>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>bone</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/圆.png);</string>
+                <string notr="true">image: url(:/signal/green.png);
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="l3">
+              <widget class="QPushButton" name="l3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Times New Roman</family>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="toolTip">
                 <string>reference</string>
                </property>
-               <property name="statusTip">
-                <string>reference</string>
-               </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/圆.png);</string>
+                <string notr="true">image: url(:/signal/green.png);
+color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>

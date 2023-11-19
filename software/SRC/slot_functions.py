@@ -130,7 +130,6 @@ class slot_functions():
     
     @staticmethod
     def print_info(item, messages):
-        print("print_info")
         item.appendPlainText(messages + '\n')
         pass
     

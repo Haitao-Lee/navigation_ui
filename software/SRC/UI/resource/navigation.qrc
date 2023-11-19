@@ -1,20 +1,23 @@
 <RCC>
   <qresource lang="mode" prefix="init">
+    <file>_定位小.png</file>
     <file>6-6系统.png</file>
   </qresource>
   <qresource prefix="add">
     <file>导出.png</file>
   </qresource>
-  <qresource prefix="新前缀"/>
   <qresource lang="save_all" prefix="menu">
+    <file>保存.png</file>
     <file>保存(1).png</file>
     <file>保存.png</file>
   </qresource>
   <qresource lang="test" prefix="menu">
+    <file>结束.png</file>
     <file>退出.png</file>
     <file>属性.png</file>
   </qresource>
   <qresource lang="show3D" prefix="init">
+    <file>3D.png</file>
     <file>3D.png</file>
   </qresource>
   <qresource lang="location" prefix="init">
@@ -27,27 +30,35 @@
     <file>帮助_1.png</file>
   </qresource>
   <qresource lang="file" prefix="menu">
+    <file>文本.png</file>
     <file>文件.png</file>
   </qresource>
   <qresource lang="setting" prefix="menu">
+    <file>138设置、系统设置、功能设置、属性.png</file>
     <file>205设置.png</file>
   </qresource>
   <qresource lang="folder" prefix="menu">
+    <file>文件夹.png</file>
     <file>文件夹_1.png</file>
   </qresource>
   <qresource lang="cut" prefix="init">
+    <file>切片2.png</file>
     <file>剪切.png</file>
   </qresource>
   <qresource lang="measure" prefix="init">
+    <file>测长度.png</file>
     <file>测量.png</file>
   </qresource>
   <qresource lang="reset" prefix="init">
+    <file>体质辨别-重新测试.png</file>
     <file>重置.png</file>
   </qresource>
   <qresource lang="robotics" prefix="init">
+    <file>冷金属过渡焊接（CMT）0.png</file>
     <file>机械制造.png</file>
   </qresource>
   <qresource lang="undo" prefix="init">
+    <file>撤回.png</file>
     <file>撤回.png</file>
   </qresource>
   <qresource lang="file" prefix="toolbar">
@@ -60,6 +71,8 @@
     <file>帮助_1.png</file>
   </qresource>
   <qresource lang="light" prefix="signal">
+    <file>green.png</file>
+    <file>red.png</file>
     <file>圆(1).png</file>
     <file>圆(2).png</file>
     <file>圆.png</file>
@@ -68,15 +81,19 @@
     <file>全屏.png</file>
   </qresource>
   <qresource lang="connect" prefix="init">
+    <file>连接 (1).png</file>
     <file>连接.png</file>
   </qresource>
   <qresource lang="disconnect" prefix="init">
     <file>取消连接.png</file>
   </qresource>
   <qresource lang="callibration" prefix="init">
+    <file>anzhuangguanli.png</file>
+    <file>18电钻.png</file>
     <file>探针管理.png</file>
   </qresource>
   <qresource lang="registration" prefix="init">
+    <file>标定.png</file>
     <file>靶心,对准,准心,环形.png</file>
   </qresource>
 </RCC>
