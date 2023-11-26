@@ -3,12 +3,12 @@ import vtk
 import config
 
 class dicom():
-    def __init__(self, data, Name=None, Age=None, filePath=None, SerialNum=None):
+    def __init__(self, data, Name=None, Age=None, filePath=None, resolution=None):
         self.data = data
         self.name = Name
         self.age = Age
         self.path = filePath
-        self.SerialNum = SerialNum
+        self.resolution = resolution
         self.actor = None
         
     def setActor(self, actor):
