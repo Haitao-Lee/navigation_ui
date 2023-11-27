@@ -1,4 +1,5 @@
 from PyQt5.QtCore import *
+import numpy as np
 
 def importImplant(path):
     implant_file = QFile(path)
@@ -23,7 +24,7 @@ def importImplant(path):
             line = stream.readLine().split(" ")
             radius = float(line[0])
             # length = float(line[1])
-            implants.append(firstpt, secondpt, radius, color)
+            implants.append([np.array(firstpt), np.array(secondpt), radius, np.array(color)])
         
         # 在这里可以使用读取到的数据进行相应的处理或存储
         implant_file.close()

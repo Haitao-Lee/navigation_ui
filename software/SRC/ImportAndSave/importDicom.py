@@ -1,14 +1,50 @@
 import SimpleITK as sitk
+import pydicom
+import os
+from PyQt5.QtCore import *
 
 def importDicom(path):
+    # 获取文件夹中的所有文件名
+    files = os.listdir(path)
+    # 用于存储DICOM文件的列表
+    dicom_files = []
+    # 遍历文件夹中的文件
+    for file_name in files:
+        file_path = os.path.join(path, file_name)
+        # 检查文件是否是DICOM格式
+        if os.path.isfile(file_path) and file_name.lower().endswith('.dcm'):
+            dicom_files.append(file_path)
+            QCoreApplication.processEvents() # 防止卡顿
+    # 读取DICOM文件
+    dicom_data = [pydicom.dcmread(file) for file in dicom_files]
     reader = sitk.ImageSeriesReader()
-    dicom_names = reader.GetGDCMSeriesFileNames(path)
-    reader.SetFileNames(dicom_names)
+    QCoreApplication.processEvents()
+    reader.SetFileNames(dicom_files)
+    QCoreApplication.processEvents()
     image = reader.Execute()
-    # image_array = sitk.GetArrayFromImage(image) # z, y, x
-    # origin = image.GetOrigin() # x, y, z
-    # spacing = image.GetSpacing()
-    return image
+    QCoreApplication.processEvents()
+    return dicom_data, image
+
+# # 获取DICOM序列中的一些信息
+    # for tag in dicom_data[0].dir():
+    #     print(tag)
+    # for data in dicom_data:
+    #     print(f"Patient Name: {data.PatientName}")
+    #     print(f"Study Description: {data.StudyDescription}")
+    #     print(f"Series Description: {data.SeriesDescription}")
+    #     print(f"Image Shape: {data.Rows} x {data.Columns}")
+    #     print("-----------------------------")
+
+# def importDicom(path):
+#     reader = sitk.ImageSeriesReader()
+#     dicom_names = reader.GetGDCMSeriesFileNames(path)
+#     reader.SetFileNames(dicom_names)
+#     image = reader.Execute()
+#     # patient_name = image.GetMetaData("0010|0010") 
+#     # image_array = sitk.GetArrayFromImage(image) # z, y, x
+#     # origin = image.GetOrigin() # x, y, z
+#     # spacing = image.GetSpacing()
+#     return image
 
 '''
 # DICOM序列所在的文件夹路径

@@ -6,7 +6,7 @@ import vtkmodules.all as vtk
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from Message.printMessageByItem import *
+import Message.print_info as print_info
 
 class system_manager():
     def __init__(self):
@@ -14,10 +14,16 @@ class system_manager():
         # ui
         self.ui = ui_all.ui_all()
         self.slot_fs = slot_functions.slot_functions()
+        self.showProgress(0)
+        
+        # thread
+        self.signal_thread = QThread() # connect成功后才启动
+        
         
         # timer
-        self.socket_timer = QTimer()
+        self.signal_timer = QTimer()
         self.regis_timer = QTimer()
+        
         
         # setting
         self.connections = None
@@ -25,9 +31,11 @@ class system_manager():
         self.probeDeviateMatrix = None
         self.TrackerHostName = None
         
+        
         # rom
         self.SROM_name = []
         self.SROM_path_map = {}
+        
         
         # adjustment
         self.lookupTable = vtk.vtkLookupTable()
@@ -36,6 +44,7 @@ class system_manager():
         self.lower3Dvalues = config.lower3Dvalue
         self.upper3Dvalues = config.upper3Dvalue
 
+
         # data
         self.dicoms = []
         self.meshs =[]
@@ -43,13 +52,38 @@ class system_manager():
         self.tools = []
         self.landmarks =[]
         
+        
         # setup
         self.setupConnections()       
     
-    def printInfo(self, message):
-        print_info(self.ui.info_ten, message)
     
-      
+    # infomation
+    def printInfo(self, message):
+        print_info.print_info(self.ui.info_te, message)
+        
+    def showProgress(self, value):
+        if value >= 100:
+            value = 100
+        elif value < 0:
+            value = 0
+        self.ui.progressBar.setValue(value)
+        if self.ui.progressBar.value() == 100:
+            self.ui.progressBar.setValue(0)
+        
+    def ProgressStart(self):
+        self.showProgress(0)
+        for i in range(config.pg_start):
+            self.showProgress(i)
+            
+    def ProgressMiddle(self):
+        for i in range(self.ui.progressBar.value(), config.pg_middle):
+            self.showProgress(i)
+            
+    def ProgressEnd(self):
+        for i in range(self.ui.progressBar.value(), config.pg_end+1):
+            self.showProgress(i)
+    
+    # signals and slots
     def setupConnections(self):
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))

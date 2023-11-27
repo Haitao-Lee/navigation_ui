@@ -1734,11 +1734,13 @@ color: rgb(255, 255, 255);</string>
                 <property name="font">
                  <font>
                   <family>Times New Roman</family>
+                  <pointsize>12</pointsize>
+                  <bold>true</bold>
                  </font>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(100, 100, 100);border:none;
-color: rgb(255, 255, 255);</string>
+color: rgb(0,0, 0);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>

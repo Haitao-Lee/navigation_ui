@@ -38,4 +38,9 @@ to_color = [0, 255, 255]
 to_visible = 1
 to_opcaity = 1
 
+# progress
+pg_start = 30
+pg_middle = 75
+pg_end = 100
+
 

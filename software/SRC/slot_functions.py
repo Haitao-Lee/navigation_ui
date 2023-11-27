@@ -24,11 +24,17 @@ class slot_functions():
         super(slot_functions, self).__init__()
 
     def addSystemDicoms(self, path, sysman):
-        new_dicom = importDicom.importDicom(path)
-        patient_name = new_dicom.GetMetaData("0010|0010")  
-        patient_age = new_dicom.GetMetaData("0010|1010")
-        image_array = sitk.GetArrayFromImage(new_dicom)
-        sysman.dicoms.append(m_dicom.dicom(data=new_dicom, Name=patient_name, Age=patient_age, resolution=image_array, filePath=path)) # (data, Name=None, Age=None, filePath=None, resolution=None)
+        sysman.ProgressStart()
+        dicom_series, images = importDicom.importDicom(path)
+        sysman.ProgressMiddle()
+        if len(dicom_series) == 0:
+            sysman.printInfo("--There is no dicom file in the folder:" + path)
+            return
+        patient_name = dicom_series[0].PatientName
+        patient_age = dicom_series[0].PatientAge
+        image_array = sitk.GetArrayFromImage(images)
+        sysman.dicoms.append(m_dicom.dicom(data=image_array, Name=patient_name, Age=patient_age, resolution=image_array, filePath=path)) # (data, Name=None, Age=None, filePath=None, resolution=None)
+        sysman.ProgressEnd()
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)
@@ -40,7 +46,7 @@ class slot_functions():
         name = path.split("/")[-1]
         sysman.meshs.append(m_mesh.mesh(polydata=new_stl, Name=name, filePath=path))
         
-    def addSystemImplant(path, sysman):
+    def addSystemImplant(self, path, sysman):
         implants = importImplant.importImplant(path)
         for implant in implants:
             sysman.implants.append(m_implant.implants(start=implant[0], end=implant[1], radius=implant[2], color=implant[3]))
@@ -72,12 +78,36 @@ class slot_functions():
             sysman.SROM_name.append(file_name)
             
     def buildAll(self, path, sysman):
-        NDI_path = path + 'NDIFiles'
-        SETTING_path = path + 'setting.ini'
-        if os.path.exists(NDI_path):
-            self.buildSystemRom(NDI_path, sysman)
-        if os.path.exists(SETTING_path):
-            self.buildSystemSetting(SETTING_path, sysman)
+        if not os.path.exists(path):
+            sysman.printInfo("--Path:\""+path+"\" does not work!")
+            return 
+        # NDI_path = path + 'NDIFiles'
+        # if os.path.exists(NDI_path):
+        #     self.buildSystemRom(NDI_path, sysman)
+        files = os.listdir(path)
+        num_files = len(files)
+        for i in range(num_files):
+            QCoreApplication.processEvents() # 防卡顿
+            sysman.showProgress(int(100*i/num_files))
+            f = files[i]
+            file_path = os.path.join(path, f)
+            if f.lower().endswith('.stl'):
+                self.addSystemSTL(file_path, sysman)
+                sysman.printInfo("--Add STL:\""+file_path+"\".")
+            elif f.lower().endswith('.implant'):
+                self.addSystemImplant(file_path, sysman)
+                sysman.printInfo("--Add implants:\""+file_path+"\".")
+            elif f.lower().endswith('.ini'):
+                self.buildSystemSetting(file_path, sysman)
+                sysman.printInfo("--Add settings:\""+file_path+"\".")
+            elif 'NDIFiles' in f:
+                self.buildSystemRom(file_path, sysman)
+                sysman.printInfo("--Add ROM files.")
+            else:
+                self.addSystemDicoms(file_path, sysman)
+                sysman.printInfo("--Add dicoms in:" + path)
+        sysman.ProgressEnd()
+                
 
     def import_file(self, sysman, file_type=None): 
         file_name = None
@@ -85,7 +115,8 @@ class slot_functions():
             file_name, _ = QFileDialog.getOpenFileName(sysman.ui, f'select a {file_type} file', "C:/", f"{file_type}(*.{file_type});All Files(*)")
         else: 
             file_name, _ = QFileDialog.getOpenFileName(sysman.ui, f'select a file', "C:/", f"All Files(*)")
-        if file_name is None:
+        if not os.path.exists(file_name):
+            sysman.printInfo("--No document was selected!")
             return
         name = file_name.split("/")[-1]
         file_extension = name.split(".")[-1]
@@ -110,11 +141,13 @@ class slot_functions():
             pass
         else:
             QMessageBox.warning(sysman.ui, 'Warning', 'The file is not appropriate!', QMessageBox.Ok)
+            return
+        sysman.printInfo("--Import file:" + file_name)
         pass
            
     def import_folder(self, sysman):
         path = QFileDialog.getExistingDirectory(sysman.ui, 'Choose Source File Which Should Include Image, NDI File, Implant Files and so on', os.getcwd())
-        if ~os.path.exists(path):
+        if not os.path.exists(path):
             return
         self.buildAll(path, sysman)
         pass
@@ -164,7 +197,11 @@ class slot_functions():
     
     def addDicom(self, sysman):
         path = QFileDialog.getExistingDirectory(sysman.ui, 'select the dicom folder', os.getcwd())
+        if not os.path.exists(path):
+            sysman.printInfo("--Path:\""+path+"\" does not work!")
+            return
         self.addSystemDicoms(path, sysman)
+        sysman.printInfo("--Successfully import dicoms in:" + path)
         pass
         
     def deleteDicom(self, sysman):
@@ -236,16 +273,14 @@ class slot_functions():
     def showTime(self, sysman):
         pass
     
-    @staticmethod
-    def print_info(item, messages):
-        item.appendPlainText(messages + '\n')
-        pass
-    
     def setLight(self, item, sign=True):
         pass
     
     def addLight(self, sysman):
         pass  
+    
+    def deleteLight(sysman):
+        pass
         
     @staticmethod    
     def get_files(dir, fileType=None):

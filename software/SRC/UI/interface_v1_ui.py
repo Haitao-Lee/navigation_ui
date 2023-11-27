@@ -883,9 +883,11 @@ class Ui_MainWindow(object):
         self.info_te = QtWidgets.QPlainTextEdit(self.info)
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
+        font.setPointSize(12)
+        font.setBold(True)
         self.info_te.setFont(font)
         self.info_te.setStyleSheet("background-color: rgb(100, 100, 100);border:none;\n"
-"color: rgb(255, 255, 255);")
+"color: rgb(0,0, 0);")
         self.info_te.setFrameShape(QtWidgets.QFrame.Box)
         self.info_te.setFrameShadow(QtWidgets.QFrame.Raised)
         self.info_te.setLineWidth(10)
