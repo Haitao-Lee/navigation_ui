@@ -5,3 +5,9 @@ def importSTL(path):
     reader.SetFileName(path)
     reader.Update()
     return reader.GetOutput()
+
+def importOBJ(path):
+    reader = vtk.vtkOBJReader()
+    reader.SetFileName(path)
+    reader.Update()
+    return reader.GetOutput()

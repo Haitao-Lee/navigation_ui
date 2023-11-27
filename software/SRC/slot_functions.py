@@ -7,43 +7,77 @@ import numpy as np
 from config import ALLWIN, TRANSS, SAGITA, VIEW3D
 import ImportAndSave.importDicom as importDicom
 import ImportAndSave.importImplant as importImplant
-import ImportAndSave.importLandmark as importLandmark
-import ImportAndSave.importSTL as importSTL
+import ImportAndSave.importIni as importIni
+import ImportAndSave.importMesh as importMesh
 import ImportAndSave.importTool as importTool
 import ImportAndSave.importTxt as importTxt
 import dicom as m_dicom
 import mesh as m_mesh
 import implant as m_implant
+import landmark as m_landmark
 import SimpleITK as sitk
+import copy
 
 
 class slot_functions():
     def __init__(self):
         super(slot_functions, self).__init__()
 
-    def buildSystemDicom(path, sysman):
+    def addSystemDicoms(self, path, sysman):
         new_dicom = importDicom.importDicom(path)
         patient_name = new_dicom.GetMetaData("0010|0010")  
         patient_age = new_dicom.GetMetaData("0010|1010")
         image_array = sitk.GetArrayFromImage(new_dicom)
-        sysman.dicoms.append(m_dicom(data=new_dicom, Name=patient_name, Age=patient_age, resolution=image_array, filePath=path)) # (data, Name=None, Age=None, filePath=None, resolution=None)
+        sysman.dicoms.append(m_dicom.dicom(data=new_dicom, Name=patient_name, Age=patient_age, resolution=image_array, filePath=path)) # (data, Name=None, Age=None, filePath=None, resolution=None)
     
-    def buildSystemSTL(path, sysman):
-        new_stl = importSTL.importSTL(path)
+    def addSystemSTL(self, path, sysman):
+        new_stl = importMesh.importSTL(path)
         name = path.split("/")[-1]
-        sysman.meshs.append(m_mesh(polydata=new_stl, Name=name, filePath=path))
+        sysman.meshs.append(m_mesh.mesh(polydata=new_stl, Name=name, filePath=path))
         
-    def buildSystemOBJ(path, sysman):
-        new_stl = importSTL.importOBJ(path)
+    def addSystemOBJ(self, path, sysman):
+        new_stl = importMesh.importOBJ(path)
         name = path.split("/")[-1]
-        sysman.meshs.append(m_mesh(polydata=new_stl, Name=name, filePath=path))
+        sysman.meshs.append(m_mesh.mesh(polydata=new_stl, Name=name, filePath=path))
         
-    def buildSystemImplant(path, sysman):
+    def addSystemImplant(path, sysman):
         implants = importImplant.importImplant(path)
-        name = path.split("/")[-1]
         for implant in implants:
-            sysman.implants.append(m_implant(start=implant[0], end=implant[1], radius=implant[2]/2, color=implant[3]))
-
+            sysman.implants.append(m_implant.implants(start=implant[0], end=implant[1], radius=implant[2], color=implant[3]))
+            
+    def addSystemLandmark(self, pointlist, sysman):
+        tmp_point = []
+        for i in range(len(pointlist)):
+            tmp_point.append(float(pointlist[i]))
+            if len(tmp_point) == 3:
+                sysman.landmarks.append(m_landmark.landmark(scalar = copy.deepcopy(tmp_point)))
+                tmp_point = []
+                
+    def buildSystemSetting(self, path, sysman):
+        settings = importIni.importIni(path)
+        pointlist= settings.get('General', 'FiducialPoints').split(',')
+        sysman.landmarks = [] # 清空原来的定点
+        self.addSystemLandmark(pointlist, sysman)
+        sysman.TrackerHostName = settings.get('General', 'TrackerHostName')
+        sysman.probeDeviateMatrix = np.array(settings.get('General', 'probeDeviateMatrix')).reshape(4, 4)    
+        
+    def buildSystemRom(self, path, sysman):
+        # 定义过滤器和文件列表
+        SROM_filter = "*.rom"
+        SROM_list = [file for file in os.listdir(path) if file.endswith(SROM_filter) and os.path.isfile(os.path.join(path, file))]
+        for file in SROM_list:
+            file_name = os.path.splitext(file)[0]
+            SROM_path = os.path.join(path, file)
+            sysman.SROM_path_map[file_name] = SROM_path
+            sysman.SROM_name.append(file_name)
+            
+    def buildAll(self, path, sysman):
+        NDI_path = path + 'NDIFiles'
+        SETTING_path = path + 'setting.ini'
+        if os.path.exists(NDI_path):
+            self.buildSystemRom(NDI_path, sysman)
+        if os.path.exists(SETTING_path):
+            self.buildSystemSetting(SETTING_path, sysman)
 
     def import_file(self, sysman, file_type=None): 
         file_name = None
@@ -55,21 +89,24 @@ class slot_functions():
             return
         name = file_name.split("/")[-1]
         file_extension = name.split(".")[-1]
-        print(file_extension)
         if file_extension == "dcm":
-            self.buildSystemDicoms(file_name, sysman)
+            self.addSystemDicoms(file_name, sysman)
             pass
         elif file_extension == "stl":
+            self.addSystemSTL(file_name, sysman)
             pass
         elif file_extension == "obj":
+            self.addSystemOBJ(file_name, sysman)
             pass
         elif file_extension == "implant":
+            self.addSystemImplant(file_name, sysman)
             pass
-        elif file_extension == "txt":
-            pass
+        # elif file_extension == "txt":
+        #     pass
         elif file_extension == "rom":
             pass
         elif file_extension == "ini":
+            self.buildSystemSetting(file_name, sysman)
             pass
         else:
             QMessageBox.warning(sysman.ui, 'Warning', 'The file is not appropriate!', QMessageBox.Ok)
@@ -77,7 +114,9 @@ class slot_functions():
            
     def import_folder(self, sysman):
         path = QFileDialog.getExistingDirectory(sysman.ui, 'Choose Source File Which Should Include Image, NDI File, Implant Files and so on', os.getcwd())
-        
+        if ~os.path.exists(path):
+            return
+        self.buildAll(path, sysman)
         pass
     
     def save_all(self, sysman):
@@ -125,13 +164,22 @@ class slot_functions():
     
     def addDicom(self, sysman):
         path = QFileDialog.getExistingDirectory(sysman.ui, 'select the dicom folder', os.getcwd())
-        self.buildSystemDicoms(path, sysman)
+        self.addSystemDicoms(path, sysman)
         pass
         
     def deleteDicom(self, sysman):
         pass
           
     def addMesh(self, sysman):
+        file_name, _ = QFileDialog.getOpenFileName(sysman.ui, f'select a mesh file', "C:/", f"STL(*.stl);OBJ(*.obj);All Files(*)")
+        if file_name is None:
+            return
+        name = file_name.split("/")[-1]
+        file_extension = name.split(".")[-1]
+        if file_extension == "stl":
+            self.addSystemSTL(file_name, sysman)
+        elif file_extension == "obj":
+            self.addSystemOBJ(file_name, sysman)
         pass
     
     def changeMeshColor(self, sysman):

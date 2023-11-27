@@ -14,15 +14,6 @@ class dicom():
     def setActor(self, actor):
         self.actor = actor
             
-    def setOpacity(self, opacity):
-        if opacity > 1:
-            opacity = 1
-        if opacity < 0:
-            opacity = 0
-        self.opacity = opacity
-        if self.actor:
-            self.actor.GetProperty().SetOptical(self.opacity)
-            self.actor.SetVisibility(self.visible) 
             
     def setColor(self, color):
         self.color = color

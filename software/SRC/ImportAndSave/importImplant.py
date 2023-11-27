@@ -6,7 +6,6 @@ def importImplant(path):
     if implant_file.open(QFile.ReadOnly):
         # 创建 QTextStream 对象，关联文件
         stream = QTextStream(implant_file)
-
        # 读取数字
         line = stream.readLine()
         numOfitem = int(line) if line.isdigit() else None  # 转换为整数
@@ -22,9 +21,9 @@ def importImplant(path):
                 secondpt.append(line[1])
                 color.append(line[2])
             line = stream.readLine().split(" ")
-            diameter = float(line[0])
+            radius = float(line[0])
             # length = float(line[1])
-            implants.append(firstpt, secondpt, diameter, color)
+            implants.append(firstpt, secondpt, radius, color)
         
         # 在这里可以使用读取到的数据进行相应的处理或存储
         implant_file.close()

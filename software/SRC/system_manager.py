@@ -22,6 +22,12 @@ class system_manager():
         # setting
         self.connections = None
         self.robotics = None
+        self.probeDeviateMatrix = None
+        self.TrackerHostName = None
+        
+        # rom
+        self.SROM_name = []
+        self.SROM_path_map = {}
         
         # adjustment
         self.lookupTable = vtk.vtkLookupTable()

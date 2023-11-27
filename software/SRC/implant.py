@@ -99,7 +99,7 @@ class implants():
             opacity = 0
         self.opacity = opacity
         if self.tube_actor:
-            self.tube_actor.GetProperty().SetOptical(self.opacity)
+            self.tube_actor.GetProperty().SetOpacity(self.opacity)
             self.tube_actor.SetVisibility(self.visible>0) 
             
     def setColor(self, color):

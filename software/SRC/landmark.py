@@ -25,13 +25,13 @@ class landmark():
         actor = vtk.vtkActor()
         actor.SetMapper(mapper)
         actor.GetProperty().SetColor(color)
-        actor.GetProperty().SetOptical(opacity)
+        actor.GetProperty().SetOpacity(opacity)
         actor.SetVisibility(visible) 
         return actor
         
     def setActor(self, actor):
         self.actor = actor
-        self.actor.GetProperty().SetOptical(self.opacity)
+        self.actor.GetProperty().SetOpacity(self.opacity)
         self.actor.SetVisibility(self.visible) 
         
     def changeVisible(self):
@@ -52,7 +52,7 @@ class landmark():
             opacity = 0
         self.opacity = opacity
         if self.actor:
-            self.actor.GetProperty().SetOptical(self.opacity)
+            self.actor.GetProperty().SetOpacity(self.opacity)
             self.actor.SetVisibility(self.visible) 
             
     def setColor(self, color):
