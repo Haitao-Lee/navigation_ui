@@ -709,7 +709,7 @@ color: rgb(255,255,255);</string>
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -730,7 +730,8 @@ color: rgb(255,255,255);</string>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+              <string notr="true">background-color: rgb(120, 120, 120);
+border:none;</string>
              </property>
              <attribute name="title">
               <string>Dicom</string>
@@ -755,7 +756,14 @@ color: rgb(255,255,255);</string>
                <widget class="QTableWidget" name="dicom_tw">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(120, 120, 120);</string>
+background-color: rgb(120, 120, 120);
+</string>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
                 </property>
                 <attribute name="verticalHeaderVisible">
                  <bool>false</bool>
@@ -927,7 +935,7 @@ border-radius: 8px;</string>
             </widget>
             <widget class="QWidget" name="mesh_w">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+              <string notr="true">background-color: rgb(120, 120, 120);border:none;</string>
              </property>
              <attribute name="title">
               <string>Mesh</string>
@@ -962,6 +970,12 @@ color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="lineWidth">
                  <number>0</number>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
                 </property>
                 <property name="showGrid">
                  <bool>false</bool>
@@ -1129,6 +1143,9 @@ border-radius: 8px;</string>
              </layout>
             </widget>
             <widget class="QWidget" name="implant_w">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(120, 120, 120);\nborder:none;</string>
+             </property>
              <attribute name="title">
               <string>Implant</string>
              </attribute>
@@ -1155,27 +1172,28 @@ border-radius: 8px;</string>
 color: rgb(0, 0, 0);
 background-color: rgb(120, 120, 120);</string>
                 </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
+                </property>
                 <attribute name="verticalHeaderVisible">
                  <bool>false</bool>
                 </attribute>
                 <column>
                  <property name="text">
-                  <string>Name</string>
+                  <string>Start</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>start</string>
+                  <string>End</string>
                  </property>
                 </column>
                 <column>
                  <property name="text">
-                  <string>end</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>radius</string>
+                  <string>Radius</string>
                  </property>
                 </column>
                 <column>
@@ -1351,6 +1369,12 @@ border-radius: 8px;</string>
 color: rgb(0, 0, 0);
 background-color: rgb(120, 120, 120);</string>
                 </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
+                </property>
                 <attribute name="verticalHeaderVisible">
                  <bool>false</bool>
                 </attribute>
@@ -1511,6 +1535,9 @@ border-radius: 8px;</string>
              </layout>
             </widget>
             <widget class="QWidget" name="tool_w">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(120, 120, 120);\nborder:none;</string>
+             </property>
              <attribute name="title">
               <string>Tool</string>
              </attribute>
@@ -1536,6 +1563,12 @@ border-radius: 8px;</string>
                  <string notr="true">border:none;
 color: rgb(0, 0, 0);
 background-color: rgb(120, 120, 120);</string>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
                 </property>
                 <attribute name="horizontalHeaderHighlightSections">
                  <bool>true</bool>
@@ -1730,7 +1763,7 @@ background-color: rgb(80, 80, 80);</string>
               <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
              </property>
              <attribute name="title">
-              <string>message</string>
+              <string>Message</string>
              </attribute>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <property name="spacing">
@@ -1793,7 +1826,7 @@ background-color: rgb(120, 120, 120);</string>
 border:none;</string>
              </property>
              <attribute name="title">
-              <string>property</string>
+              <string>Property</string>
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <property name="spacing">
