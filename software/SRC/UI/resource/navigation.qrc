@@ -3,6 +3,10 @@
     <file>_定位小.png</file>
     <file>6-6系统.png</file>
   </qresource>
+  <qresource prefix="visible">
+    <file>visible.png</file>
+    <file>unvisible.png</file>
+  </qresource>
   <qresource prefix="add">
     <file>导出.png</file>
   </qresource>

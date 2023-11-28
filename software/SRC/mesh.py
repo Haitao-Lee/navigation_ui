@@ -5,7 +5,7 @@ import config
 class mesh():
     def __init__(self, polydata, Name=None, filePath=None, visible=config.mesh_visible, opacity=config.mesh_opacity, color=config.mesh_colors[0]):
         self.polydata = polydata
-        self.color = color
+        self.color = np.array(color)
         self.visible = visible
         self.opacity = opacity
         self.name = Name

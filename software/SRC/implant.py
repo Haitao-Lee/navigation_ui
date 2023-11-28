@@ -5,8 +5,8 @@ import math
 
 class implants():
     def __init__(self, start, end, radius=config.ip_radius, color=config.ip_colors[0], visible=config.ip_visible, opacity = config.ip_opacity):
-        self.start = start
-        self.end = end
+        self.start = np.array(start)
+        self.end = np.array(end)
         direct = end - start
         self.length = np.linalg.norm(direct)
         self.direct = direct/self.length
@@ -17,11 +17,11 @@ class implants():
         self.tube_polytdata = self.createTuberPolyData(self.start, self.end, self.radius)
         self.tube_actor = self.createActor(self.tube_polytdata, self.opacity, self.visible, self.color)
         self.dash_polydata = self.createDashPolydata(self.start, self.direct, self.length)
-        self.dash_actor = self.createDashActor(self.line_polydata)
+        self.dash_actor = self.createDashActor(self.dash_polydata)
     
     @staticmethod     
     def createTuberPolyData(start, end, radius, resolution=config.ip_cylinder_res):
-        ls = vtk.ctkLineSource()
+        ls = vtk.vtkLineSource()
         ls.SetPoint1(start)
         ls.SetPoint2(end)
         ts = vtk.vtkTubeFilter()
@@ -29,7 +29,7 @@ class implants():
         ts.SetRadius(radius)
         ts.SetNumberOfSides(resolution)
         ts.CappingOn()
-        ts.Updata()
+        ts.Update()
         return ts.GetOutput()
     
     @staticmethod  
@@ -48,7 +48,7 @@ class implants():
         dashed = vtk.vtkAppendPolyData()
         total_line_length = length_rate*length
         n_start = start - (total_line_length-length)*direct/2
-        for _ in range(total_line_length//dash_length):
+        for _ in range(int(total_line_length//dash_length)):
             p1 = n_start
             p2 = n_start + 3*dash_length*direct/4
             line = vtk.vtkLineSource()

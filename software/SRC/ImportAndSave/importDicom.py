@@ -5,17 +5,21 @@ from PyQt5.QtCore import *
 
 def importDicom(path):
     # 获取文件夹中的所有文件名
+    if not os.path.isdir(path):
+        return None, None
     files = os.listdir(path)
     # 用于存储DICOM文件的列表
     dicom_files = []
     # 遍历文件夹中的文件
     for file_name in files:
-        file_path = os.path.join(path, file_name)
+        file_path = os.path.join(path, file_name).replace("\\","/")
         # 检查文件是否是DICOM格式
         if os.path.isfile(file_path) and file_name.lower().endswith('.dcm'):
             dicom_files.append(file_path)
             QCoreApplication.processEvents() # 防止卡顿
     # 读取DICOM文件
+    if len(dicom_files) == 0:
+        return None, None
     dicom_data = [pydicom.dcmread(file) for file in dicom_files]
     reader = sitk.ImageSeriesReader()
     QCoreApplication.processEvents()

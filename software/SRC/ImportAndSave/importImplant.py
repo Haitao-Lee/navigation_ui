@@ -17,14 +17,14 @@ def importImplant(path):
             secondpt = []
             color = []
             for _ in range(3):
-                line = (stream.readLine()).split(" ")
+                line = (stream.readLine()).split()
                 firstpt.append(line[0])
                 secondpt.append(line[1])
                 color.append(line[2])
-            line = stream.readLine().split(" ")
-            radius = float(line[0])
+            line = stream.readLine().split()
+            radius = line[0]
             # length = float(line[1])
-            implants.append([np.array(firstpt), np.array(secondpt), radius, np.array(color)])
+            implants.append([firstpt, secondpt, radius, color])
         
         # 在这里可以使用读取到的数据进行相应的处理或存储
         implant_file.close()

@@ -54,7 +54,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(100, 100, 100);</string>
+    <string notr="true">background-color: rgb(80, 80, 80);</string>
    </property>
    <layout class="QHBoxLayout" name="central_h_layoout">
     <property name="spacing">
@@ -370,7 +370,7 @@ text-align: center;</string>
              </sizepolicy>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);
+             <string notr="true">background-color: rgb(120, 120, 120);
 border-color: rgb(100, 100, 100);</string>
             </property>
             <property name="title">
@@ -419,7 +419,7 @@ border-color: rgb(100, 100, 100);</string>
                 <string>reset</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/体质辨别-重新测试.png);</string>
                </property>
                <property name="text">
@@ -445,7 +445,7 @@ image: url(:/init/体质辨别-重新测试.png);</string>
                 <string>connect to NDI tracker</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/连接 (1).png);</string>
                </property>
                <property name="text">
@@ -475,7 +475,7 @@ image: url(:/init/连接 (1).png);</string>
                 <string>undo</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/撤回.png);</string>
                </property>
                <property name="text">
@@ -501,7 +501,7 @@ image: url(:/init/撤回.png);</string>
                 <string>registration</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/标定.png);</string>
                </property>
                <property name="text">
@@ -533,7 +533,7 @@ image: url(:/init/标定.png);</string>
                 <string>callibration</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/anzhuangguanli.png);
 </string>
                </property>
@@ -569,7 +569,7 @@ image: url(:/init/anzhuangguanli.png);
                 <string>connect to robotics</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/冷金属过渡焊接（CMT）0.png);</string>
                </property>
                <property name="text">
@@ -598,7 +598,7 @@ image: url(:/init/冷金属过渡焊接（CMT）0.png);</string>
                 <string>localization</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/_定位小.png);</string>
                </property>
                <property name="text">
@@ -627,7 +627,7 @@ image: url(:/init/_定位小.png);</string>
                 <string>measure</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/测长度.png);</string>
                </property>
                <property name="text">
@@ -653,7 +653,7 @@ image: url(:/init/测长度.png);</string>
                 <string>show 3D models</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/3D.png);</string>
                </property>
                <property name="text">
@@ -679,7 +679,7 @@ image: url(:/init/3D.png);</string>
                 <string>projection</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(80, 80, 80);
+                <string notr="true">background-color: rgb(120, 120, 120);
 image: url(:/init/切片2.png);</string>
                </property>
                <property name="text">
@@ -702,7 +702,7 @@ image: url(:/init/切片2.png);</string>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);
+             <string notr="true">background-color: rgb(80, 80, 80);
 color: rgb(255,255,255);</string>
             </property>
             <property name="tabShape">
@@ -752,18 +752,17 @@ color: rgb(255,255,255);</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="tableWidget">
+               <widget class="QTableWidget" name="dicom_tw">
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);</string>
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(120, 120, 120);</string>
                 </property>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
                 <column>
                  <property name="text">
                   <string>Name</string>
-                 </property>
-                </column>
-                <column>
-                 <property name="text">
-                  <string>Gender</string>
                  </property>
                 </column>
                 <column>
@@ -952,7 +951,8 @@ border-radius: 8px;</string>
               <item row="0" column="0">
                <widget class="QTableWidget" name="mesh_tw">
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);color: rgb(0, 0, 0);</string>
+                 <string notr="true">background-color: rgb(120, 120, 120);
+color: rgb(0, 0, 0);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -969,6 +969,9 @@ border-radius: 8px;</string>
                 <property name="gridStyle">
                  <enum>Qt::SolidLine</enum>
                 </property>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -976,7 +979,7 @@ border-radius: 8px;</string>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Path</string>
+                  <string>Visible</string>
                  </property>
                 </column>
                 <column>
@@ -986,7 +989,7 @@ border-radius: 8px;</string>
                 </column>
                 <column>
                  <property name="text">
-                  <string>Visible</string>
+                  <string>Path</string>
                  </property>
                 </column>
                </widget>
@@ -1146,11 +1149,15 @@ border-radius: 8px;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="tableWidget_2">
+               <widget class="QTableWidget" name="implant_tw">
                 <property name="styleSheet">
                  <string notr="true">border:none;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+background-color: rgb(120, 120, 120);</string>
                 </property>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -1341,8 +1348,12 @@ border-radius: 8px;</string>
                <widget class="QTableWidget" name="landmarks_tw">
                 <property name="styleSheet">
                  <string notr="true">border:none;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+background-color: rgb(120, 120, 120);</string>
                 </property>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -1523,8 +1534,15 @@ border-radius: 8px;</string>
                <widget class="QTableWidget" name="tool_tw">
                 <property name="styleSheet">
                  <string notr="true">border:none;
-color: rgb(0, 0, 0);</string>
+color: rgb(0, 0, 0);
+background-color: rgb(120, 120, 120);</string>
                 </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
                 <column>
                  <property name="text">
                   <string>Name</string>
@@ -1685,14 +1703,15 @@ border-radius: 8px;</string>
              <enum>Qt::TabFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100, 100, 100);border:none;
-color: rgb(255, 255, 255);</string>
+             <string notr="true">border:none;
+color: rgb(255, 255, 255);
+background-color: rgb(80, 80, 80);</string>
             </property>
             <property name="tabShape">
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <property name="documentMode">
              <bool>true</bool>
@@ -1739,8 +1758,9 @@ color: rgb(255, 255, 255);</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(100, 100, 100);border:none;
-color: rgb(0,0, 0);</string>
+                 <string notr="true">border:none;
+color: rgb(0,0, 0);
+background-color: rgb(120, 120, 120);</string>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>
@@ -1767,9 +1787,10 @@ color: rgb(0,0, 0);</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="tab_4">
+            <widget class="QWidget" name="widget">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(100, 100, 100);border:none;</string>
+              <string notr="true">background-color: rgb(120, 120, 120);
+border:none;</string>
              </property>
              <attribute name="title">
               <string>property</string>
@@ -1794,7 +1815,8 @@ color: rgb(0,0, 0);</string>
                  </font>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);</string>
+                 <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(120, 120, 120);</string>
                 </property>
                 <property name="title">
                  <string>2D</string>
@@ -2118,7 +2140,7 @@ color: rgb(0,0, 0);</string>
              <enum>Qt::DefaultContextMenu</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(100,100,100);border:none;</string>
+             <string notr="true">background-color: rgb(80,80,80);border:none;</string>
             </property>
             <property name="title">
              <string/>
@@ -2235,10 +2257,10 @@ color: rgb(255, 255, 255);</string>
                 <number>0</number>
                </property>
                <property name="topMargin">
-                <number>4</number>
+                <number>0</number>
                </property>
                <property name="bottomMargin">
-                <number>4</number>
+                <number>0</number>
                </property>
                <item>
                 <widget class="QProgressBar" name="progressBar">
@@ -2255,14 +2277,16 @@ color: rgb(255, 255, 255);</string>
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">background-color: rgb(180, 180, 180);
-color: rgb(0, 0, 0);</string>
+                  <string notr="true">background-color: rgb(80, 80, 80);</string>
                  </property>
                  <property name="value">
-                  <number>50</number>
+                  <number>0</number>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="textVisible">
+                  <bool>false</bool>
                  </property>
                  <property name="textDirection">
                   <enum>QProgressBar::TopToBottom</enum>

@@ -53,13 +53,21 @@ class system_manager():
         self.landmarks =[]
         
         
+        # icon
+        self.visible_icon = QIcon()  
+        self.visible_icon.addPixmap(QPixmap('UI/resource/visible.png'), QIcon.Normal, QIcon.Off)
+        
+        self.unvisible_icon = QIcon()  
+        self.unvisible_icon.addPixmap(QPixmap('UI/resource/unvisible.png'), QIcon.Normal, QIcon.Off)
+        
+        
         # setup
         self.setupConnections()       
     
     
     # infomation
     def printInfo(self, message):
-        print_info.print_info(self.ui.info_te, message)
+        print_info.print_info(self.ui.info_te, '--'+message)
         
     def showProgress(self, value):
         if value >= 100:
@@ -82,6 +90,8 @@ class system_manager():
     def ProgressEnd(self):
         for i in range(self.ui.progressBar.value(), config.pg_end+1):
             self.showProgress(i)
+            
+    
     
     # signals and slots
     def setupConnections(self):
@@ -89,7 +99,6 @@ class system_manager():
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
         self.ui.save_all_btn.clicked.connect(partial(self.slot_fs.save_all, self))
         self.ui.setting_btn.clicked.connect(partial(self.slot_fs.open_setting, self))
-        # self.ui.help_btn.clicked.connect(partial(self.slot_fs.open_help, self))
         self.ui.quit_btn.clicked.connect(partial(self.slot_fs.quit_system,self))
         self.ui.connect_btn.clicked.connect(partial(self.slot_fs.conect2ndi, self))
         self.ui.registration_btn.clicked.connect(partial(self.slot_fs.registration,self))
@@ -120,18 +129,7 @@ class system_manager():
         self.ui.lower3Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.upper3Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
-        
+        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))    
         pass
-        # self.QFile.triggered.connect(self.slot_fs.import_file_slot)
-        # self.QFolder.triggered.connect(self.slot_fs.import_folder_slot)
-        # self.QSave.triggered.connect(self.slot_fs.save_slot)
-        # self.QQuit.triggered.connect(self.slot_fs.quit_slot)
-        # self.predict.clicked.connect(self.slot_fs.predict_slot)
-        # # self.update.clicked.connect(self.slot_fs.update_slot)
-        # self.visual.clicked.connect(self.slot_fs.visual_slot)
-        # self.isolate.clicked.connect(self.slot_fs.isolate_slot)
-        # self.working_tree.doubleClicked.connect(self.slot_fs.get_file)
-        # self.model_select.currentIndexChanged.connect((self.slot_fs.model_select_slot)) 
         
         

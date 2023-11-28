@@ -1,3 +1,5 @@
+import PyQt5.QtGui as QtGui
+
 # display: corresponding to the visual status
 ALLWIN = 0
 TRANSS = 1
