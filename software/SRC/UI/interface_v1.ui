@@ -1727,6 +1727,16 @@ background-color: rgb(120, 120, 120);</string>
                 </column>
                 <column>
                  <property name="text">
+                  <string>Visible</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Color</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
                   <string>Path</string>
                  </property>
                 </column>

@@ -3,8 +3,7 @@ import vtk
 import config
 
 class tool():
-    def __init__(self, data, matrix, Name=None, filePath=None, polydata=None, opacity=config.to_opcaity, visible=config.to_visible, color=config.to_color):
-        self.data = data
+    def __init__(self, polydata, Name=None, filePath=None, matrix = config.to_matrix, opacity=config.to_opcaity, visible=config.to_visible, color=config.to_color):
         self.matrix = matrix
         self.name = Name
         self.color = color

@@ -1,4 +1,4 @@
-import PyQt5.QtGui as QtGui
+import numpy as np
 
 # display: corresponding to the visual status
 ALLWIN = 0
@@ -22,7 +22,7 @@ lm_visible = 1
 lm_opacity = 1
 
 # meshes
-mesh_colors = [[255,255,0], [128,0,128], [69,130,30], [0,255,0], [0,0,255], [0,255,255]]
+mesh_colors = [[200,200,180], [69,130,30], [0,255,0], [0,0,255], [255,255,0], [0,255,255]]
 mesh_visible = 1
 mesh_opacity = 1
 
@@ -36,9 +36,10 @@ ip_line_rate = 2
 ip_cylinder_res = 36
 
 # tool 
-to_color = [0, 255, 255]
+to_color = [255, 255, 0]
 to_visible = 1
 to_opcaity = 1
+to_matrix = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
 
 # progress
 pg_start = 30
