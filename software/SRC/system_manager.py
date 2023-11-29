@@ -53,14 +53,6 @@ class system_manager():
         self.landmarks =[]
         
         
-        # icon
-        self.visible_icon = QIcon()  
-        self.visible_icon.addPixmap(QPixmap('UI/resource/visible.png'), QIcon.Normal, QIcon.Off)
-        
-        self.unvisible_icon = QIcon()  
-        self.unvisible_icon.addPixmap(QPixmap('UI/resource/unvisible.png'), QIcon.Normal, QIcon.Off)
-        
-        
         # setup
         self.setupConnections()       
     

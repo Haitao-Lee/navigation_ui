@@ -23,6 +23,7 @@ class ui_all(QMainWindow, ui_interface):
         self.setupUi(self)
         self.setupSplitters()
         self.initVTKview()
+        self.initRegisterMark()
         # self.initAdjustment()
         QApplication.processEvents()
     
@@ -90,6 +91,13 @@ class ui_all(QMainWindow, ui_interface):
         # self.adjustment_ui.views2D_layout.setStretch(0, 1)
         # self.adjustment_ui.views2D_layout.setStretch(1, 1)
         # self.adjustment_ui.views2D_layout.setStretch(2, 1)
+        
+    def initRegisterMark(self):
+        # 用的时候根据点数num取出需要的Label:tmp = self.regisMarks[-num:]
+        self.regisMarks = [self.regis_mark1, self.regis_mark2, self.regis_mark3, self.regis_mark4, self.regis_mark5, self.regis_mark6, self.regis_mark7, self.regis_mark8, self.regis_mark9, self.regis_mark10, self.regis_mark11, self.regis_mark12 ]
+        for r in self.regisMarks:
+            r.setVisible(False) 
+        pass
                 
     def setVTKview(self):
         pass

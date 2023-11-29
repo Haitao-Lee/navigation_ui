@@ -45,4 +45,8 @@ pg_start = 30
 pg_middle = 75
 pg_end = 100
 
+#tableWidget
+text_margin = 1.2
+min_margin = 60
+
 

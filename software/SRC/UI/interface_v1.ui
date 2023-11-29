@@ -81,7 +81,7 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QHBoxLayout" name="manu_layout" stretch="2,2,2,2,2,74,2,2,2,5">
+       <layout class="QHBoxLayout" name="manu_layout" stretch="2,2,2,2,2,56,2,2,2,2,2,2,2,2,2,2,2,2,5">
         <property name="spacing">
          <number>8</number>
         </property>
@@ -253,7 +253,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="mrak3_lab">
+         <widget class="QLabel" name="regis_mark1">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -269,7 +269,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="mark2_lab">
+         <widget class="QLabel" name="regis_mark2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -285,7 +285,151 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="mark1_lab">
+         <widget class="QLabel" name="regis_mark3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark5">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark6">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark7">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark8">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark9">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark10">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark11">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/signal/red.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="regis_mark12">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -348,7 +492,7 @@ text-align: center;</string>
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="function_layout" stretch="20,80,60,6">
+         <layout class="QVBoxLayout" name="function_layout" stretch="20,70,70,6">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -709,7 +853,7 @@ color: rgb(255,255,255);</string>
              <enum>QTabWidget::Triangular</enum>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
@@ -935,7 +1079,7 @@ border-radius: 8px;</string>
             </widget>
             <widget class="QWidget" name="mesh_w">
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(120, 120, 120);border:none;</string>
+              <string notr="true">background-color: rgb(120, 120, 120);</string>
              </property>
              <attribute name="title">
               <string>Mesh</string>
@@ -1175,6 +1319,9 @@ background-color: rgb(120, 120, 120);</string>
                 <property name="sizeAdjustPolicy">
                  <enum>QAbstractScrollArea::AdjustToContents</enum>
                 </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::ExtendedSelection</enum>
+                </property>
                 <property name="textElideMode">
                  <enum>Qt::ElideMiddle</enum>
                 </property>
@@ -1343,6 +1490,9 @@ border-radius: 8px;</string>
              </layout>
             </widget>
             <widget class="QWidget" name="landmark_w">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(120, 120, 120);\nborder:none;</string>
+             </property>
              <attribute name="title">
               <string>Landmark</string>
              </attribute>
@@ -1365,8 +1515,7 @@ border-radius: 8px;</string>
               <item>
                <widget class="QTableWidget" name="landmarks_tw">
                 <property name="styleSheet">
-                 <string notr="true">border:none;
-color: rgb(0, 0, 0);
+                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(120, 120, 120);</string>
                 </property>
                 <property name="sizeAdjustPolicy">
@@ -1378,11 +1527,6 @@ background-color: rgb(120, 120, 120);</string>
                 <attribute name="verticalHeaderVisible">
                  <bool>false</bool>
                 </attribute>
-                <column>
-                 <property name="text">
-                  <string>Name</string>
-                 </property>
-                </column>
                 <column>
                  <property name="text">
                   <string>Scalar</string>
