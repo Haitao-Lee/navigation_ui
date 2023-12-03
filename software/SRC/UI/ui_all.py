@@ -9,7 +9,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import QMainWindow
 from UI.interface_v1_ui import Ui_MainWindow as ui_interface
-from config import ALLWIN, TRANSS, SAGITA, VIEW3D
 from UI.make_display_ui import display_ui
 from UI.make_adjustment_ui import adjustment_ui
 import copy
@@ -25,43 +24,16 @@ class ui_all(QMainWindow, ui_interface):
         self.initVTKview()
         self.initRegisterMark()
         # self.initAdjustment()
+        self.initWidget()
         QApplication.processEvents()
     
     def initVTKview(self):
-        self.dlsplay_status = ALLWIN            #当前显示状态，widget显示四个窗口还是某一个窗口
         self.views_layout = [self.view_box0.layout(), self.view_box1.layout(), self.view_box2.layout(), self.view_box3.layout()]
         self.ui_displays = [display_ui(), display_ui(), display_ui(), display_ui()]#,display_ui(), display_ui(), display_ui(), display_ui()] 
-        self.vtk_renderWinbdows = []
-        self.renderers = []
-        self.styles = []
-        self.irens = []
-        self.bot_color = np.array([1, 1, 1])
-        self.top_color = np.array([0.529, 0.8078, 0.92157])
-        self.box_color = self.top_color*255
         # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
         for i in range(4):
-            self.vtk_renderWinbdows.append(self.ui_displays[i].view.GetRenderWindow())
-            self.renderers.append(vtk.vtkRenderer())
-            self.irens.append(vtk.vtkRenderWindowInteractor())
-            self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
-            # 3d窗口设置渐变色
-            if i == 1:# or i==5:
-                self.ui_displays[i].box.setStyleSheet("border:None;\n"
-                                                      f"background-color: rgb({self.box_color[0]}, {self.box_color[1]}, {self.box_color[2]});")
-                # print(f"background-color: rgb({box_color[0]}, {box_color[1]}, {box_color[2]});")
-                self.renderers[i].SetBackground(self.bot_color)              # 设置页面底部颜色值
-                self.renderers[i].SetBackground2(self.top_color)    # 设置页面顶部颜色值
-                self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
-            else: 
-                self.renderers[i].SetBackground(0, 0, 0)
-            self.irens[i].SetInteractorStyle(self.styles[i])
-            self.irens[i].SetRenderWindow(self.vtk_renderWinbdows[i])
-            self.vtk_renderWinbdows[i].AddRenderer(self.renderers[i])
-            # self.irens[i].Initialize()   
-            # self.irens[i].Start()
             if i < 4:
                 self.views_layout[i].addWidget(self.ui_displays[i].box)
-            self.vtk_renderWinbdows[i].Render()
         self.update()
             
     def initAdjustment(self):
@@ -98,6 +70,10 @@ class ui_all(QMainWindow, ui_interface):
         for r in self.regisMarks:
             r.setVisible(False) 
         pass
+    
+    def initWidget(self):
+        self.info_te.setWordWrapMode(QtGui.QTextOption.NoWrap)
+        self.dataWidget.tabBar().setExpanding(True)
                 
     def setVTKview(self):
         pass

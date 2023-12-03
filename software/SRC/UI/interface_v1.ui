@@ -475,7 +475,7 @@ text-align: center;</string>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="widget_layout" stretch="5,18">
+       <layout class="QHBoxLayout" name="widget_layout" stretch="6,18">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -857,6 +857,9 @@ color: rgb(255,255,255);</string>
             </property>
             <property name="elideMode">
              <enum>Qt::ElideLeft</enum>
+            </property>
+            <property name="usesScrollButtons">
+             <bool>true</bool>
             </property>
             <property name="documentMode">
              <bool>true</bool>
@@ -1678,6 +1681,195 @@ border-radius: 8px;</string>
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="rom_w">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(120, 120, 120);
+color: rgb(255,255,255);</string>
+             </property>
+             <attribute name="title">
+              <string>Rom</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_12" stretch="8,1">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTableWidget" name="rom_tw">
+                <property name="styleSheet">
+                 <string notr="true">border:none;
+color: rgb(0, 0, 0);
+background-color: rgb(120, 120, 120);</string>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="textElideMode">
+                 <enum>Qt::ElideMiddle</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>true</bool>
+                </attribute>
+                <attribute name="verticalHeaderVisible">
+                 <bool>false</bool>
+                </attribute>
+                <column>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Path</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="4,1,4,1,4">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
+                <property name="leftMargin">
+                 <number>25</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>25</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="addRom__btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string>  add  </string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/加.png</normaloff>resource/加.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="deleteRom_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> delete</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/删除_填充.png</normaloff>resource/删除_填充.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_24">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="exportRom_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>12</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(150, 150, 150);
+border-radius: 8px;</string>
+                  </property>
+                  <property name="text">
+                   <string> export</string>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>resource/导出.png</normaloff>resource/导出.png</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="tool_w">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(120, 120, 120);\nborder:none;</string>
@@ -1966,6 +2158,9 @@ background-color: rgb(120, 120, 120);</string>
                 </property>
                 <property name="horizontalScrollBarPolicy">
                  <enum>Qt::ScrollBarAsNeeded</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustIgnored</enum>
                 </property>
                 <property name="cursorWidth">
                  <number>0</number>

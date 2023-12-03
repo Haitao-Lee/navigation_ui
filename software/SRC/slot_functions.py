@@ -15,10 +15,10 @@ import dicom as m_dicom
 import mesh as m_mesh
 import implant as m_implant
 import landmark as m_landmark
+import rom as m_rom
 import tool as m_tool
 import SimpleITK as sitk
 import copy
-import UI.resource.navigation_rc
 import config
 
 
@@ -276,9 +276,30 @@ class slot_functions():
                         max_width = text_width*config.text_margin
             sysman.ui.tool_tw.setColumnWidth(j, max(max_width, config.min_margin))
             
+    def addTableRom(self, sysman, newRom):
+        current_row = len(sysman.roms)
+        sysman.roms.append(newRom)
+        sysman.ui.rom_tw.insertRow(current_row)
+        nameItem = QTableWidgetItem(sysman.roms[-1].name)
+        nameItem.setTextAlignment(0x0004 | 0x0080)
+        sysman.ui.rom_tw.setItem(current_row, 0, nameItem)
+        pathItem = QTableWidgetItem(sysman.roms[-1].path)
+        pathItem.setTextAlignment(0x0004 | 0x0080)
+        sysman.ui.rom_tw.setItem(current_row, 1, pathItem)
+        # 设置列宽度以适应每列中各自字符串的长度
+        for j in range(sysman.ui.rom_tw.columnCount()):
+            max_width = 0
+            for i in range(sysman.ui.rom_tw.rowCount()):
+                item = sysman.ui.rom_tw.item(i, j)
+                if item:
+                    text_width = sysman.ui.rom_tw.fontMetrics().boundingRect(item.text()).width()
+                    if text_width > max_width:
+                        max_width = text_width*config.text_margin
+            sysman.ui.rom_tw.setColumnWidth(j, max(max_width, config.min_margin))
+            
     def addSystemDicoms(self, path, sysman):
         dicom_series, images = importDicom.importDicom(path)
-        if len(dicom_series) == 0 or images is None:
+        if images is None:
             sysman.printInfo("There is no dicom file in the folder:" + path)
             return
         patient_name = str(dicom_series[0].PatientName)
@@ -314,6 +335,13 @@ class slot_functions():
             if len(tmp_point) == 3:
                 newLandmark = m_landmark.landmark(scalar = copy.deepcopy(tmp_point))
                 self.addTableLandmark(sysman, newLandmark)
+                tmp_point = []
+                
+    def addSystemRom(self, path, sysman):
+        path = path.replace("\\", "/")
+        name = path.split("/")[-1].split('.')[0]
+        newRom = m_rom.rom(Name=name, filePath=path)
+        self.addTableRom(sysman, newRom)
                 
     def buildSystemTools(self, path, sysman):
         TOOL_filter = "stl"
@@ -344,10 +372,8 @@ class slot_functions():
         SROM_filter = "rom"
         SROM_list = [file for file in os.listdir(path) if file.split(".")[-1] == SROM_filter and os.path.isfile(os.path.join(path, file))]
         for file in SROM_list:
-            file_name = os.path.splitext(file)[0]
             SROM_path = os.path.join(path, file)
-            sysman.SROM_path_map[file_name] = SROM_path
-            sysman.SROM_name.append(file_name)
+            self.addSystemRom(SROM_path, sysman)
             
     def buildAll(self, path, sysman):
         if not os.path.exists(path):
@@ -364,7 +390,7 @@ class slot_functions():
             numOfSTLs = len(sysman.meshs)
             numOfImplants = len(sysman.implants)
             numOfDicomss = len(sysman.dicoms)
-            numOfRoms = len(sysman.SROM_name)
+            numOfRoms = len(sysman.roms)
             numOfTools = len(sysman.tools)
             if f.lower().endswith('.stl'):
                 self.addSystemSTL(file_path, sysman)
@@ -380,7 +406,7 @@ class slot_functions():
                     sysman.printInfo("Add settings:\""+file_path+"\".")
             elif 'NDIFiles' in f:
                 self.buildSystemRom(file_path, sysman)
-                if len(sysman.SROM_name) > numOfRoms:
+                if len(sysman.roms) > numOfRoms:
                     sysman.printInfo("Add ROM files in:"+file_path+".")
                 self.buildSystemTools(file_path, sysman)
                 if len(sysman.tools) > numOfTools:
@@ -391,7 +417,6 @@ class slot_functions():
                     sysman.printInfo("Add dicoms in:" + path)
         sysman.ProgressEnd()
                 
-
     def import_file(self, sysman, file_type=None): 
         file_name = None
         if file_type:
@@ -402,28 +427,26 @@ class slot_functions():
             sysman.printInfo("No document was selected!")
             return
         sysman.ProgressStart()
-        path = path.replace("\\", "/")
+        if '\\' in file_name:
+            file_name = file_name.replace("\\", "/")
         name = file_name.split("/")[-1]
         file_extension = name.split(".")[-1]
-        if file_extension == "dcm":
-            self.addSystemDicoms(file_name, sysman)
-            pass
-        elif file_extension == "stl":
+        if file_extension == "stl":
             self.addSystemSTL(file_name, sysman)
-            pass
         elif file_extension == "obj":
             self.addSystemOBJ(file_name, sysman)
-            pass
         elif file_extension == "implant":
             self.addSystemImplant(file_name, sysman)
-            pass
-        # elif file_extension == "txt":
-        #     pass
+        elif file_extension == "txt":
+            lines = importTxt.importTxt(file_name)
+            content = "\n*******************************************************************************"
+            for line in lines:
+                content = str(content) + '\n' + line
+            sysman.printInfo(content+"\n*******************************************************************************")
         elif file_extension == "rom":
-            pass
+            self.addSystemRom(file_name, sysman)
         elif file_extension == "ini":
             self.buildSystemSetting(file_name, sysman)
-            pass
         else:
             QMessageBox.warning(sysman.ui, 'Warning', 'The file is not appropriate!', QMessageBox.Ok)
             return
@@ -455,9 +478,13 @@ class slot_functions():
         pass
     
     def registration(self, sysman):
-        tmp_marks = sysman.ui.regisMarks[-len(sysman.landmarks):]
-        for mark in tmp_marks:
-            mark.setVisible(True)
+        if sysman.ui.registration_btn.isChecked():
+            tmp_marks = sysman.ui.regisMarks[-len(sysman.landmarks):]
+            for mark in tmp_marks:
+                mark.setVisible(True)
+        else:
+            for mark in sysman.ui.regisMarks:
+                mark.setVisible(False)
         pass
     
     def calibration(self, sysman):

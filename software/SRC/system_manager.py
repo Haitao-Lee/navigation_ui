@@ -7,6 +7,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import Message.print_info as print_info
+from config import ALLWIN, TRANSS, SAGITA, VIEW3D
+import numpy as np
+
 
 class system_manager():
     def __init__(self):
@@ -30,12 +33,7 @@ class system_manager():
         self.robotics = None
         self.probeDeviateMatrix = None
         self.TrackerHostName = None
-        
-        
-        # rom
-        self.SROM_name = []
-        self.SROM_path_map = {}
-        
+
         
         # adjustment
         self.lookupTable = vtk.vtkLookupTable()
@@ -51,9 +49,22 @@ class system_manager():
         self.implants =[]
         self.tools = []
         self.landmarks =[]
+        self.roms = []
+        
+        
+        # visulization
+        self.dlsplay_status = None     #当前显示状态，widget显示四个窗口还是某一个窗口
+        self.bot_color = None
+        self.top_color = None
+        self.box_color = None
+        self.vtk_renderWindows = []
+        self.renderers = []
+        self.styles = []
+        self.irens = []
         
         
         # setup
+        self.initVTKProperty()
         self.setupConnections()       
     
     
@@ -82,9 +93,36 @@ class system_manager():
     def ProgressEnd(self):
         for i in range(self.ui.progressBar.value(), config.pg_end+1):
             self.showProgress(i)
-            
     
     
+    # visualization
+    def initVTKProperty(self):
+        self.dlsplay_status = ALLWIN            #当前显示状态，widget显示四个窗口还是某一个窗口
+        self.bot_color = np.array([1, 1, 1])
+        self.top_color = np.array([0.529, 0.8078, 0.92157])
+        self.box_color = self.top_color*255
+        # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
+        for i in range(4):
+            self.vtk_renderWindows.append(self.ui.ui_displays[i].view.GetRenderWindow())
+            self.renderers.append(vtk.vtkRenderer())
+            self.irens.append(vtk.vtkRenderWindowInteractor())
+            self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
+            # 3d窗口设置渐变色
+            if i == 1:
+                self.ui.ui_displays[i].box.setStyleSheet("border:None;\n"
+                                                      f"background-color: rgb({self.box_color[0]}, {self.box_color[1]}, {self.box_color[2]});")
+                self.renderers[i].SetBackground(self.bot_color)              # 设置页面底部颜色值
+                self.renderers[i].SetBackground2(self.top_color)    # 设置页面顶部颜色值
+                self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
+            else: 
+                self.renderers[i].SetBackground(0, 0, 0)
+            self.irens[i].SetInteractorStyle(self.styles[i])
+            self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
+            self.vtk_renderWindows[i].AddRenderer(self.renderers[i])
+            # self.irens[i].Initialize()   
+            # self.irens[i].Start()
+            self.vtk_renderWindows[i].Render()  
+                
     # signals and slots
     def setupConnections(self):
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
