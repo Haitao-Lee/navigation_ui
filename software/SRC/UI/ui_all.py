@@ -1,5 +1,6 @@
 # coding = utf-8
 import sys
+sys.path.append('../')
 import vtk
 import numpy as np
 import os
@@ -11,6 +12,7 @@ from PyQt5.QtWidgets import QMainWindow
 from UI.interface_v1_ui import Ui_MainWindow as ui_interface
 from UI.make_display_ui import display_ui
 from UI.make_adjustment_ui import adjustment_ui
+import config as config
 import copy
 #from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor as QVTKWidget
 #import resource.navigation_rc
@@ -23,7 +25,7 @@ class ui_all(QMainWindow, ui_interface):
         self.setupSplitters()
         self.initVTKview()
         self.initRegisterMark()
-        # self.initAdjustment()
+        self.initAdjustment()
         self.initWidget()
         QApplication.processEvents()
     
@@ -37,32 +39,31 @@ class ui_all(QMainWindow, ui_interface):
         self.update()
             
     def initAdjustment(self):
-        self.adjustment_ui = adjustment_ui()
-        self.adjustment_ui.setFixedSize(900, 600)
-        # 确保没有设置最小/最大大小
-        self.adjustment_ui.setMinimumSize(900, 600)
-        self.adjustment_ui.setMaximumSize(900, 600)
-        
-        self.adjustment_ui.box2D0.layout().removeWidget(self.adjustment_ui.box2D0)
-        self.ui_displays[4].view.resize(299,249)
-        self.adjustment_ui.box2D0.layout().addWidget(self.ui_displays[4].view)
-        self.adjustment_ui.box3D.layout().removeWidget(self.adjustment_ui.box3D)
-        self.ui_displays[5].view.resize(448,288)
-        self.adjustment_ui.box3D.layout().addWidget(self.ui_displays[5].view)
-        self.adjustment_ui.box2D1.layout().removeWidget(self.adjustment_ui.box2D1)
-        self.ui_displays[6].view.resize(299,249)
-        self.adjustment_ui.box2D1.layout().addWidget(self.ui_displays[6].view)
-        self.adjustment_ui.box2D2.layout().removeWidget(self.adjustment_ui.box2D2)
-        self.ui_displays[7].view.resize(299,249)
-        self.adjustment_ui.box2D2.layout().addWidget(self.ui_displays[7].view)
-        # self.adjustment_ui.box3D.layout().removeWidget(self.adjustment_ui.box3D)
-        # self.adjustment_ui.box3D.layout().addWidget(self.ui_displays[5].view)
-        # self.adjustment_ui.view3D_layout.addWidget(self.ui_displays[5].view)
-        # self.adjustment_ui.views2D_layout.addWidget(self.ui_displays[6].view)
-        # self.adjustment_ui.views2D_layout.addWidget(self.ui_displays[7].view)
-        # self.adjustment_ui.views2D_layout.setStretch(0, 1)
-        # self.adjustment_ui.views2D_layout.setStretch(1, 1)
-        # self.adjustment_ui.views2D_layout.setStretch(2, 1)
+        self.lower2Dslider.setMinimum(config.minimum)
+        self.lower2Dslider.setMaximum(config.maximum)
+        self.lower2Dslider.setValue(config.lower2Dvalue)
+        self.lower2Dbox.setMinimum(config.minimum)
+        self.lower2Dbox.setMaximum(config.maximum)
+        self.lower2Dbox.setValue(config.lower2Dvalue)
+        self.upper2Dslider.setMinimum(config.minimum)
+        self.upper2Dslider.setMaximum(config.maximum)
+        self.upper2Dslider.setValue(config.upper2Dvalue)
+        self.upper2Dbox.setMinimum(config.minimum)
+        self.upper2Dbox.setMaximum(config.maximum)
+        self.upper2Dbox.setValue(config.upper2Dvalue)
+        self.lower3Dslider.setMinimum(config.minimum)
+        self.lower3Dslider.setMaximum(config.maximum)
+        self.lower3Dslider.setValue(config.lower3Dvalue)
+        self.lower3Dbox.setMinimum(config.minimum)
+        self.lower3Dbox.setMaximum(config.maximum)
+        self.lower3Dbox.setValue(config.lower3Dvalue)
+        self.upper3Dslider.setMinimum(config.minimum)
+        self.upper3Dslider.setMaximum(config.maximum)
+        self.upper3Dslider.setValue(config.upper3Dvalue)
+        self.upper3Dbox.setMinimum(config.minimum)
+        self.upper3Dbox.setMaximum(config.maximum)
+        self.upper3Dbox.setValue(config.upper3Dvalue)
+
         
     def initRegisterMark(self):
         # 用的时候根据点数num取出需要的Label:tmp = self.regisMarks[-num:]

@@ -57,6 +57,9 @@ class system_manager():
         self.bot_color = None
         self.top_color = None
         self.box_color = None
+        self.LUT2D = None
+        self.LUT3D = None
+        self.views = []
         self.vtk_renderWindows = []
         self.renderers = []
         self.styles = []
@@ -103,6 +106,7 @@ class system_manager():
         self.box_color = self.top_color*255
         # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
         for i in range(4):
+            self.views.append(self.ui.ui_displays[i].view)
             self.vtk_renderWindows.append(self.ui.ui_displays[i].view.GetRenderWindow())
             self.renderers.append(vtk.vtkRenderer())
             self.irens.append(vtk.vtkRenderWindowInteractor())
@@ -122,9 +126,66 @@ class system_manager():
             # self.irens[i].Initialize()   
             # self.irens[i].Start()
             self.vtk_renderWindows[i].Render()  
+        self.LUT2D = vtk.vtkLookupTable()
+        self.LUT2D.SetRange(config.lower2Dvalue, config.upper2Dvalue)
+        self.LUT2D.SetValueRange(0.0, 1.0)
+        self.LUT2D.SetSaturationRange(0.0, 0.0)
+        self.LUT2D.SetRampToLinear()
+        self.LUT2D.Build()
+        self.LUT3D = vtk.vtkLookupTable()
+        self.LUT3D.SetRange(config.lower3Dvalue, config.upper3Dvalue)
+        self.LUT3D.SetValueRange(0.0, 1.0)
+        self.LUT3D.SetSaturationRange(0.0, 0.0)
+        self.LUT3D.SetRampToLinear()
+        self.LUT3D.Build()
+      
+    
+    # synchronization
+    def updateLower2D(self, value):
+        max_val = self.ui.upper2Dslider.value()
+        val = min(max_val, value)
+        self.ui.lower2Dbox.setValue(val)
+        self.ui.lower2Dslider.setValue(val)
+        self.updateLUT()
+    
+    def updateUpper2D(self, value):
+        min_val = self.ui.lower2Dslider.value()
+        val = max(min_val, value)
+        self.ui.upper2Dbox.setValue(val)
+        self.ui.upper2Dslider.setValue(val)
+        self.updateLUT()
+    
+    def updateLower3D(self, value):
+        max_val = self.ui.upper3Dslider.value()
+        val = min(max_val, value)
+        self.ui.lower3Dbox.setValue(val)
+        self.ui.lower3Dslider.setValue(val)
+        self.updateLUT()
+    
+    def updateUpper3D(self, value):
+        min_val = self.ui.lower3Dslider.value()
+        val = max(min_val, value)
+        self.ui.upper3Dbox.setValue(val)
+        self.ui.upper3Dslider.setValue(val)
+        self.updateLUT()
+    
+    def updateLUT(self):
+        self.LUT2D.SetRange(self.ui.lower2Dbox.value(), self.ui.upper2Dbox.value())
+        self.LUT3D.SetRange(self.ui.lower3Dbox.value(), self.ui.upper3Dbox.value())
+        for view in self.views:
+            view.update()
+        
                 
     # signals and slots
     def setupConnections(self):
+        self.ui.lower2Dbox.valueChanged.connect(self.updateLower2D)
+        self.ui.lower2Dslider.valueChanged.connect(self.updateLower2D)
+        self.ui.upper2Dbox.valueChanged.connect(self.updateUpper2D)
+        self.ui.upper2Dslider.valueChanged.connect(self.updateUpper2D)
+        self.ui.lower3Dbox.valueChanged.connect(self.updateLower3D)
+        self.ui.lower3Dslider.valueChanged.connect(self.updateLower3D)
+        self.ui.upper3Dbox.valueChanged.connect(self.updateUpper3D)
+        self.ui.upper3Dslider.valueChanged.connect(self.updateUpper3D)
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
         self.ui.save_all_btn.clicked.connect(partial(self.slot_fs.save_all, self))

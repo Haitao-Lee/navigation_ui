@@ -10,10 +10,17 @@ VIEW3D = 4
 ## init value setting
 
 # system manager
-lower2Dvalue = 0
-upper2Dvalue = 100
-lower3Dvalue = 0
-upper3Dvalue = 100
+minimum = -1000
+maximum = 2000
+lower2Dvalue = -100
+upper2Dvalue = 500
+lower3Dvalue = -100
+upper3Dvalue = 500
+
+# dicoms
+axialMtx = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+sagittalMtx = np.array(	[0, 0,-1, 0, 1, 0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 1])
+cornalMtx = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, -1,0, 0, 0, 0, 0, 1])
 
 # landmarks
 lm_color = [255, 0, 0] #red

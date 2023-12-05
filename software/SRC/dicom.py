@@ -3,34 +3,36 @@ import vtk
 import config
 
 class dicom():
-    def __init__(self, data, Name=None, Age=None, filePath=None, resolution=None):
-        self.data = data
+    def __init__(self, arrayData, vtkImageData, Name=None, Age=None, filePath=None, resolution=None):
+        self.arrayData = arrayData
+        self.vtkImageData = vtkImageData
         self.name = Name
         self.age = Age
         self.path = filePath
         self.resolution = resolution
-        self.actor = None
-        
-    def setActor(self, actor):
-        self.actor = actor
-            
-            
-    def setColor(self, color):
-        self.color = color
-        if self.actor is not None:
-            self.actor.GetProperty().SetColor(color)
-            
-    def getPolydata(self):
-        return self.polydata
+        self.actors = None
     
-    def getActor(self):
-        return self.actor
+    def getArrayData(self):
+        return self.arrayData
     
-    def getColor(self):
-        return self.color
+    def getImageData(self):
+        return self.vtkImageData
+    
+    def getActors(self):
+        return self.actors
     
     def getName(self):
         return self.name
     
     def getPath(self):
         return self.path
+    
+    def getAge(self):
+        return self.age
+    
+    def getResolution(self):
+        return self.resolution
+    
+    def createActors(self, LUT):
+        pass
+        

@@ -2448,6 +2448,9 @@ background-color: rgb(120, 120, 120);</string>
                      <property name="text">
                       <string>Volume</string>
                      </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
                     </widget>
                    </item>
                    <item>
@@ -2470,6 +2473,9 @@ background-color: rgb(120, 120, 120);</string>
                      </property>
                      <property name="text">
                       <string>Mesh</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
