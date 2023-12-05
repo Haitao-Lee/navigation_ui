@@ -4,7 +4,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import os
 import numpy as np
-from vtk.util.numpy_support import vtk_to_numpy, numpy_to_vtk
 from config import ALLWIN, TRANSS, SAGITA, VIEW3D
 import ImportAndSave.importDicom as importDicom
 import ImportAndSave.importImplant as importImplant
@@ -19,6 +18,7 @@ import landmark as m_landmark
 import rom as m_rom
 import tool as m_tool
 import SimpleITK as sitk
+import Adjustment.get_pixels_hu as get_pixels_hu
 import copy
 import config
 import vtk
@@ -307,13 +307,8 @@ class slot_functions():
         patient_name = str(dicom_series[0].PatientName)
         patient_age = str(dicom_series[0].PatientAge)
         image_array = sitk.GetArrayFromImage(images)
-        imageData = vtk.vtkImageData()
-        imageData.SetDimensions(images.GetSize()[0], images.GetSize()[1], images.GetDepth())
-        imageData.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
-        # numpy数组转换为vtkArray，并赋值给vtkImageData
-        vtk_array = numpy_to_vtk(image_array.ravel(), deep=True)
-        imageData.GetPointData().SetScalars(vtk_array)
-        new_dicom = m_dicom.dicom(arrayData=image_array, vtkImageData=imageData, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
+        image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
+        new_dicom = m_dicom.dicom(arrayData=image_array, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
         self.addTableDicoms(sysman, new_dicom)        
     
     def addSystemSTL(self, path, sysman):

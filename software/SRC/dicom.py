@@ -3,9 +3,9 @@ import vtk
 import config
 
 class dicom():
-    def __init__(self, arrayData, vtkImageData, Name=None, Age=None, filePath=None, resolution=None):
+    def __init__(self, arrayData,  Name=None, Age=None, filePath=None, resolution=None):
         self.arrayData = arrayData
-        self.vtkImageData = vtkImageData
+        # self.vtkImageData = vtkImageData
         self.name = Name
         self.age = Age
         self.path = filePath
@@ -15,8 +15,8 @@ class dicom():
     def getArrayData(self):
         return self.arrayData
     
-    def getImageData(self):
-        return self.vtkImageData
+    # def getImageData(self):
+    #     return self.vtkImageData
     
     def getActors(self):
         return self.actors
