@@ -2567,7 +2567,7 @@ background-color: rgb(120, 120, 120);</string>
                 <string>probe</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/green.png);
+                <string notr="true">image: url(:/signal/red.png);
 color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
@@ -2596,7 +2596,7 @@ color: rgb(255, 255, 255);</string>
                 <string>bone</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/green.png);
+                <string notr="true">image: url(:/signal/red.png);
 color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
@@ -2625,7 +2625,7 @@ color: rgb(255, 255, 255);</string>
                 <string>reference</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">image: url(:/signal/green.png);
+                <string notr="true">image: url(:/signal/red.png);
 color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">

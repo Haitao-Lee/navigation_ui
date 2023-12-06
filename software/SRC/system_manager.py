@@ -57,8 +57,9 @@ class system_manager():
         self.bot_color = None
         self.top_color = None
         self.box_color = None
-        self.LUT2D = None
-        self.LUT3D = None
+        self.LUT2D = None # 设置2D切面窗宽窗位
+        self.CTF3D = None # 设置3D体绘制颜色传输函数，窗宽窗位
+        self.PWF3D = None # 设置3D体绘制透明传输函数
         self.views = []
         self.vtk_renderWindows = []
         self.renderers = []
@@ -132,46 +133,65 @@ class system_manager():
         self.LUT2D.SetSaturationRange(0.0, 0.0)
         self.LUT2D.SetRampToLinear()
         self.LUT2D.Build()
-        self.LUT3D = vtk.vtkLookupTable()
-        self.LUT3D.SetRange(config.lower3Dvalue, config.upper3Dvalue)
-        self.LUT3D.SetValueRange(0.0, 1.0)
-        self.LUT3D.SetSaturationRange(0.0, 0.0)
-        self.LUT3D.SetRampToLinear()
-        self.LUT3D.Build()
+        self.CTF3D = vtk.vtkColorTransferFunction()
+        self.CTF3D.AddRGBPoint(config.lower3Dvalue, config.volume_color1[0], config.volume_color1[1], config.volume_color1[2])
+        self.CTF3D.AddRGBPoint((config.lower3Dvalue + config.upper3Dvalue)/2, config.volume_color2[0], config.volume_color2[1], config.volume_color2[2])
+        self.CTF3D.AddRGBPoint(config.upper3Dvalue, config.volume_color2[0], config.volume_color3[1], config.volume_color3[2])
+        self.PWF3D = vtk.vtkPiecewiseFunction()
+        self.PWF3D.AddPoint(config.lower3Dvalue, 1)
+        self.PWF3D.AddPoint(config.lower3Dvalue+1, 0.5*config.volume_opacity)
+        self.PWF3D.AddPoint((config.lower3Dvalue + config.upper3Dvalue)/2, 0.7*config.volume_opacity) 
+        self.PWF3D.AddPoint(config.upper3Dvalue-1, 0.8*config.volume_opacity)
+        self.PWF3D.AddPoint(config.upper3Dvalue, config.volume_opacity)
       
-    
     # synchronization
     def updateLower2D(self, value):
         max_val = self.ui.upper2Dslider.value()
         val = min(max_val, value)
         self.ui.lower2Dbox.setValue(val)
         self.ui.lower2Dslider.setValue(val)
-        self.updateLUT()
+        self.updateProperty()
     
     def updateUpper2D(self, value):
         min_val = self.ui.lower2Dslider.value()
         val = max(min_val, value)
         self.ui.upper2Dbox.setValue(val)
         self.ui.upper2Dslider.setValue(val)
-        self.updateLUT()
+        self.updateProperty()
     
     def updateLower3D(self, value):
         max_val = self.ui.upper3Dslider.value()
         val = min(max_val, value)
         self.ui.lower3Dbox.setValue(val)
         self.ui.lower3Dslider.setValue(val)
-        self.updateLUT()
+        self.updateProperty()
     
     def updateUpper3D(self, value):
         min_val = self.ui.lower3Dslider.value()
         val = max(min_val, value)
         self.ui.upper3Dbox.setValue(val)
         self.ui.upper3Dslider.setValue(val)
-        self.updateLUT()
+        self.updateProperty()
+        
+    def update3DOpacity(self, value):
+        # self.printInfo(str(value))
+        for mesh in self.meshs:
+            mesh.setOpacity(value)
+        for view in self.views:
+            view.update()
     
-    def updateLUT(self):
+    def updateProperty(self):
         self.LUT2D.SetRange(self.ui.lower2Dbox.value(), self.ui.upper2Dbox.value())
-        self.LUT3D.SetRange(self.ui.lower3Dbox.value(), self.ui.upper3Dbox.value())
+        self.CTF3D.RemoveAllPoints()
+        self.CTF3D.AddRGBPoint(self.ui.lower3Dbox.value(), config.volume_color1[0], config.volume_color1[1], config.volume_color1[2])
+        self.CTF3D.AddRGBPoint((self.ui.lower3Dbox.value() + self.ui.upper3Dbox.value())/2, config.volume_color2[0], config.volume_color2[1], config.volume_color2[2])
+        self.CTF3D.AddRGBPoint(self.ui.upper3Dbox.value(), config.volume_color2[0], config.volume_color3[1], config.volume_color3[2])
+        self.PWF3D.RemoveAllPoints()
+        self.PWF3D.AddPoint(self.ui.lower3Dbox.value(), 1)
+        self.PWF3D.AddPoint(self.ui.lower3Dbox.value()+1, 0.5*config.volume_opacity)
+        self.PWF3D.AddPoint((self.ui.lower3Dbox.value() + self.ui.upper3Dbox.value())/2, 0.7*config.volume_opacity) 
+        self.PWF3D.AddPoint(self.ui.upper3Dbox.value()-1, 0.8*config.volume_opacity)
+        self.PWF3D.AddPoint(self.ui.upper3Dbox.value(), config.volume_opacity)
         for view in self.views:
             view.update()
         
@@ -186,6 +206,7 @@ class system_manager():
         self.ui.lower3Dslider.valueChanged.connect(self.updateLower3D)
         self.ui.upper3Dbox.valueChanged.connect(self.updateUpper3D)
         self.ui.upper3Dslider.valueChanged.connect(self.updateUpper3D)
+        self.ui.ui_displays[1].slider.valueChanged.connect(self.update3DOpacity)
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
         self.ui.save_all_btn.clicked.connect(partial(self.slot_fs.save_all, self))

@@ -1362,7 +1362,7 @@ class Ui_MainWindow(object):
         font.setFamily("Times New Roman")
         font.setBold(True)
         self.l1.setFont(font)
-        self.l1.setStyleSheet("image: url(:/signal/green.png);\n"
+        self.l1.setStyleSheet("image: url(:/signal/red.png);\n"
 "color: rgb(255, 255, 255);")
         self.l1.setText("")
         self.l1.setFlat(True)
@@ -1378,7 +1378,7 @@ class Ui_MainWindow(object):
         font.setFamily("Times New Roman")
         font.setBold(True)
         self.l2.setFont(font)
-        self.l2.setStyleSheet("image: url(:/signal/green.png);\n"
+        self.l2.setStyleSheet("image: url(:/signal/red.png);\n"
 "color: rgb(255, 255, 255);")
         self.l2.setText("")
         self.l2.setFlat(True)
@@ -1394,7 +1394,7 @@ class Ui_MainWindow(object):
         font.setFamily("Times New Roman")
         font.setBold(True)
         self.l3.setFont(font)
-        self.l3.setStyleSheet("image: url(:/signal/green.png);\n"
+        self.l3.setStyleSheet("image: url(:/signal/red.png);\n"
 "color: rgb(255, 255, 255);")
         self.l3.setText("")
         self.l3.setFlat(True)

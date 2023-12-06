@@ -304,11 +304,31 @@ class slot_functions():
         if images is None:
             sysman.printInfo("There is no dicom file in the folder:" + path)
             return
+        # # 获取 DICOM 文件的元数据
+        # dicom_tags = images.GetMetaDataKeys()
+        # # 获取病人姓名
+        # if '0010|0010' in dicom_tags:
+        #     patient_name = images.GetMetaData('0010|0010')
+        #     print("Patient's Name:", patient_name)
+
+        # # 获取病人年龄
+        # if '0010|1010' in dicom_tags:
+        #     patient_age = images.GetMetaData('0010|1010')
+        #     print("Patient's Age:", patient_age)
+
+        # # 获取病人性别
+        # if '0010|0040' in dicom_tags:
+        #     patient_sex = images.GetMetaData('0010|0040')
+        #     print("Patient's Sex:", patient_sex)
         patient_name = str(dicom_series[0].PatientName)
         patient_age = str(dicom_series[0].PatientAge)
         image_array = sitk.GetArrayFromImage(images)
+        vtk_image = sitk.GetImageFromArray(image_array)
+        vtk_image.SetSpacing(images.GetSpacing())
+        QCoreApplication.processEvents()
         image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
-        new_dicom = m_dicom.dicom(arrayData=image_array, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
+        QCoreApplication.processEvents()
+        new_dicom = m_dicom.dicom(arrayData=image_array, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
         self.addTableDicoms(sysman, new_dicom)        
     
     def addSystemSTL(self, path, sysman):
@@ -478,13 +498,23 @@ class slot_functions():
         app.quit()
     
     def conect2ndi(self, sysman):
+        if sysman.ui.connect_btn.isChecked():
+            sysman.ui.l1.setVisible(True) 
+            sysman.ui.l2.setVisible(True)
+            sysman.ui.l3.setVisible(True) 
+        else:
+            sysman.ui.l1.setVisible(False) 
+            sysman.ui.l2.setVisible(False)
+            sysman.ui.l3.setVisible(False) 
         pass
     
     def registration(self, sysman):
         if sysman.ui.registration_btn.isChecked():
-            tmp_marks = sysman.ui.regisMarks[-len(sysman.landmarks):]
-            for mark in tmp_marks:
-                mark.setVisible(True)
+            numOfLight = min(config.numOfLight, len(sysman.landmarks))
+            if numOfLight:
+                tmp_marks = sysman.ui.regisMarks[-numOfLight:]
+                for mark in tmp_marks:
+                    mark.setVisible(True)
         else:
             for mark in sysman.ui.regisMarks:
                 mark.setVisible(False)

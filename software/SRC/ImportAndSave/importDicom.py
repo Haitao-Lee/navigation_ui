@@ -3,6 +3,8 @@ import pydicom
 import os
 from PyQt5.QtCore import *
 
+
+'''之所以用2个库来读取dicom。是因为simpleITK和pydicom在当前版本下和numpy、vtk等都有兼容问题,单个无法满足要求，只能妥协点读取时间了'''
 def importDicom(path):
     # 获取文件夹中的所有文件名
     if not os.path.isdir(path):
@@ -24,6 +26,7 @@ def importDicom(path):
     reader = sitk.ImageSeriesReader()
     QCoreApplication.processEvents()
     reader.SetFileNames(dicom_files)
+    # reader.LoadPrivateTagsOn()
     QCoreApplication.processEvents()
     image = reader.Execute()
     QCoreApplication.processEvents()

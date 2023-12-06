@@ -16,6 +16,10 @@ lower2Dvalue = -100
 upper2Dvalue = 500
 lower3Dvalue = -100
 upper3Dvalue = 500
+volume_color1 = [0.8, 0.8, 0.8]
+volume_color2 = [0.8, 0.8, 0.8]
+volume_color3 = [1, 1, 1]
+volume_opacity = 1
 
 # dicoms
 axialMtx = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
@@ -56,5 +60,10 @@ pg_end = 100
 #tableWidget
 text_margin = 1.2
 min_margin = 60
+
+
+# registration
+numOfLight = 12
+
 
 
