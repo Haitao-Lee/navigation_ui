@@ -883,7 +883,7 @@ border:none;</string>
              <attribute name="title">
               <string>Dicom</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout" stretch="8,1">
+             <layout class="QVBoxLayout" name="verticalLayout" stretch="6,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1087,7 +1087,7 @@ border-radius: 8px;</string>
              <attribute name="title">
               <string>Mesh</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_2" rowstretch="8,1" rowminimumheight="8,1">
+             <layout class="QGridLayout" name="gridLayout_2" rowstretch="6,1" rowminimumheight="6,1">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -1296,7 +1296,7 @@ border-radius: 8px;</string>
              <attribute name="title">
               <string>Implant</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_11" stretch="8,1">
+             <layout class="QVBoxLayout" name="verticalLayout_11" stretch="6,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1499,7 +1499,7 @@ border-radius: 8px;</string>
              <attribute name="title">
               <string>Landmark</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_6" stretch="8,1">
+             <layout class="QVBoxLayout" name="verticalLayout_6" stretch="6,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1689,7 +1689,7 @@ color: rgb(255,255,255);</string>
              <attribute name="title">
               <string>Rom</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_12" stretch="8,1">
+             <layout class="QVBoxLayout" name="verticalLayout_12" stretch="6,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -1877,7 +1877,7 @@ border-radius: 8px;</string>
              <attribute name="title">
               <string>Tool</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_10" stretch="8,1">
+             <layout class="QVBoxLayout" name="verticalLayout_10" stretch="6,1">
               <property name="spacing">
                <number>0</number>
               </property>
@@ -2177,7 +2177,7 @@ border:none;</string>
              <attribute name="title">
               <string>Property</string>
              </attribute>
-             <layout class="QVBoxLayout" name="verticalLayout_7">
+             <layout class="QVBoxLayout" name="verticalLayout_7" stretch="6,1,6,3">
               <property name="spacing">
                <number>15</number>
               </property>
@@ -2203,7 +2203,7 @@ background-color: rgb(120, 120, 120);</string>
                 <property name="title">
                  <string>2D</string>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_8">
+                <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,1">
                  <property name="spacing">
                   <number>10</number>
                  </property>
@@ -2211,7 +2211,7 @@ background-color: rgb(120, 120, 120);</string>
                   <number>40</number>
                  </property>
                  <property name="bottomMargin">
-                  <number>30</number>
+                  <number>20</number>
                  </property>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
@@ -2297,6 +2297,19 @@ background-color: rgb(120, 120, 120);</string>
                </widget>
               </item>
               <item>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
                <widget class="QGroupBox" name="groupBox_2">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -2317,7 +2330,7 @@ background-color: rgb(120, 120, 120);</string>
                 <property name="title">
                  <string>3D</string>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,1,0">
+                <layout class="QVBoxLayout" name="verticalLayout_9" stretch="1,1">
                  <property name="spacing">
                   <number>10</number>
                  </property>
@@ -2346,6 +2359,9 @@ background-color: rgb(120, 120, 120);</string>
                      </property>
                      <property name="styleSheet">
                       <string notr="true">color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="stepType">
+                      <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
                      </property>
                     </widget>
                    </item>
@@ -2410,102 +2426,115 @@ background-color: rgb(120, 120, 120);</string>
                    </item>
                   </layout>
                  </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,1,1">
-                   <property name="spacing">
-                    <number>30</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>20</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>10</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>20</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QCheckBox" name="volume_cbox">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Times New Roman</family>
-                       <pointsize>16</pointsize>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="layoutDirection">
-                      <enum>Qt::RightToLeft</enum>
-                     </property>
-                     <property name="text">
-                      <string>Volume</string>
-                     </property>
-                     <property name="checked">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QCheckBox" name="mesh_cbox">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Times New Roman</family>
-                       <pointsize>16</pointsize>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="layoutDirection">
-                      <enum>Qt::RightToLeft</enum>
-                     </property>
-                     <property name="text">
-                      <string>Mesh</string>
-                     </property>
-                     <property name="checked">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="color3D_btn">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Times New Roman</family>
-                       <pointsize>16</pointsize>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(135, 206, 235);</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
                 </layout>
                </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,3,2,2">
+                <property name="spacing">
+                 <number>30</number>
+                </property>
+                <property name="leftMargin">
+                 <number>20</number>
+                </property>
+                <property name="topMargin">
+                 <number>20</number>
+                </property>
+                <property name="rightMargin">
+                 <number>20</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>20</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="volume_cbox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>16</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Volume</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="mesh_cbox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>16</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="layoutDirection">
+                   <enum>Qt::RightToLeft</enum>
+                  </property>
+                  <property name="text">
+                   <string>Mesh</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="color3D_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>16</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(135, 206, 235);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>

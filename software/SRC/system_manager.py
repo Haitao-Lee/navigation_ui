@@ -111,7 +111,10 @@ class system_manager():
             self.vtk_renderWindows.append(self.ui.ui_displays[i].view.GetRenderWindow())
             self.renderers.append(vtk.vtkRenderer())
             self.irens.append(vtk.vtkRenderWindowInteractor())
-            self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
+            if i == 1:
+                self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
+            else:
+                self.styles.append(vtk.vtkInteractorStyleImage())
             # 3d窗口设置渐变色
             if i == 1:
                 self.ui.ui_displays[i].box.setStyleSheet("border:None;\n"
@@ -124,8 +127,6 @@ class system_manager():
             self.irens[i].SetInteractorStyle(self.styles[i])
             self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
             self.vtk_renderWindows[i].AddRenderer(self.renderers[i])
-            # self.irens[i].Initialize()   
-            # self.irens[i].Start()
             self.vtk_renderWindows[i].Render()  
         self.LUT2D = vtk.vtkLookupTable()
         self.LUT2D.SetRange(config.lower2Dvalue, config.upper2Dvalue)
@@ -143,6 +144,7 @@ class system_manager():
         self.PWF3D.AddPoint((config.lower3Dvalue + config.upper3Dvalue)/2, 0.7*config.volume_opacity) 
         self.PWF3D.AddPoint(config.upper3Dvalue-1, 0.8*config.volume_opacity)
         self.PWF3D.AddPoint(config.upper3Dvalue, config.volume_opacity)
+        self.PWF3D.ClampingOff()
       
     # synchronization
     def updateLower2D(self, value):
@@ -175,6 +177,7 @@ class system_manager():
         
     def update3DOpacity(self, value):
         # self.printInfo(str(value))
+        value = value/100
         for mesh in self.meshs:
             mesh.setOpacity(value)
         for view in self.views:
@@ -192,6 +195,7 @@ class system_manager():
         self.PWF3D.AddPoint((self.ui.lower3Dbox.value() + self.ui.upper3Dbox.value())/2, 0.7*config.volume_opacity) 
         self.PWF3D.AddPoint(self.ui.upper3Dbox.value()-1, 0.8*config.volume_opacity)
         self.PWF3D.AddPoint(self.ui.upper3Dbox.value(), config.volume_opacity)
+        self.PWF3D.ClampingOff()
         for view in self.views:
             view.update()
         

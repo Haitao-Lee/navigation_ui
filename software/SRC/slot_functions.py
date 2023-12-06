@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import os
 import numpy as np
+from vtk.util import numpy_support
 from config import ALLWIN, TRANSS, SAGITA, VIEW3D
 import ImportAndSave.importDicom as importDicom
 import ImportAndSave.importImplant as importImplant
@@ -304,32 +305,24 @@ class slot_functions():
         if images is None:
             sysman.printInfo("There is no dicom file in the folder:" + path)
             return
-        # # 获取 DICOM 文件的元数据
-        # dicom_tags = images.GetMetaDataKeys()
-        # # 获取病人姓名
-        # if '0010|0010' in dicom_tags:
-        #     patient_name = images.GetMetaData('0010|0010')
-        #     print("Patient's Name:", patient_name)
-
-        # # 获取病人年龄
-        # if '0010|1010' in dicom_tags:
-        #     patient_age = images.GetMetaData('0010|1010')
-        #     print("Patient's Age:", patient_age)
-
-        # # 获取病人性别
-        # if '0010|0040' in dicom_tags:
-        #     patient_sex = images.GetMetaData('0010|0040')
-        #     print("Patient's Sex:", patient_sex)
         patient_name = str(dicom_series[0].PatientName)
         patient_age = str(dicom_series[0].PatientAge)
         image_array = sitk.GetArrayFromImage(images)
-        vtk_image = sitk.GetImageFromArray(image_array)
+        # 创建VTK图像数据
+        vtk_image = vtk.vtkImageData()
+        vtk_image.SetDimensions(image_array.shape[::-1])  # 注意维度的顺序可能需要颠倒
+        vtk_image.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
+        vtk_array = numpy_support.numpy_to_vtk(image_array.ravel(), deep=True)
+        vtk_image.GetPointData().SetScalars(vtk_array) # 将NumPy数组数据复制到VTK图像数据中
         vtk_image.SetSpacing(images.GetSpacing())
         QCoreApplication.processEvents()
         image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
         QCoreApplication.processEvents()
         new_dicom = m_dicom.dicom(arrayData=image_array, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
-        self.addTableDicoms(sysman, new_dicom)        
+        new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
+        self.addTableDicoms(sysman, new_dicom)   
+        QCoreApplication.processEvents()     
+        self.renderDicom(new_dicom, sysman)
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)
@@ -407,7 +400,6 @@ class slot_functions():
         for i in range(num_files):
             QCoreApplication.processEvents() # 防卡顿
             sysman.showProgress(int(100*i/num_files))
-        for i in range(num_files):
             f = files[num_files-i-1]
             file_path = os.path.join(path, f).replace('\\','/')
             numOfSTLs = len(sysman.meshs)
@@ -634,6 +626,24 @@ class slot_functions():
     def deleteLight(sysman):
         pass
         
+    def renderDicom(self, dicom, sysman):
+        for i in range(4):
+            sysman.renderers[i].RemoveAllViewProps()
+            QCoreApplication.processEvents()
+            sysman.renderers[i].ResetCamera()
+            if i == 1:
+                sysman.renderers[i].AddVolume(dicom.actors[i])
+            else:
+                sysman.renderers[i].AddActor(dicom.actors[i])
+                sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
+                sysman.renderers[i].GetActiveCamera().SetParallelScale(config.ParallelScale)
+                sysman.renderers[i].GetActiveCamera().Zoom(config.zoom);
+            # sysman.irens[i].Initialize()   
+            # sysman.irens[i].Start()
+            sysman.vtk_renderWindows[i].Render() 
+            sysman.views[i].update()
+        
+       
     @staticmethod    
     def get_files(dir, fileType=None):
         pass

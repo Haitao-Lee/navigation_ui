@@ -10,11 +10,11 @@ VIEW3D = 4
 ## init value setting
 
 # system manager
-minimum = -1000
+minimum = -2000
 maximum = 2000
-lower2Dvalue = -100
+lower2Dvalue = -1500
 upper2Dvalue = 500
-lower3Dvalue = -100
+lower3Dvalue = -1500
 upper3Dvalue = 500
 volume_color1 = [0.8, 0.8, 0.8]
 volume_color2 = [0.8, 0.8, 0.8]
@@ -25,6 +25,11 @@ volume_opacity = 1
 axialMtx = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
 sagittalMtx = np.array(	[0, 0,-1, 0, 1, 0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 1])
 cornalMtx = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, -1,0, 0, 0, 0, 0, 1])
+axialNormal = np.array([0, 0, 1])
+sagittalNormal = np.array([1, 0, 0])
+cornalNormal = np.array([0, 1, 0])
+ParallelScale = 120
+zoom = 1
 
 # landmarks
 lm_color = [255, 0, 0] #red
