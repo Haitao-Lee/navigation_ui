@@ -5,7 +5,7 @@ from PyQt5.QtGui import *
 import os
 import numpy as np
 from vtk.util import numpy_support
-from config import ALLWIN, TRANSS, SAGITA, VIEW3D
+from config import ALLWIN, AXIAL, SAGITA, VIEW3D
 import ImportAndSave.importDicom as importDicom
 import ImportAndSave.importImplant as importImplant
 import ImportAndSave.importIni as importIni
@@ -59,12 +59,12 @@ class slot_functions():
                         max_width = text_width*config.text_margin
             sysman.ui.dicom_tw.setColumnWidth(j, max(max_width, config.min_margin))
     
-    def addTableSTL(self, sysman, newSTL):
+    def addTableMesh(self, sysman, newMesh):
         current_row = len(sysman.meshes)
-        sysman.meshes.append(newSTL)
+        sysman.meshes.append(newMesh)
         sysman.ui.mesh_tw.insertRow(current_row)
         visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget = createColorWidget.createColorWidget(sysman.meshes[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(np.array(sysman.meshes[-1].color)*255)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
         nameItem = QTableWidgetItem(sysman.meshes[-1].name)
         nameItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.mesh_tw.setItem(current_row, 0, nameItem)
@@ -92,7 +92,7 @@ class slot_functions():
             # 更新UI中的列表
             sysman.ui.implant_tw.insertRow(current_row)
             visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            color_widget = createColorWidget.createColorWidget(sysman.implants[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            color_widget = createColorWidget.createColorWidget(np.array(sysman.implants[-1].color)*255)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
             startItem = QTableWidgetItem(f"{sysman.implants[-1].start[0]}, {sysman.implants[-1].start[1]}, {sysman.implants[-1].start[2]}")
             startItem.setTextAlignment(0x0004 | 0x0080)
             sysman.ui.implant_tw.setItem(current_row, 0, startItem)
@@ -125,7 +125,7 @@ class slot_functions():
         # 更新UI中的列表
         sysman.ui.landmark_tw.insertRow(current_row)
         visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget = createColorWidget.createColorWidget(sysman.landmarks[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(np.array(sysman.landmarks[-1].color)*255)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
         scalartItem = QTableWidgetItem(f"{sysman.landmarks[-1].scalar[0]}, {sysman.landmarks[-1].scalar[1]}, {sysman.landmarks[-1].scalar[2]}")
         scalartItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.landmark_tw.setItem(current_row, 0, scalartItem)
@@ -148,7 +148,7 @@ class slot_functions():
         sysman.ui.tool_tw.insertRow(current_row)
         # 更新UI中的列表
         visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget = createColorWidget.createColorWidget(sysman.tools[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(np.array(sysman.tools[-1].color)*255)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
         nameItem = QTableWidgetItem(sysman.tools[-1].name)
         nameItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.tool_tw.setItem(current_row, 0, nameItem)
@@ -213,21 +213,21 @@ class slot_functions():
         new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
         self.addTableDicoms(sysman, new_dicom)   
         QCoreApplication.processEvents()     
-        self.renderDicoms(new_dicom, sysman)
+        # self.renderDicoms(new_dicom, sysman)
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)
         path = path.replace("\\", "/")
         name = path.split("/")[-1].split('.')[0]
-        newSTL = m_mesh.mesh(polydata=new_stl, Name=name, filePath=path)
-        self.addTableSTL(sysman, newSTL)
+        newMesh = m_mesh.mesh(polydata=new_stl, Name=name, filePath=path, color=config.mesh_colors[len(sysman.meshes)%(len(config.mesh_colors)-1)])
+        self.addTableMesh(sysman, newMesh)
     
     def addSystemOBJ(self, path, sysman):
         new_stl = importMesh.importOBJ(path)
         path = path.replace("\\", "/")
         name = path.split("/")[-1].split('.')[0]
-        newSTL = m_mesh.mesh(polydata=new_stl, Name=name, filePath=path)
-        self.addTableSTL(sysman, newSTL)
+        newMesh = m_mesh.mesh(polydata=new_stl, Name=name, filePath=path, color=config.mesh_colors[len(sysman.meshes)%(len(config.mesh_colors)-1)])
+        self.addTableMesh(sysman, newMesh)
         
     def addSystemImplant(self, path, sysman):
         implants = importImplant.importImplant(path)
@@ -422,11 +422,11 @@ class slot_functions():
         pass
         
     def volume_calculation(self, sysman):
-        if sysman.current_mesh is None:
+        if sysman.current_mesh_index is None:
             sysman.printInfo("<b>Bold\033[91m Please select a mesh!\033[0m.</b>") # 加粗加红
             return 
-        volume = volumeOfMesh.volumeOfMesh(sysman.current_mesh.getPolydata())
-        sysman.printInfo(f"The volume of the selected mesh: \n            {volume} mm{config.cubic}") # 加粗加红
+        volume = volumeOfMesh.volumeOfMesh(sysman.meshes[sysman.current_mesh_index].getPolydata())
+        sysman.printInfo(f"The volume of "+sysman.meshes[sysman.current_mesh_index].getName()+f": {volume} mm{config.cubic}") # 加粗加红
     
     def project2D(self, sysman):
         pass
@@ -521,81 +521,224 @@ class slot_functions():
     def deleteLight(sysman):
         pass
         
-    def renderDicoms(self, dicom, sysman):
-        for i in range(4):
-            sysman.renderers[i].RemoveAllViewProps()
+    def renderDicoms(self, dicom, sysman, last=None):
+        for i in config.VIEWORDER:
             QCoreApplication.processEvents()
             if i == 1:
+                if last is not None:
+                    sysman.renderers[i].RemoveVolume(sysman.dicoms[last].actors[i])
                 sysman.renderers[i].AddVolume(dicom.actors[i])
+                sysman.renderers[i].GetActiveCamera().SetParallelProjection(0)
             else:
+                sysman.renderers[i].RemoveAllViewProps()
                 sysman.renderers[i].AddActor(dicom.actors[i])
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
+                sysman.renderers[i].ResetCamera()
                 # sysman.renderers[i].GetActiveCamera().SetParallelScale(config.ParallelScale)
-                # 
-            sysman.renderers[i].ResetCamera()
             sysman.renderers[i].GetActiveCamera().Zoom(config.zoom)
             sysman.vtk_renderWindows[i].Render() 
             sysman.views[i].update()
             
     def renderMeshes(self, mesh, sysman):
         sysman.renderers[1].AddActor(mesh.actor)
-        sysman.renderers[1].ResetCamera()
+        # sysman.renderers[1].ResetCamera()
         sysman.vtk_renderWindows[1].Render() 
         sysman.views[1].update()
     
-    def on_dicom_table_clicked(self, sysman, row, column ):
-        sysman.current_dicom = sysman.dicoms[row]
+    def on_dicom_table_clicked(self, sysman, row, column):
+        sysman.current_dicom_index = row
+        pass
+    
+    def on_dicom_table_doubleClicked(self, sysman, row, column):
+        last_row = sysman.current_dicom_index
+        sysman.current_dicom_index = row
+        self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, last_row)
         pass
     
     def on_mesh_table_clicked(self, sysman, row, column):
-        sysman.current_mesh = sysman.meshes[row]
-        if column == 1:
-            sysman.meshes[row].changeVisible()
-            # widget = sysman.ui.mesh_tw.cellWidget(row, column)
-            visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            sysman.ui.mesh_tw.setCellWidget(row, column, visible_widget)
-            sysman.renderers[1].ResetCamera()
-            sysman.vtk_renderWindows[1].Render() 
-            sysman.views[1].update()
+        sysman.current_mesh_index = row
+        for i in range(sysman.ui.mesh_tw.columnCount()):
+            if 'Visible' in sysman.ui.mesh_tw.horizontalHeaderItem(i).text() and column == i:
+                sysman.meshes[row].changeVisible()
+                visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+                sysman.ui.mesh_tw.setCellWidget(row, column, visible_widget)
+                # sysman.renderers[1].ResetCamera()
+                sysman.vtk_renderWindows[1].Render() 
+                sysman.views[1].update()
+            if 'Color' in sysman.ui.mesh_tw.horizontalHeaderItem(i).text() and column == i:
+                # 设置初始颜色为RGB(255, 0, 0)
+                initial_color = QColor(255, 0, 0)
+                # 显示颜色选择对话框，并设置初始颜色
+                color = QColorDialog.getColor(initial_color)
+                color = [color.red(), color.green(), color.blue()]
+                color_widget = createColorWidget.createColorWidget(color)
+                sysman.ui.mesh_tw.setCellWidget(row, column, color_widget)
+                sysman.meshes[row].setColor(np.array(color)/255)
+                sysman.views[1].update()
+                pass
         pass
     
     def on_implant_table_clicked(self, sysman, row, column):
-        sysman.current_implant = sysman.implants[row]
-        if column == 4:
-            sysman.implants[row].changeVisible()
-            visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            sysman.ui.implant_tw.setCellWidget(row, column, visible_widget)
-            sysman.renderers[1].ResetCamera()
-            sysman.vtk_renderWindows[1].Render() 
-            sysman.views[1].update()
+        sysman.current_implant_index = row
+        for i in range(sysman.ui.implant_tw.columnCount()):
+            if 'Visible' in sysman.ui.implant_tw.horizontalHeaderItem(i).text() and column == i:
+                sysman.implants[row].changeVisible()
+                visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+                sysman.ui.implant_tw.setCellWidget(row, column, visible_widget)
+                sysman.renderers[1].ResetCamera()
+                sysman.vtk_renderWindows[1].Render() 
+                sysman.views[1].update()
+            if 'Color' in sysman.ui.implant_tw.horizontalHeaderItem(i).text() and column == i:
+                # 设置初始颜色为RGB(255, 0, 0)
+                initial_color = QColor(255, 0, 0)
+                # 显示颜色选择对话框，并设置初始颜色
+                color = QColorDialog.getColor(initial_color)
+                color = [color.red(), color.green(), color.blue()]
+                color_widget = createColorWidget.createColorWidget(color)
+                sysman.ui.implant_tw.setCellWidget(row, column, color_widget)
+                sysman.implants[row].setColor(np.array(color)/255)
+                sysman.views[1].update()
+                pass
         pass
     
     def on_landmark_table_clicked(self, sysman, row, column):
-        sysman.current_landmark = sysman.landmarks[row]
-        if column == 2:
-            sysman.landmarks[row].changeVisible()
-            visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            sysman.ui.landmark_tw.setCellWidget(row, column, visible_widget)
-            sysman.renderers[1].ResetCamera()
-            sysman.vtk_renderWindows[1].Render() 
-            sysman.views[1].update()
+        sysman.current_landmark_index = row
+        for i in range(sysman.ui.landmark_tw.columnCount()):
+            if 'Visible' in sysman.ui.landmark_tw.horizontalHeaderItem(i).text() and column == i:
+                sysman.landmarks[row].changeVisible()
+                visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+                sysman.ui.landmark_tw.setCellWidget(row, column, visible_widget)
+                # sysman.renderers[1].ResetCamera()
+                # sysman.vtk_renderWindows[1].Render() 
+                sysman.views[1].update()
+            if 'Color' in sysman.ui.landmark_tw.horizontalHeaderItem(i).text() and column == i:
+                # 设置初始颜色为RGB(255, 0, 0)
+                initial_color = QColor(255, 0, 0)
+                # 显示颜色选择对话框，并设置初始颜色
+                color = QColorDialog.getColor(initial_color)
+                color = [color.red(), color.green(), color.blue()]
+                color_widget = createColorWidget.createColorWidget(color)
+                sysman.ui.landmark_tw.setCellWidget(row, column, color_widget)
+                sysman.landmarks[row].setColor(np.array(color)/255)
+                sysman.views[1].update()
+                pass
         pass
     
     def on_rom_table_clicked(self, sysman, row, column):
-        sysman.current_rom = sysman.roms[row]
+        sysman.current_rom_index = row
         pass
     
     def on_tool_table_clicked(self, sysman, row, column):
-        sysman.current_tool = sysman.tools[row]
-        if column == 1:
-            sysman.tools[row].changeVisible()
-            # widget = sysman.ui.mesh_tw.cellWidget(row, column)
-            visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            sysman.ui.tool_tw.setCellWidget(row, column, visible_widget)
-            sysman.renderers[1].ResetCamera()
-            sysman.vtk_renderWindows[1].Render() 
-            sysman.views[1].update()
+        sysman.current_tool_index = row
+        for i in range(sysman.ui.tool_tw.columnCount()):
+            if 'Visible' in sysman.ui.tool_tw.horizontalHeaderItem(i).text() and column == i:
+                sysman.tools[row].changeVisible()
+                visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+                sysman.ui.tool_tw.setCellWidget(row, column, visible_widget)
+                sysman.renderers[1].ResetCamera()
+                sysman.vtk_renderWindows[1].Render() 
+                sysman.views[1].update()
+            if 'Color' in sysman.ui.tool_tw.horizontalHeaderItem(i).text() and column == i:
+                # 设置初始颜色为RGB(255, 0, 0)
+                initial_color = QColor(255, 0, 0)
+                # 显示颜色选择对话框，并设置初始颜色
+                color = QColorDialog.getColor(initial_color)
+                color = [color.red(), color.green(), color.blue()]
+                color_widget = createColorWidget.createColorWidget(color)
+                sysman.ui.tool_tw.setCellWidget(row, column, color_widget)
+                sysman.tools[row].setColor(np.array(color)/255)
+                sysman.views[1].update()
+                pass
         pass
+    
+    def resetCamera0(self, sysman):
+        sysman.renderers[0].ResetCamera()
+        sysman.vtk_renderWindows[0].Render() 
+        sysman.views[0].update()
+    
+    def resetCamera1(self, sysman):
+        sysman.renderers[1].ResetCamera()
+        sysman.vtk_renderWindows[1].Render() 
+        sysman.views[1].update()
+        
+    def resetCamera2(self, sysman):
+        sysman.renderers[2].ResetCamera()
+        sysman.vtk_renderWindows[2].Render() 
+        sysman.views[2].update()
+        
+    def resetCamera3(self, sysman):
+        sysman.renderers[3].ResetCamera()
+        sysman.vtk_renderWindows[3].Render() 
+        sysman.views[3].update()
+        
+    def volume_visual(self, sysman, state):
+        if state: # checked
+            volumes = sysman.renderers[1].GetVolumes()  # 获取渲染器中的vtkVolume集合
+            volumes.InitTraversal()
+            volume = volumes.GetNextItem()
+            while volume is not None:
+                volume.VisibilityOn()  # 将vtkVolume设为不可见
+                volume = volumes.GetNextItem()
+                sysman.views[1].update()
+        else:
+            volumes = sysman.renderers[1].GetVolumes()  # 获取渲染器中的vtkVolume集合
+            volumes.InitTraversal()
+            volume = volumes.GetNextItem()
+            while volume is not None:
+                volume.VisibilityOff()  # 将vtkVolume设为不可见
+                volume = volumes.GetNextItem()
+                sysman.views[1].update()
+        
+    def mesh_visual(self, sysman, state):
+        if state: # checked
+            for mesh in sysman.meshes:
+                mesh.refresh()
+                self.renderMeshes(mesh, sysman)
+                sysman.views[1].update()
+            pass
+        else:
+            actors = sysman.renderers[1].GetActors()  # 获取渲染器中的vtkActor集合
+            actors.InitTraversal()
+            actor = actors.GetNextItem()
+            while actor is not None:
+                sysman.renderers[1].RemoveActor(actor)  # 直接抹去
+                actor = actors.GetNextItem()
+                sysman.views[1].update()
+            pass
+        
+    def set3DBackgroundTop(self, sysman):
+        # 设置初始颜色为RGB(255, 0, 0)
+        initial_color = QColor(255, 0, 0)
+        # 显示颜色选择对话框，并设置初始颜色
+        color = QColorDialog.getColor(initial_color)
+        color = np.array([color.red(), color.green(), color.blue()])
+        sysman.top_color = color/255
+        sysman.box_color = color
+        sysman.ui.color3D_btn_top.setStyleSheet(f"background-color: rgb({color[0]}, {color[1]}, {color[2]});")
+        sysman.ui.ui_displays[1].box.setStyleSheet("border:None;\n"
+                                                    f"background-color: rgb({sysman.box_color[0]}, {sysman.box_color[1]}, {sysman.box_color[2]});")
+        sysman.renderers[1].SetBackground(sysman.bot_color)              # 设置页面底部颜色值
+        sysman.renderers[1].SetBackground2(sysman.top_color)    # 设置页面顶部颜色值
+        sysman.renderers[1].SetGradientBackground(1)   
+        sysman.views[1].update()
+        pass
+    
+    def set3DBackgroundBot(self, sysman):
+        # 设置初始颜色为RGB(255, 0, 0)
+        initial_color = QColor(255, 0, 0)
+        # 显示颜色选择对话框，并设置初始颜色
+        color = QColorDialog.getColor(initial_color)
+        color = np.array([color.red(), color.green(), color.blue()])
+        sysman.ui.color3D_btn_bot.setStyleSheet(f"background-color: rgb({color[0]}, {color[1]}, {color[2]});")
+        sysman.bot_color = color/255
+        sysman.renderers[1].SetBackground(sysman.bot_color)              # 设置页面底部颜色值
+        sysman.renderers[1].SetBackground2(sysman.top_color)    # 设置页面顶部颜色值
+        sysman.renderers[1].SetGradientBackground(1)   
+        sysman.views[1].update()
+        pass
+            
+            
+        
     
         
     

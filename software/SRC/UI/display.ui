@@ -104,9 +104,9 @@
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,25">
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,1,25">
           <property name="spacing">
-           <number>0</number>
+           <number>8</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -138,6 +138,26 @@
              <string/>
             </property>
             <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="resetCamera_btn">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">image: url(:/display/房子.png)；
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
              <bool>true</bool>
             </property>
            </widget>

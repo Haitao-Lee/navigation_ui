@@ -20,6 +20,7 @@ class mesh():
         actor.SetMapper(mapper)
         actor.GetProperty().SetColor(color)
         actor.GetProperty().SetOpacity(opacity)
+        actor.GetProperty().ShadingOn()
         actor.SetVisibility(visible) 
         return actor
         
@@ -81,3 +82,7 @@ class mesh():
     
     def getPath(self):
         return self.path
+    
+    def refresh(self):
+        self.actor.GetProperty().SetColor(self.color)
+        self.actor.GetProperty().SetOpacity(self.opacity)

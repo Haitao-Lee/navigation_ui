@@ -1,11 +1,19 @@
 import numpy as np
+import vtk
+
+
+# 所有颜色注意vtk渲染和qt渲染的区别，乘除255
 
 # display: corresponding to the visual status
 ALLWIN = 0
-TRANSS = 1
-SAGITA = 3
+AXIAL = 1
+SAGITA = 2
+CORNAL = 3
 VIEW3D = 4
-
+VIEWORDER = [0,2,3,1]
+initial_2Dcolor = np.array([0,0,0])
+bottom_3Dcolor = np.array([1, 1, 1])
+top_3Dcolor = np.array([0.529, 0.8078, 0.92157])
 
 # 使用Unicode字符表示立方
 cubic = "³"
@@ -36,19 +44,19 @@ ParallelScale = 120
 zoom = 1.2
 
 # landmarks
-lm_color = [255, 0, 0] #red
+lm_color = [1, 0, 0] #red
 lm_radius = 10
 lm_visible = 1
 lm_opacity = 1
 
 # meshes
-mesh_colors = [[200,200,180], [69,130,30], [0,255,0], [0,0,255], [255,255,0], [0,255,255]]
+mesh_colors = [[1, 0.9, 0.8], [0.4, 0.7, 0.8], [0,1,0], [0,0,1], [1,1,0], [0,1,1]]
 mesh_visible = 0
 mesh_opacity = 1
 
 # implants
 ip_radius = 5
-ip_colors = [[0,255,0], [0,0,255], [0,255,255]]
+ip_colors = [[0,1,0], [0,0,1], [0,1,1]]
 ip_opacity = 0.5
 ip_visible = 2
 ip_dash_length = 8
@@ -56,7 +64,7 @@ ip_line_rate = 2
 ip_cylinder_res = 36
 
 # tool 
-to_color = [255, 255, 0]
+to_color = [1, 1, 0]
 to_visible = 1
 to_opcaity = 1
 to_matrix = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])

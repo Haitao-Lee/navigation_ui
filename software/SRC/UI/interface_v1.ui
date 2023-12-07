@@ -2430,7 +2430,7 @@ background-color: rgb(120, 120, 120);</string>
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,3,2,2">
+               <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,3,2,0,2">
                 <property name="spacing">
                  <number>30</number>
                 </property>
@@ -2512,7 +2512,7 @@ background-color: rgb(120, 120, 120);</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="color3D_btn">
+                 <widget class="QPushButton" name="color3D_btn_top">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -2528,6 +2528,29 @@ background-color: rgb(120, 120, 120);</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(135, 206, 235);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="color3D_btn_bot">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Times New Roman</family>
+                    <pointsize>16</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="text">
                    <string/>

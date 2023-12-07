@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 import Message.print_info as print_info
-from config import ALLWIN, TRANSS, SAGITA, VIEW3D
+from config import ALLWIN, AXIAL, SAGITA, VIEW3D
 import numpy as np
 import Interaction.m_interactorStyle as m_interactorStyle
 
@@ -45,18 +45,19 @@ class system_manager():
 
 
         # data
+        # 若要添加新的tag，涉及颜色改变的表头请命名为‘Color’，涉及可视化的请命名为‘Visible’
         self.dicoms = []
         self.meshes =[]
         self.implants =[]
         self.tools = []
         self.landmarks =[]
         self.roms = []
-        self.current_dicom =None
-        self.current_mesh =None
-        self.current_implant = None
-        self.current_tool = None
-        self.cuurent_landmark = None
-        self.current_rom = None
+        self.current_dicom_index =None
+        self.current_mesh_index =None
+        self.current_implant_index = None
+        self.current_tool_index = None
+        self.current_landmark_index = None
+        self.current_rom_index = None
         
         
         # visulization
@@ -109,8 +110,8 @@ class system_manager():
     # visualization
     def initVTKProperty(self):
         self.dlsplay_status = ALLWIN            #当前显示状态，widget显示四个窗口还是某一个窗口
-        self.bot_color = np.array([1, 1, 1])
-        self.top_color = np.array([0.529, 0.8078, 0.92157])
+        self.bot_color = config.bottom_3Dcolor
+        self.top_color = config.top_3Dcolor
         self.box_color = self.top_color*255
         # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
         for i in range(4):
@@ -128,11 +129,11 @@ class system_manager():
                 self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
             else: 
                 self.styles.append(m_interactorStyle.CustomInteractorStyle())
-                self.renderers[i].SetBackground(0, 0, 0)
+                self.renderers[i].SetBackground(config.initial_2Dcolor)
             self.irens[i].SetInteractorStyle(self.styles[i])
             self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
             self.vtk_renderWindows[i].AddRenderer(self.renderers[i])
-            self.vtk_renderWindows[i].Render()  
+            # self.vtk_renderWindows[i].Render()  
         self.LUT2D = vtk.vtkLookupTable()
         self.LUT2D.SetRange(config.lower2Dvalue, config.upper2Dvalue)
         self.LUT2D.SetValueRange(0.0, 1.0)
@@ -243,12 +244,21 @@ class system_manager():
         self.ui.deleteTool_btn.clicked.connect(partial(self.slot_fs.deleteTool, self))
         self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.dicom_tw.cellClicked.connect(partial(self.slot_fs.on_dicom_table_clicked, self))    
+        self.ui.dicom_tw.cellClicked.connect(partial(self.slot_fs.on_dicom_table_clicked, self))
+        self.ui.dicom_tw.cellDoubleClicked.connect(partial(self.slot_fs.on_dicom_table_doubleClicked, self))    
         self.ui.mesh_tw.cellClicked.connect(partial(self.slot_fs.on_mesh_table_clicked, self))  
         self.ui.landmark_tw.cellClicked.connect(partial(self.slot_fs.on_landmark_table_clicked, self))  
         self.ui.implant_tw.cellClicked.connect(partial(self.slot_fs.on_implant_table_clicked, self))  
         self.ui.rom_tw.cellClicked.connect(partial(self.slot_fs.on_rom_table_clicked, self))  
-        self.ui.tool_tw.cellClicked.connect(partial(self.slot_fs.on_tool_table_clicked, self))  
+        self.ui.tool_tw.cellClicked.connect(partial(self.slot_fs.on_tool_table_clicked, self))
+        self.ui.ui_displays[0].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera0, self))
+        self.ui.ui_displays[1].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera1, self))
+        self.ui.ui_displays[2].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera2, self))
+        self.ui.ui_displays[3].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera3, self))
+        self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.volume_visual, self))
+        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.mesh_visual, self))
+        self.ui.color3D_btn_bot.clicked.connect(partial(self.slot_fs.set3DBackgroundBot, self))
+        self.ui.color3D_btn_top.clicked.connect(partial(self.slot_fs.set3DBackgroundTop, self))
         pass
         
         

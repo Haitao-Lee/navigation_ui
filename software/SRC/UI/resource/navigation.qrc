@@ -83,7 +83,9 @@
   </qresource>
   <qresource prefix="display">
     <file>全屏.png</file>
+    <file>房子.png</file>
   </qresource>
+  <qresource/>
   <qresource lang="connect" prefix="init">
     <file>连接 (1).png</file>
     <file>连接.png</file>
