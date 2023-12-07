@@ -12,6 +12,7 @@ import ImportAndSave.importIni as importIni
 import ImportAndSave.importMesh as importMesh
 import ImportAndSave.importTool as importTool
 import ImportAndSave.importTxt as importTxt
+import Geometry.volumeOfMesh as volumeOfMesh
 import dicom as m_dicom
 import mesh as m_mesh
 import implant as m_implant
@@ -23,6 +24,8 @@ import Adjustment.get_pixels_hu as get_pixels_hu
 import copy
 import config
 import vtk
+import Visualization.createColorWidget as createColorWidget
+import Visualization.createVisibleWidget as createVisibleWidget
 
 
 class slot_functions():
@@ -57,47 +60,17 @@ class slot_functions():
             sysman.ui.dicom_tw.setColumnWidth(j, max(max_width, config.min_margin))
     
     def addTableSTL(self, sysman, newSTL):
-        current_row = len(sysman.meshs)
-        sysman.meshs.append(newSTL)
+        current_row = len(sysman.meshes)
+        sysman.meshes.append(newSTL)
         sysman.ui.mesh_tw.insertRow(current_row)
-        # 更新UI中的列表
-        visible_lb = QLabel() # 创建一个label，并将其放置在 QVBoxLayout 中
-        if sysman.meshs[-1].visible:
-            visible_lb.setStyleSheet("image: url(:/visible/unvisible.png);")
-        else:
-            visible_lb.setStyleSheet("image: url(:/visible/visible.png);")
-        # visible_btn.setFlat(True)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(visible_lb.sizePolicy().hasHeightForWidth())
-        visible_lb.setSizePolicy(sizePolicy)
-        visible_layout = QVBoxLayout()
-        visible_layout.addWidget(visible_lb)
-        visible_layout.setContentsMargins(0, 0, 0, 0)
-        visible_layout.setSpacing(0)
-        visible_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        visible_widget.setLayout(visible_layout)
-        # 创建一个按钮，并将其放置在 QVBoxLayout 中
-        color_lb = QLabel()
-        color_lb.setStyleSheet(f"background-color: rgb({sysman.meshs[-1].color[0]}, {sysman.meshs[-1].color[1]}, {sysman.meshs[-1].color[2]});")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(color_lb.sizePolicy().hasHeightForWidth())
-        color_lb.setSizePolicy(sizePolicy)
-        color_layout = QVBoxLayout()
-        color_layout.addWidget(color_lb)
-        color_layout.setContentsMargins(0, 0, 0, 0)
-        color_layout.setSpacing(0)
-        color_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget.setLayout(color_layout)
-        nameItem = QTableWidgetItem(sysman.meshs[-1].name)
+        visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(sysman.meshes[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        nameItem = QTableWidgetItem(sysman.meshes[-1].name)
         nameItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.mesh_tw.setItem(current_row, 0, nameItem)
         sysman.ui.mesh_tw.setCellWidget(current_row, 1, visible_widget)
         sysman.ui.mesh_tw.setCellWidget(current_row, 2, color_widget)
-        pathItem = QTableWidgetItem(sysman.meshs[-1].path)
+        pathItem = QTableWidgetItem(sysman.meshes[-1].path)
         pathItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.mesh_tw.setItem(current_row, 3, pathItem)
         # 设置列宽度以适应每列中各自字符串的长度
@@ -110,6 +83,7 @@ class slot_functions():
                     if text_width > max_width:
                         max_width = text_width*config.text_margin
             sysman.ui.mesh_tw.setColumnWidth(j, max(max_width, config.min_margin))
+        self.renderMeshes(sysman.meshes[-1], sysman)
             
     def addTableImplant(self, sysman, newImplant):
         try:
@@ -117,36 +91,8 @@ class slot_functions():
             sysman.implants.append(newImplant)
             # 更新UI中的列表
             sysman.ui.implant_tw.insertRow(current_row)
-            visible_lb = QLabel() # 创建一个label，并将其放置在 QVBoxLayout 中
-            if sysman.implants[-1].visible:
-                visible_lb.setStyleSheet("image: url(:/visible/unvisible.png);")
-            else:
-                visible_lb.setStyleSheet("image: url(:/visible/visible.png);")
-            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            sizePolicy.setHorizontalStretch(0)
-            sizePolicy.setVerticalStretch(0)
-            sizePolicy.setHeightForWidth(visible_lb.sizePolicy().hasHeightForWidth())
-            visible_lb.setSizePolicy(sizePolicy)
-            visible_layout = QVBoxLayout()
-            visible_layout.addWidget(visible_lb)
-            visible_layout.setContentsMargins(0, 0, 0, 0)
-            visible_layout.setSpacing(0)
-            visible_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            visible_widget.setLayout(visible_layout)
-            # 创建一个按钮，并将其放置在 QVBoxLayout 中
-            color_lb = QLabel()
-            color_lb.setStyleSheet(f"background-color: rgb({sysman.implants[-1].color[0]*255}, {sysman.implants[-1].color[1]*255}, {sysman.implants[-1].color[2]*255});")
-            sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            sizePolicy.setHorizontalStretch(0)
-            sizePolicy.setVerticalStretch(0)
-            sizePolicy.setHeightForWidth(color_lb.sizePolicy().hasHeightForWidth())
-            color_lb.setSizePolicy(sizePolicy)
-            color_layout = QVBoxLayout()
-            color_layout.addWidget(color_lb)
-            color_layout.setContentsMargins(0, 0, 0, 0)
-            color_layout.setSpacing(0)
-            color_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-            color_widget.setLayout(color_layout)
+            visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            color_widget = createColorWidget.createColorWidget(sysman.implants[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
             startItem = QTableWidgetItem(f"{sysman.implants[-1].start[0]}, {sysman.implants[-1].start[1]}, {sysman.implants[-1].start[2]}")
             startItem.setTextAlignment(0x0004 | 0x0080)
             sysman.ui.implant_tw.setItem(current_row, 0, startItem)
@@ -177,89 +123,32 @@ class slot_functions():
         sysman.landmarks.append(newLandmark)
         tmp_point = []
         # 更新UI中的列表
-        sysman.ui.landmarks_tw.insertRow(current_row)
-        visible_lb = QLabel() # 创建一个label，并将其放置在 QVBoxLayout 中
-        if sysman.landmarks[-1].visible:
-            visible_lb.setStyleSheet("image: url(:/visible/unvisible.png);")
-        else:
-            visible_lb.setStyleSheet("image: url(:/visible/visible.png);")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(visible_lb.sizePolicy().hasHeightForWidth())
-        visible_lb.setSizePolicy(sizePolicy)
-        visible_layout = QVBoxLayout()
-        visible_layout.addWidget(visible_lb)
-        visible_layout.setContentsMargins(0, 0, 0, 0)
-        visible_layout.setSpacing(0)
-        visible_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        visible_widget.setLayout(visible_layout)
-        # 创建一个按钮，并将其放置在 QVBoxLayout 中
-        color_lb = QLabel()
-        color_lb.setStyleSheet(f"background-color: rgb({sysman.landmarks[-1].color[0]}, {sysman.landmarks[-1].color[1]}, {sysman.landmarks[-1].color[2]});")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(color_lb.sizePolicy().hasHeightForWidth())
-        color_lb.setSizePolicy(sizePolicy)
-        color_layout = QVBoxLayout()
-        color_layout.addWidget(color_lb)
-        color_layout.setContentsMargins(0, 0, 0, 0)
-        color_layout.setSpacing(0)
-        color_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget.setLayout(color_layout)
+        sysman.ui.landmark_tw.insertRow(current_row)
+        visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(sysman.landmarks[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
         scalartItem = QTableWidgetItem(f"{sysman.landmarks[-1].scalar[0]}, {sysman.landmarks[-1].scalar[1]}, {sysman.landmarks[-1].scalar[2]}")
         scalartItem.setTextAlignment(0x0004 | 0x0080)
-        sysman.ui.landmarks_tw.setItem(current_row, 0, scalartItem)
-        sysman.ui.landmarks_tw.setCellWidget(current_row, 1, color_widget)
-        sysman.ui.landmarks_tw.setCellWidget(current_row, 2, visible_widget) 
+        sysman.ui.landmark_tw.setItem(current_row, 0, scalartItem)
+        sysman.ui.landmark_tw.setCellWidget(current_row, 1, color_widget)
+        sysman.ui.landmark_tw.setCellWidget(current_row, 2, visible_widget) 
         # 设置列宽度以适应每列中各自字符串的长度
-        for j in range(sysman.ui.landmarks_tw.columnCount()):
+        for j in range(sysman.ui.landmark_tw.columnCount()):
             max_width = 0
-            for i in range(sysman.ui.landmarks_tw.rowCount()):
-                item = sysman.ui.landmarks_tw.item(i, j)
+            for i in range(sysman.ui.landmark_tw.rowCount()):
+                item = sysman.ui.landmark_tw.item(i, j)
                 if item:
-                    text_width = sysman.ui.landmarks_tw.fontMetrics().boundingRect(item.text()).width()
+                    text_width = sysman.ui.landmark_tw.fontMetrics().boundingRect(item.text()).width()
                     if text_width > max_width:
                         max_width = text_width*config.text_margin
-            sysman.ui.landmarks_tw.setColumnWidth(j, max(max_width, config.min_margin))
+            sysman.ui.landmark_tw.setColumnWidth(j, max(max_width, config.min_margin))
             
     def addTableTool(self, sysman, newTool):
         current_row = len(sysman.tools)
         sysman.tools.append(newTool)
         sysman.ui.tool_tw.insertRow(current_row)
         # 更新UI中的列表
-        visible_lb = QLabel() # 创建一个label，并将其放置在 QVBoxLayout 中
-        if sysman.tools[-1].visible:
-            visible_lb.setStyleSheet("image: url(:/visible/unvisible.png);")
-        else:
-            visible_lb.setStyleSheet("image: url(:/visible/visible.png);")
-        # visible_btn.setFlat(True)
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(visible_lb.sizePolicy().hasHeightForWidth())
-        visible_lb.setSizePolicy(sizePolicy)
-        visible_layout = QVBoxLayout()
-        visible_layout.addWidget(visible_lb)
-        visible_layout.setContentsMargins(0, 0, 0, 0)
-        visible_layout.setSpacing(0)
-        visible_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        visible_widget.setLayout(visible_layout)
-        # 创建一个按钮，并将其放置在 QVBoxLayout 中
-        color_lb = QLabel()
-        color_lb.setStyleSheet(f"background-color: rgb({sysman.tools[-1].color[0]}, {sysman.tools[-1].color[1]}, {sysman.tools[-1].color[2]});")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(color_lb.sizePolicy().hasHeightForWidth())
-        color_lb.setSizePolicy(sizePolicy)
-        color_layout = QVBoxLayout()
-        color_layout.addWidget(color_lb)
-        color_layout.setContentsMargins(0, 0, 0, 0)
-        color_layout.setSpacing(0)
-        color_widget = QWidget()  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
-        color_widget.setLayout(color_layout)
+        visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[-1].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+        color_widget = createColorWidget.createColorWidget(sysman.tools[-1].color)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
         nameItem = QTableWidgetItem(sysman.tools[-1].name)
         nameItem.setTextAlignment(0x0004 | 0x0080)
         sysman.ui.tool_tw.setItem(current_row, 0, nameItem)
@@ -310,19 +199,21 @@ class slot_functions():
         image_array = sitk.GetArrayFromImage(images)
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
-        vtk_image.SetDimensions(image_array.shape[::-1])  # 注意维度的顺序可能需要颠倒
+        vtk_image.SetDimensions(images.GetSize()[0], images.GetSize()[1], images.GetDepth())  # 注意维度的顺序可能需要颠倒
+        vtk_image.SetSpacing(images.GetSpacing())
+        vtk_image.SetOrigin(images.GetOrigin())
         vtk_image.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
         vtk_array = numpy_support.numpy_to_vtk(image_array.ravel(), deep=True)
         vtk_image.GetPointData().SetScalars(vtk_array) # 将NumPy数组数据复制到VTK图像数据中
         vtk_image.SetSpacing(images.GetSpacing())
         QCoreApplication.processEvents()
-        image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
+        # image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
         QCoreApplication.processEvents()
         new_dicom = m_dicom.dicom(arrayData=image_array, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
         new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
         self.addTableDicoms(sysman, new_dicom)   
         QCoreApplication.processEvents()     
-        self.renderDicom(new_dicom, sysman)
+        self.renderDicoms(new_dicom, sysman)
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)
@@ -402,14 +293,14 @@ class slot_functions():
             sysman.showProgress(int(100*i/num_files))
             f = files[num_files-i-1]
             file_path = os.path.join(path, f).replace('\\','/')
-            numOfSTLs = len(sysman.meshs)
+            numOfSTLs = len(sysman.meshes)
             numOfImplants = len(sysman.implants)
             numOfDicomss = len(sysman.dicoms)
             numOfRoms = len(sysman.roms)
             numOfTools = len(sysman.tools)
             if f.lower().endswith('.stl'):
                 self.addSystemSTL(file_path, sysman)
-                if len(sysman.meshs) > numOfSTLs:
+                if len(sysman.meshes) > numOfSTLs:
                     sysman.printInfo("Add STL:\""+file_path+"\".")
             elif f.lower().endswith('.implant'):
                 self.addSystemImplant(file_path, sysman)
@@ -529,9 +420,13 @@ class slot_functions():
     
     def measure(self, sysman):
         pass
-    
-    def show3D(self, sysman):
-        pass
+        
+    def volume_calculation(self, sysman):
+        if sysman.current_mesh is None:
+            sysman.printInfo("<b>Bold\033[91m Please select a mesh!\033[0m.</b>") # 加粗加红
+            return 
+        volume = volumeOfMesh.volumeOfMesh(sysman.current_mesh.getPolydata())
+        sysman.printInfo(f"The volume of the selected mesh: \n            {volume} mm{config.cubic}") # 加粗加红
     
     def project2D(self, sysman):
         pass
@@ -626,26 +521,81 @@ class slot_functions():
     def deleteLight(sysman):
         pass
         
-    def renderDicom(self, dicom, sysman):
+    def renderDicoms(self, dicom, sysman):
         for i in range(4):
             sysman.renderers[i].RemoveAllViewProps()
             QCoreApplication.processEvents()
-            sysman.renderers[i].ResetCamera()
             if i == 1:
                 sysman.renderers[i].AddVolume(dicom.actors[i])
             else:
                 sysman.renderers[i].AddActor(dicom.actors[i])
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
-                sysman.renderers[i].GetActiveCamera().SetParallelScale(config.ParallelScale)
-                sysman.renderers[i].GetActiveCamera().Zoom(config.zoom);
-            # sysman.irens[i].Initialize()   
-            # sysman.irens[i].Start()
+                # sysman.renderers[i].GetActiveCamera().SetParallelScale(config.ParallelScale)
+                # 
+            sysman.renderers[i].ResetCamera()
+            sysman.renderers[i].GetActiveCamera().Zoom(config.zoom)
             sysman.vtk_renderWindows[i].Render() 
             sysman.views[i].update()
-        
-       
-    @staticmethod    
-    def get_files(dir, fileType=None):
+            
+    def renderMeshes(self, mesh, sysman):
+        sysman.renderers[1].AddActor(mesh.actor)
+        sysman.renderers[1].ResetCamera()
+        sysman.vtk_renderWindows[1].Render() 
+        sysman.views[1].update()
+    
+    def on_dicom_table_clicked(self, sysman, row, column ):
+        sysman.current_dicom = sysman.dicoms[row]
         pass
+    
+    def on_mesh_table_clicked(self, sysman, row, column):
+        sysman.current_mesh = sysman.meshes[row]
+        if column == 1:
+            sysman.meshes[row].changeVisible()
+            # widget = sysman.ui.mesh_tw.cellWidget(row, column)
+            visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            sysman.ui.mesh_tw.setCellWidget(row, column, visible_widget)
+            sysman.renderers[1].ResetCamera()
+            sysman.vtk_renderWindows[1].Render() 
+            sysman.views[1].update()
+        pass
+    
+    def on_implant_table_clicked(self, sysman, row, column):
+        sysman.current_implant = sysman.implants[row]
+        if column == 4:
+            sysman.implants[row].changeVisible()
+            visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            sysman.ui.implant_tw.setCellWidget(row, column, visible_widget)
+            sysman.renderers[1].ResetCamera()
+            sysman.vtk_renderWindows[1].Render() 
+            sysman.views[1].update()
+        pass
+    
+    def on_landmark_table_clicked(self, sysman, row, column):
+        sysman.current_landmark = sysman.landmarks[row]
+        if column == 2:
+            sysman.landmarks[row].changeVisible()
+            visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            sysman.ui.landmark_tw.setCellWidget(row, column, visible_widget)
+            sysman.renderers[1].ResetCamera()
+            sysman.vtk_renderWindows[1].Render() 
+            sysman.views[1].update()
+        pass
+    
+    def on_rom_table_clicked(self, sysman, row, column):
+        sysman.current_rom = sysman.roms[row]
+        pass
+    
+    def on_tool_table_clicked(self, sysman, row, column):
+        sysman.current_tool = sysman.tools[row]
+        if column == 1:
+            sysman.tools[row].changeVisible()
+            # widget = sysman.ui.mesh_tw.cellWidget(row, column)
+            visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
+            sysman.ui.tool_tw.setCellWidget(row, column, visible_widget)
+            sysman.renderers[1].ResetCamera()
+            sysman.vtk_renderWindows[1].Render() 
+            sysman.views[1].update()
+        pass
+    
         
     

@@ -22,10 +22,15 @@ class tool():
             actor.SetMapper(mapper)
             actor.GetProperty().SetColor(color)
             actor.GetProperty().SetOpacity(opacity)
-            actor.SetVisibility(visible > 0)
+            actor.SetVisibility(visible)
             return actor
         return None
        
+    def changeVisible(self):
+        self.visible = 1 - self.visible
+        if self.actor is not None:
+            self.actor.SetVisibility(self.visible)
+    
     def setActor(self, actor):
         self.actor = actor
         self.actor.GetProperty().SetOptical(self.opacity)

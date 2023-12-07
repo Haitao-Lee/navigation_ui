@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 import Message.print_info as print_info
 from config import ALLWIN, TRANSS, SAGITA, VIEW3D
 import numpy as np
+import Interaction.m_interactorStyle as m_interactorStyle
 
 
 class system_manager():
@@ -45,11 +46,17 @@ class system_manager():
 
         # data
         self.dicoms = []
-        self.meshs =[]
+        self.meshes =[]
         self.implants =[]
         self.tools = []
         self.landmarks =[]
         self.roms = []
+        self.current_dicom =None
+        self.current_mesh =None
+        self.current_implant = None
+        self.current_tool = None
+        self.cuurent_landmark = None
+        self.current_rom = None
         
         
         # visulization
@@ -110,19 +117,17 @@ class system_manager():
             self.views.append(self.ui.ui_displays[i].view)
             self.vtk_renderWindows.append(self.ui.ui_displays[i].view.GetRenderWindow())
             self.renderers.append(vtk.vtkRenderer())
-            self.irens.append(vtk.vtkRenderWindowInteractor())
+            # self.irens.append(vtk.vtkRenderWindowInteractor())
+            self.irens.append(self.vtk_renderWindows[i].GetInteractor())
             if i == 1:
                 self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
-            else:
-                self.styles.append(vtk.vtkInteractorStyleImage())
-            # 3d窗口设置渐变色
-            if i == 1:
                 self.ui.ui_displays[i].box.setStyleSheet("border:None;\n"
                                                       f"background-color: rgb({self.box_color[0]}, {self.box_color[1]}, {self.box_color[2]});")
                 self.renderers[i].SetBackground(self.bot_color)              # 设置页面底部颜色值
                 self.renderers[i].SetBackground2(self.top_color)    # 设置页面顶部颜色值
                 self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
             else: 
+                self.styles.append(m_interactorStyle.CustomInteractorStyle())
                 self.renderers[i].SetBackground(0, 0, 0)
             self.irens[i].SetInteractorStyle(self.styles[i])
             self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
@@ -178,7 +183,7 @@ class system_manager():
     def update3DOpacity(self, value):
         # self.printInfo(str(value))
         value = value/100
-        for mesh in self.meshs:
+        for mesh in self.meshes:
             mesh.setOpacity(value)
         for view in self.views:
             view.update()
@@ -224,7 +229,7 @@ class system_manager():
         self.ui.undo_btn.clicked.connect(partial(self.slot_fs.undo,self))
         self.ui.reset_btn.clicked.connect(partial(self.slot_fs.reset,self))
         self.ui.measure_btn.clicked.connect(partial(self.slot_fs.measure, self))
-        self.ui.show3d_btn.clicked.connect(partial(self.slot_fs.show3D, self))
+        self.ui.volume_btn.clicked.connect(partial(self.slot_fs.volume_calculation, self))
         self.ui.project_btn.clicked.connect(partial(self.slot_fs.project2D, self))
         self.ui.addDicom_btn.clicked.connect(partial(self.slot_fs.addDicom, self))
         self.ui.deleteDicom_btn.clicked.connect(partial(self.slot_fs.deleteDicom, self))
@@ -236,16 +241,14 @@ class system_manager():
         self.ui.deleteLandmark_btn.clicked.connect(partial(self.slot_fs.deleteLandmark, self))
         self.ui.addTool_btn.clicked.connect(partial(self.slot_fs.addTool, self))
         self.ui.deleteTool_btn.clicked.connect(partial(self.slot_fs.deleteTool, self))
-        self.ui.lower2Dslider.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.upper2Dslider.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.lower3Dslider.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.upper3Dslider.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.lower2Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.upper2Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.lower3Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.upper3Dbox.valueChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
-        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))    
+        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
+        self.ui.dicom_tw.cellClicked.connect(partial(self.slot_fs.on_dicom_table_clicked, self))    
+        self.ui.mesh_tw.cellClicked.connect(partial(self.slot_fs.on_mesh_table_clicked, self))  
+        self.ui.landmark_tw.cellClicked.connect(partial(self.slot_fs.on_landmark_table_clicked, self))  
+        self.ui.implant_tw.cellClicked.connect(partial(self.slot_fs.on_implant_table_clicked, self))  
+        self.ui.rom_tw.cellClicked.connect(partial(self.slot_fs.on_rom_table_clicked, self))  
+        self.ui.tool_tw.cellClicked.connect(partial(self.slot_fs.on_tool_table_clicked, self))  
         pass
         
         

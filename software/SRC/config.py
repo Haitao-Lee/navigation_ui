@@ -7,14 +7,18 @@ SAGITA = 3
 VIEW3D = 4
 
 
+# 使用Unicode字符表示立方
+cubic = "³"
+
+
 ## init value setting
 
 # system manager
 minimum = -2000
 maximum = 2000
-lower2Dvalue = -1500
+lower2Dvalue = -800
 upper2Dvalue = 500
-lower3Dvalue = -1500
+lower3Dvalue = -800
 upper3Dvalue = 500
 volume_color1 = [0.8, 0.8, 0.8]
 volume_color2 = [0.8, 0.8, 0.8]
@@ -29,7 +33,7 @@ axialNormal = np.array([0, 0, 1])
 sagittalNormal = np.array([1, 0, 0])
 cornalNormal = np.array([0, 1, 0])
 ParallelScale = 120
-zoom = 1
+zoom = 1.2
 
 # landmarks
 lm_color = [255, 0, 0] #red
@@ -39,7 +43,7 @@ lm_opacity = 1
 
 # meshes
 mesh_colors = [[200,200,180], [69,130,30], [0,255,0], [0,0,255], [255,255,0], [0,255,255]]
-mesh_visible = 1
+mesh_visible = 0
 mesh_opacity = 1
 
 # implants

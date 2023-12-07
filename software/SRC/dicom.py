@@ -68,8 +68,7 @@ class dicom():
             self.actors[i].GetMapper().SetInputConnection(colormaps[i].GetOutputPort())
         # 3D
         # 创建VTKVolumeMapper
-        volume_mapper = vtk.vtkSmartVolumeMapper()
-        volume_mapper.SetBlendModeToComposite()  # 使用复合模式混合
+        volume_mapper = vtk.vtkGPUVolumeRayCastMapper()
         volume_mapper.SetInputData(self.imageData)
         # 创建VTKVolumeProperty
         volume_property = vtk.vtkVolumeProperty()
@@ -85,30 +84,3 @@ class dicom():
         volume.SetMapper(volume_mapper)
         volume.SetProperty(volume_property)
         self.actors.insert(1, volume)
-    
-    # def createActors(self, LUT2D, CTF3D, PWF3D):
-    #     # 创建图像 actor, 分别为axial、体绘制、sagittal和0cornal 的actor/volume
-    #     self.actors = [] # 清空原有actors
-    #     # 2D
-    #     self.imageReslices = []
-    #     for _ in range(3): 
-    #         self.actors.append(vtk.vtkImageActor())
-    #         self.actors[-1].GetMapper().SetLookupTable(LUT2D)
-    #     self.actors[0].SetInputData(self.arrayData[self.arrayData.shape[0] // 2, :, :])   
-    #     self.actors[1].SetInputData(self.arrayData[:, self.arrayData.shape[0] // 2, :])  
-    #     self.actors[2].SetInputData(self.arrayData[:, :, self.arrayData.shape[0] // 2]) 
-    #     # 3D
-    #     # 创建VTKVolumeMapper
-    #     volume_mapper = vtk.vtkSmartVolumeMapper()
-    #     volume_mapper.SetBlendModeToComposite()  # 使用复合模式混合
-    #     volume_mapper.SetInputData(self.arrayData)
-    #     # 创建VTKVolumeProperty
-    #     volume_property = vtk.vtkVolumeProperty()
-    #     volume_property.SetColor(CTF3D)
-    #     volume_property.SetScalarOpacity(PWF3D)
-    #     volume_property.ShadeOn()  # 启用阴影
-    #     # 创建VTKVolume
-    #     volume = vtk.vtkVolume()
-    #     volume.SetMapper(volume_mapper)
-    #     volume.SetProperty(volume_property)
-    #     self.actors.append(volume)

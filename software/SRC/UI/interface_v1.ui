@@ -780,7 +780,7 @@ image: url(:/init/测长度.png);</string>
               </widget>
              </item>
              <item row="2" column="4">
-              <widget class="QPushButton" name="show3d_btn">
+              <widget class="QPushButton" name="volume_btn">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -794,7 +794,7 @@ image: url(:/init/测长度.png);</string>
                 </font>
                </property>
                <property name="toolTip">
-                <string>show 3D models</string>
+                <string>volume calculation of meshes</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(120, 120, 120);
@@ -1516,7 +1516,7 @@ border-radius: 8px;</string>
                <number>0</number>
               </property>
               <item>
-               <widget class="QTableWidget" name="landmarks_tw">
+               <widget class="QTableWidget" name="landmark_tw">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(120, 120, 120);</string>
