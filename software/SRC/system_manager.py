@@ -136,6 +136,18 @@ class system_manager():
             self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
             self.vtk_renderWindows[i].AddRenderer(self.renderers[i])
             # self.vtk_renderWindows[i].Render()  
+        # 设置方向widget
+        m_3DAxesActor = vtk.vtkAxesActor()
+        m_3DCubeActor = vtk.vtkAnnotatedCubeActor()	
+        probAssemble = vtk.vtkPropAssembly()
+        probAssemble.AddPart(m_3DAxesActor)
+        probAssemble.AddPart(m_3DCubeActor)
+        m_3DOrientationWidget = vtk.vtkOrientationMarkerWidget()
+        m_3DOrientationWidget.SetOrientationMarker(probAssemble)
+        m_3DOrientationWidget.SetInteractor(self.vtk_renderWindows[1].GetInteractor())
+        m_3DOrientationWidget.SetViewport(0.85, 0, 1, 0.2)
+        m_3DOrientationWidget.EnabledOn()
+        m_3DOrientationWidget.InteractiveOn()
         self.LUT2D = vtk.vtkLookupTable()
         self.LUT2D.SetRange(config.lower2Dvalue, config.upper2Dvalue)
         self.LUT2D.SetValueRange(0.0, 1.0)
@@ -145,7 +157,7 @@ class system_manager():
         self.CTF3D = vtk.vtkColorTransferFunction()
         self.CTF3D.AddRGBPoint(config.lower3Dvalue, config.volume_color1[0], config.volume_color1[1], config.volume_color1[2])
         self.CTF3D.AddRGBPoint((config.lower3Dvalue + config.upper3Dvalue)/2, config.volume_color2[0], config.volume_color2[1], config.volume_color2[2])
-        self.CTF3D.AddRGBPoint(config.upper3Dvalue, config.volume_color2[0], config.volume_color3[1], config.volume_color3[2])
+        self.CTF3D.AddRGBPoint(config.upper3Dvalue, config.volume_color3[0], config.volume_color3[1], config.volume_color3[2])
         self.PWF3D = vtk.vtkPiecewiseFunction()
         self.PWF3D.AddPoint(config.lower3Dvalue, 1)
         self.PWF3D.AddPoint(config.lower3Dvalue+1, 0.5*config.volume_opacity)
@@ -202,9 +214,9 @@ class system_manager():
         extent = np.array(vtk_img.GetExtent())
         spacing = np.array(vtk_img.GetSpacing())
         origin = np.array(vtk_img.GetOrigin())
-        self.lineCenter[0] = spacing[0] * (self.ui.ui_displays[0].slider.value()+extent[4]) + origin[0]
-        self.lineCenter[1] = spacing[1] * (self.ui.ui_displays[2].slider.value()+extent[0]) + origin[1]
-        self.lineCenter[2] = spacing[2] * (self.ui.ui_displays[3].slider.value()+extent[2]) + origin[2]
+        self.lineCenter[0] = spacing[0] * (self.ui.ui_displays[0].slider.value()+extent[0]) + origin[0]
+        self.lineCenter[1] = spacing[1] * (self.ui.ui_displays[2].slider.value()+extent[2]) + origin[1]
+        self.lineCenter[2] = spacing[2] * (self.ui.ui_displays[3].slider.value()+extent[4]) + origin[2]
         self.dicoms[self.current_visual_dicom_index].adjustActors(self.LUT2D, self.lineCenter)
         for view in self.views:
             view.update()
@@ -243,10 +255,10 @@ class system_manager():
         self.ui.lower3Dslider.valueChanged.connect(self.updateLower3D)
         self.ui.upper3Dbox.valueChanged.connect(self.updateUpper3D)
         self.ui.upper3Dslider.valueChanged.connect(self.updateUpper3D)
-        self.ui.ui_displays[0].slider.sliderMoved.connect(self.updateSlice)
-        self.ui.ui_displays[1].slider.sliderMoved.connect(self.update3DOpacity)
-        self.ui.ui_displays[2].slider.sliderMoved.connect(self.updateSlice)
-        self.ui.ui_displays[3].slider.sliderMoved.connect(self.updateSlice)
+        self.ui.ui_displays[0].slider.valueChanged.connect(self.updateSlice)
+        self.ui.ui_displays[1].slider.valueChanged.connect(self.update3DOpacity)
+        self.ui.ui_displays[2].slider.valueChanged.connect(self.updateSlice)
+        self.ui.ui_displays[3].slider.valueChanged.connect(self.updateSlice)
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
         self.ui.save_all_btn.clicked.connect(partial(self.slot_fs.save_all, self))

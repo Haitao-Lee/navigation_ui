@@ -34,8 +34,16 @@ class ui_all(QMainWindow, ui_interface):
         self.ui_displays = [display_ui(), display_ui(), display_ui(), display_ui()]#,display_ui(), display_ui(), display_ui(), display_ui()] 
         # 0:transverse view,  1:3d view, 2:sagittal view, 3:coronal view]
         for i in range(4):
-            if i < 4:
-                self.views_layout[i].addWidget(self.ui_displays[i].box)
+            self.views_layout[i].addWidget(self.ui_displays[i].box)
+        self.ui_displays[0].label.setStyleSheet("color: red; background-color: transparent;")  # 设置文本颜色为红色，背景透明
+        self.ui_displays[0].label.setText("Axial")
+        self.ui_displays[1].label.setStyleSheet("color: yellow; background-color: transparent;")  # 设置文本颜色为红色，背景透明
+        self.ui_displays[1].label.setText("3D")
+        self.ui_displays[2].label.setStyleSheet("color: green; background-color: transparent;")  # 设置文本颜色为红色，背景透明
+        self.ui_displays[2].label.setText("Sagittal")
+        self.ui_displays[3].label.setStyleSheet("color: blue; background-color: transparent;")  # 设置文本颜色为红色，背景透明
+        self.ui_displays[3].label.setText("Cornal")
+        self.color3D_btn_top.setStyleSheet(f"background-color: rgb({config.top_3Dcolor[0]*255}, {config.top_3Dcolor[1]*255}, {config.top_3Dcolor[2]*255});")
         self.update()
             
     def initAdjustment(self):

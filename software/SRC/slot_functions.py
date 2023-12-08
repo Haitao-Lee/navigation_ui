@@ -527,16 +527,33 @@ class slot_functions():
                 sysman.current_visual_dicom_index = i
         vtk_img = dicom.getImageData()
         extent = vtk_img.GetExtent()
-        #                       axial               sagittal                 cornal
+        #                       axial                     sagittal                 cornal
         extent_range = [extent[5] - extent[4], 100, extent[1] - extent[0], extent[3] - extent[2]]
         cout = 0
+        sysman.ui.volume_cbox.setChecked(True)
         for i in config.VIEWORDER:
             QCoreApplication.processEvents()
             if i == 1:
                 if last is not None:
                     sysman.renderers[i].RemoveVolume(sysman.dicoms[last].actors[i])
+                QCoreApplication.processEvents()
                 sysman.renderers[i].AddVolume(dicom.actors[i])
+                QCoreApplication.processEvents()
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(0)
+                # 获取并输出当前渲染器中未被隐藏的 actor 数量
+                actors = sysman.renderers[i].GetActors()
+                actors.InitTraversal()
+                visible_actors = 0
+                while True:
+                    QCoreApplication.processEvents()
+                    actor = actors.GetNextItem()
+                    if actor:
+                        if actor.GetVisibility():
+                            visible_actors += 1
+                    else:
+                        break
+                if visible_actors == 0:
+                    sysman.renderers[i].ResetCamera()
             else:
                 sysman.ui.ui_displays[i].slider.setMaximum(extent_range[i])
                 sysman.ui.ui_displays[i].slider.setValue(extent_range[i]/2)
@@ -550,7 +567,6 @@ class slot_functions():
             sysman.views[i].update()
             cout = cout + 1
             sysman.showProgress(cout/len(config.VIEWORDER)*100)
-            
             
     def renderMeshes(self, mesh, sysman):
         sysman.renderers[1].AddActor(mesh.actor)

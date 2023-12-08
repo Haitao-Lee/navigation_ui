@@ -13,7 +13,7 @@ VIEW3D = 4
 VIEWORDER = [0,2,3,1]
 initial_2Dcolor = np.array([0,0,0])
 bottom_3Dcolor = np.array([1, 1, 1])
-top_3Dcolor = np.array([0, 0, 0])
+top_3Dcolor = np.array([0.75294118, 0.75294118, 1 ])
 
 # 使用Unicode字符表示立方
 cubic = "³"
@@ -26,10 +26,10 @@ minimum = -2000
 maximum = 2000
 lower2Dvalue = -800
 upper2Dvalue = 500
-lower3Dvalue = 200
-upper3Dvalue = 800
-volume_color1 = [0.8, 0.8, 0.8]
-volume_color2 = [0.8, 0.8, 0.8]
+lower3Dvalue = -400
+upper3Dvalue = 300
+volume_color1 = [1, 1, 1]
+volume_color2 = [1, 1, 1]
 volume_color3 = [1, 1, 1]
 volume_opacity = 1
 
@@ -46,7 +46,7 @@ scroll_list = [0, 1, 2]
 
 # landmarks
 lm_color = [1, 0, 0] #red
-lm_radius = 10
+lm_radius = 100
 lm_visible = 1
 lm_opacity = 1
 

@@ -44,7 +44,7 @@ class dicom():
         origin = np.array(self.imageData.GetOrigin())
         spacing = np.array(self.imageData.GetSpacing())
         extent = np.array(self.imageData.GetExtent())
-        scale = np.array([extent[4] + extent[5], extent[1] + extent[0], extent[3] + extent[2]])
+        scale = np.array([extent[0] + extent[1], extent[2] + extent[3], extent[4] + extent[5]])
         center = origin + 0.5*spacing*scale
         resliceAxes = []
         reslices = []
@@ -67,13 +67,13 @@ class dicom():
             colormaps[i].Update()
             self.actors.append(vtk.vtkImageActor())
             self.actors[i].GetMapper().SetInputConnection(colormaps[i].GetOutputPort())
-        # 3D
-        # 创建VTKVolumeMapper
-        volume_mapper = vtk.vtkGPUVolumeRayCastMapper()
+        # # 3D
+        # # 创建VTKVolumeMapper
+        volume_mapper = vtk.vtkFixedPointVolumeRayCastMapper()
         volume_mapper.SetInputData(self.imageData)
-        volume_mapper.SetCropping(1)	
-        volume_mapper.SetCroppingRegionPlanes(self.imageData.GetBounds())
-        volume_mapper.SetCroppingRegionFlags(0x0002000)
+        # volume_mapper.SetCropping(1)	
+        # volume_mapper.SetCroppingRegionPlanes(self.imageData.GetBounds())
+        # volume_mapper.SetCroppingRegionFlags(0x0002000)
         # 创建VTKVolumeProperty
         volume_property = vtk.vtkVolumeProperty()
         volume_property.SetInterpolationTypeToLinear() # 设置线性插值
@@ -96,7 +96,7 @@ class dicom():
         origin = np.array(self.imageData.GetOrigin())
         spacing = np.array(self.imageData.GetSpacing())
         extent = np.array(self.imageData.GetExtent())
-        scale = np.array([extent[4] + extent[5], extent[1] + extent[0], extent[3] + extent[2]])
+        scale = np.array([extent[0] + extent[1], extent[2] + extent[3], extent[4] + extent[5]])
         center = origin + 0.5*spacing*scale
         tmp_center = [[center[0], center[1], current_center[0]], [current_center[1], center[1], center[2]],[center[0], current_center[2], center[2]]]
         axisMtx = [config.axialMtx, config.sagittalMtx, config.cornalMtx]
