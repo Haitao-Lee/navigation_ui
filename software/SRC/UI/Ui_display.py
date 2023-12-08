@@ -11,7 +11,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import UI.my_qvtkWidget as my_qvtkWidget
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -89,19 +88,10 @@ class Ui_MainWindow(object):
         self.resetCamera_btn.setFlat(True)
         self.resetCamera_btn.setObjectName("resetCamera_btn")
         self.horizontalLayout_6.addWidget(self.resetCamera_btn)
-        self.slider = QtWidgets.QSlider(self.editWidget_box)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.slider.sizePolicy().hasHeightForWidth())
-        self.slider.setSizePolicy(sizePolicy)
-        self.slider.setMaximum(100)
-        self.slider.setTracking(False)
+        self.slider = QtWidgets.QScrollBar(self.editWidget_box)
+        self.slider.setStyleSheet("color: rgb(17, 149, 218);\n"
+"background-color: rgb(0, 0, 0);")
         self.slider.setOrientation(QtCore.Qt.Horizontal)
-        self.slider.setInvertedAppearance(False)
-        self.slider.setInvertedControls(False)
-        self.slider.setTickPosition(QtWidgets.QSlider.TicksBothSides)
-        self.slider.setTickInterval(2)
         self.slider.setObjectName("slider")
         self.horizontalLayout_6.addWidget(self.slider)
         self.horizontalLayout_6.setStretch(0, 1)

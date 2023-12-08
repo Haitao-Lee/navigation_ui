@@ -163,33 +163,12 @@
            </widget>
           </item>
           <item>
-           <widget class="QSlider" name="slider">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="tracking">
-             <bool>false</bool>
+           <widget class="QScrollBar" name="slider">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(17, 149, 218);</string>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="invertedAppearance">
-             <bool>false</bool>
-            </property>
-            <property name="invertedControls">
-             <bool>false</bool>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TicksBothSides</enum>
-            </property>
-            <property name="tickInterval">
-             <number>2</number>
             </property>
            </widget>
           </item>

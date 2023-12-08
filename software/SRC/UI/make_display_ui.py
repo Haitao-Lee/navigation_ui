@@ -13,3 +13,4 @@ class display_ui(QMainWindow, ui_display):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.view.sizePolicy().hasHeightForWidth())
         self.view.setSizePolicy(sizePolicy)
+        self.slider.setStyleSheet("QScrollBar { background: transparent; }")

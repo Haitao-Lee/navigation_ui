@@ -199,7 +199,7 @@ class slot_functions():
         image_array = sitk.GetArrayFromImage(images)
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
-        vtk_image.SetDimensions(images.GetSize()[0], images.GetSize()[1], images.GetDepth())  # 注意维度的顺序可能需要颠倒
+        vtk_image.SetDimensions(images.GetSize()[0],images.GetSize()[1],images.GetSize()[2])
         vtk_image.SetSpacing(images.GetSpacing())
         vtk_image.SetOrigin(images.GetOrigin())
         vtk_image.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
@@ -337,7 +337,7 @@ class slot_functions():
             file_name = file_name.replace("\\", "/")
         name = file_name.split("/")[-1]
         file_extension = name.split(".")[-1]
-        if file_extension == "stl":
+        if file_extension == "stl" or file_extension == "STL":
             self.addSystemSTL(file_name, sysman)
         elif file_extension == "obj":
             self.addSystemOBJ(file_name, sysman)
@@ -423,10 +423,10 @@ class slot_functions():
         
     def volume_calculation(self, sysman):
         if sysman.current_mesh_index is None:
-            sysman.printInfo("<b>Bold\033[91m Please select a mesh!\033[0m.</b>") # 加粗加红
+            sysman.printInfo("Please select a mesh!")
             return 
         volume = volumeOfMesh.volumeOfMesh(sysman.meshes[sysman.current_mesh_index].getPolydata())
-        sysman.printInfo(f"The volume of "+sysman.meshes[sysman.current_mesh_index].getName()+f": {volume} mm{config.cubic}") # 加粗加红
+        sysman.printInfo(f"The volume of "+sysman.meshes[sysman.current_mesh_index].getName()+f": {volume:.3f} mm{config.cubic}") # 加粗加红
     
     def project2D(self, sysman):
         pass
@@ -452,7 +452,7 @@ class slot_functions():
             return
         name = file_name.split("/")[-1]
         file_extension = name.split(".")[-1]
-        if file_extension == "stl":
+        if file_extension == "stl" or file_extension == "STL":
             self.addSystemSTL(file_name, sysman)
         elif file_extension == "obj":
             self.addSystemOBJ(file_name, sysman)
@@ -522,6 +522,14 @@ class slot_functions():
         pass
         
     def renderDicoms(self, dicom, sysman, last=None):
+        for i in range(len(sysman.dicoms)):
+            if dicom.getName() in sysman.dicoms[i].getName():
+                sysman.current_visual_dicom_index = i
+        vtk_img = dicom.getImageData()
+        extent = vtk_img.GetExtent()
+        #                       axial               sagittal                 cornal
+        extent_range = [extent[5] - extent[4], 100, extent[1] - extent[0], extent[3] - extent[2]]
+        cout = 0
         for i in config.VIEWORDER:
             QCoreApplication.processEvents()
             if i == 1:
@@ -530,6 +538,8 @@ class slot_functions():
                 sysman.renderers[i].AddVolume(dicom.actors[i])
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(0)
             else:
+                sysman.ui.ui_displays[i].slider.setMaximum(extent_range[i])
+                sysman.ui.ui_displays[i].slider.setValue(extent_range[i]/2)
                 sysman.renderers[i].RemoveAllViewProps()
                 sysman.renderers[i].AddActor(dicom.actors[i])
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
@@ -538,6 +548,9 @@ class slot_functions():
             sysman.renderers[i].GetActiveCamera().Zoom(config.zoom)
             sysman.vtk_renderWindows[i].Render() 
             sysman.views[i].update()
+            cout = cout + 1
+            sysman.showProgress(cout/len(config.VIEWORDER)*100)
+            
             
     def renderMeshes(self, mesh, sysman):
         sysman.renderers[1].AddActor(mesh.actor)
@@ -550,9 +563,10 @@ class slot_functions():
         pass
     
     def on_dicom_table_doubleClicked(self, sysman, row, column):
-        last_row = sysman.current_dicom_index
         sysman.current_dicom_index = row
-        self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, last_row)
+        if sysman.current_visual_dicom_index is not None and  sysman.current_visual_dicom_index == row:
+            return
+        self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, sysman.current_visual_dicom_index)
         pass
     
     def on_mesh_table_clicked(self, sysman, row, column):
@@ -671,7 +685,7 @@ class slot_functions():
         sysman.vtk_renderWindows[3].Render() 
         sysman.views[3].update()
         
-    def volume_visual(self, sysman, state):
+    def change_volume_visual_state(self, sysman, state):
         if state: # checked
             volumes = sysman.renderers[1].GetVolumes()  # 获取渲染器中的vtkVolume集合
             volumes.InitTraversal()
@@ -689,7 +703,7 @@ class slot_functions():
                 volume = volumes.GetNextItem()
                 sysman.views[1].update()
         
-    def mesh_visual(self, sysman, state):
+    def change_mesh_visual_state(self, sysman, state):
         if state: # checked
             for mesh in sysman.meshes:
                 mesh.refresh()

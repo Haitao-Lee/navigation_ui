@@ -53,6 +53,7 @@ class system_manager():
         self.landmarks =[]
         self.roms = []
         self.current_dicom_index =None
+        self.current_visual_dicom_index =None
         self.current_mesh_index =None
         self.current_implant_index = None
         self.current_tool_index = None
@@ -73,6 +74,7 @@ class system_manager():
         self.renderers = []
         self.styles = []
         self.irens = []
+        self.lineCenter = np.array([0, 0, 0])
         
         
         # setup
@@ -181,13 +183,38 @@ class system_manager():
         self.ui.upper3Dslider.setValue(val)
         self.updateProperty()
         
-    def update3DOpacity(self, value):
-        # self.printInfo(str(value))
+    def update3DOpacity(self):
+        value = self.ui.ui_displays[1].slider.value()
         value = value/100
+        if value > 0.98:
+            value = 1
+        if value < 0.02:
+            value = 0
         for mesh in self.meshes:
             mesh.setOpacity(value)
         for view in self.views:
             view.update()
+            
+    def updateSlice(self):
+        if self.current_visual_dicom_index is None:
+            return
+        vtk_img = self.dicoms[self.current_visual_dicom_index].getImageData()
+        extent = np.array(vtk_img.GetExtent())
+        spacing = np.array(vtk_img.GetSpacing())
+        origin = np.array(vtk_img.GetOrigin())
+        self.lineCenter[0] = spacing[0] * (self.ui.ui_displays[0].slider.value()+extent[4]) + origin[0]
+        self.lineCenter[1] = spacing[1] * (self.ui.ui_displays[2].slider.value()+extent[0]) + origin[1]
+        self.lineCenter[2] = spacing[2] * (self.ui.ui_displays[3].slider.value()+extent[2]) + origin[2]
+        self.dicoms[self.current_visual_dicom_index].adjustActors(self.LUT2D, self.lineCenter)
+        for view in self.views:
+            view.update()
+        pass
+    
+    def updateSagittalSlice(self, value):
+        pass
+    
+    def updateCornalSlice(self, value):
+        pass
     
     def updateProperty(self):
         self.LUT2D.SetRange(self.ui.lower2Dbox.value(), self.ui.upper2Dbox.value())
@@ -216,7 +243,10 @@ class system_manager():
         self.ui.lower3Dslider.valueChanged.connect(self.updateLower3D)
         self.ui.upper3Dbox.valueChanged.connect(self.updateUpper3D)
         self.ui.upper3Dslider.valueChanged.connect(self.updateUpper3D)
-        self.ui.ui_displays[1].slider.valueChanged.connect(self.update3DOpacity)
+        self.ui.ui_displays[0].slider.sliderMoved.connect(self.updateSlice)
+        self.ui.ui_displays[1].slider.sliderMoved.connect(self.update3DOpacity)
+        self.ui.ui_displays[2].slider.sliderMoved.connect(self.updateSlice)
+        self.ui.ui_displays[3].slider.sliderMoved.connect(self.updateSlice)
         self.ui.file_btn.clicked.connect(partial(self.slot_fs.import_file, self))
         self.ui.folder_btn.clicked.connect(partial(self.slot_fs.import_folder, self))
         self.ui.save_all_btn.clicked.connect(partial(self.slot_fs.save_all, self))
@@ -255,8 +285,8 @@ class system_manager():
         self.ui.ui_displays[1].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera1, self))
         self.ui.ui_displays[2].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera2, self))
         self.ui.ui_displays[3].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera3, self))
-        self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.volume_visual, self))
-        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.mesh_visual, self))
+        self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.change_volume_visual_state, self))
+        self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.change_mesh_visual_state, self))
         self.ui.color3D_btn_bot.clicked.connect(partial(self.slot_fs.set3DBackgroundBot, self))
         self.ui.color3D_btn_top.clicked.connect(partial(self.slot_fs.set3DBackgroundTop, self))
         pass

@@ -63,6 +63,9 @@ class ui_all(QMainWindow, ui_interface):
         self.upper3Dbox.setMinimum(config.minimum)
         self.upper3Dbox.setMaximum(config.maximum)
         self.upper3Dbox.setValue(config.upper3Dvalue)
+        self.ui_displays[1].slider.setMinimum(0)
+        self.ui_displays[1].slider.setMaximum(100)
+        self.ui_displays[1].slider.setValue(100)
 
         
     def initLight(self):

@@ -2,6 +2,7 @@ import numpy as np
 import vtk
 import config
 from vtk.util import numpy_support
+import copy
 
 class dicom():
     def __init__(self, arrayData,  imageData, Name=None, Age=None, filePath=None, resolution=None):
@@ -43,7 +44,7 @@ class dicom():
         origin = np.array(self.imageData.GetOrigin())
         spacing = np.array(self.imageData.GetSpacing())
         extent = np.array(self.imageData.GetExtent())
-        scale = np.array([extent[0] + extent[1] ,extent[2] + extent[3] , extent[4] + extent[5]])
+        scale = np.array([extent[4] + extent[5], extent[1] + extent[0], extent[3] + extent[2]])
         center = origin + 0.5*spacing*scale
         resliceAxes = []
         reslices = []
@@ -70,6 +71,9 @@ class dicom():
         # 创建VTKVolumeMapper
         volume_mapper = vtk.vtkGPUVolumeRayCastMapper()
         volume_mapper.SetInputData(self.imageData)
+        volume_mapper.SetCropping(1)	
+        volume_mapper.SetCroppingRegionPlanes(self.imageData.GetBounds())
+        volume_mapper.SetCroppingRegionFlags(0x0002000)
         # 创建VTKVolumeProperty
         volume_property = vtk.vtkVolumeProperty()
         volume_property.SetInterpolationTypeToLinear() # 设置线性插值
@@ -84,3 +88,36 @@ class dicom():
         volume.SetMapper(volume_mapper)
         volume.SetProperty(volume_property)
         self.actors.insert(1, volume)
+        
+    def adjustActors(self, LUT2D, current_center):
+        # 创建图像 actor, 分别为axial、体绘制、sagittal和0cornal 的actor/volume
+        # 2D
+        # 创建三个切片器，分别用于三个方向的切片
+        origin = np.array(self.imageData.GetOrigin())
+        spacing = np.array(self.imageData.GetSpacing())
+        extent = np.array(self.imageData.GetExtent())
+        scale = np.array([extent[4] + extent[5], extent[1] + extent[0], extent[3] + extent[2]])
+        center = origin + 0.5*spacing*scale
+        tmp_center = [[center[0], center[1], current_center[0]], [current_center[1], center[1], center[2]],[center[0], current_center[2], center[2]]]
+        axisMtx = [config.axialMtx, config.sagittalMtx, config.cornalMtx]
+        resliceAxes = []
+        reslices = []
+        colormaps = []
+        for i in range(3):
+            j = config.VIEWORDER[i]
+            resliceAxes.append(vtk.vtkMatrix4x4())
+            resliceAxes[i].DeepCopy(axisMtx[i])
+            resliceAxes[i].SetElement(0, 3, tmp_center[i][0])
+            resliceAxes[i].SetElement(1, 3, tmp_center[i][1])
+            resliceAxes[i].SetElement(2, 3, tmp_center[i][2])
+            reslices.append(vtk.vtkImageReslice())
+            reslices[i].SetInputData(self.imageData)
+            reslices[i].SetOutputDimensionality(2)
+            reslices[i].SetResliceAxes(resliceAxes[i])
+            reslices[i].SetInterpolationModeToLinear()
+            colormaps.append(vtk.vtkImageMapToColors())
+            colormaps[i].SetLookupTable(LUT2D)
+            colormaps[i].SetInputConnection(reslices[i].GetOutputPort())
+            colormaps[i].Update()
+            self.actors[j].GetMapper().SetInputConnection(colormaps[i].GetOutputPort())
+
