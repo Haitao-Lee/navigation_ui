@@ -35,14 +35,16 @@ volume_opacity = 1
 
 # dicoms
 axialMtx = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
-sagittalMtx = np.array(	[0, 0,-1, 0, 1, 0, 0, 0, 0,-1, 0, 0, 0, 0, 0, 1])
-cornalMtx = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, -1,0, 0, 0, 0, 0, 1])
+sagittalMtx = np.array(	[0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1])
+cornalMtx = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1])
 axialNormal = np.array([0, 0, 1])
 sagittalNormal = np.array([1, 0, 0])
 cornalNormal = np.array([0, 1, 0])
+sliceNormal = [axialNormal, sagittalNormal, cornalNormal]
 ParallelScale = 120
 zoom = 1.2
 scroll_list = [0, 1, 2]
+cam_dis = 300
 
 # landmarks
 lm_color = [1, 0, 0] #red

@@ -10,6 +10,7 @@ import Message.print_info as print_info
 from config import ALLWIN, AXIAL, SAGITA, VIEW3D
 import numpy as np
 import Interaction.m_interactorStyle as m_interactorStyle
+import landmark
 
 
 class system_manager():
@@ -214,10 +215,12 @@ class system_manager():
         extent = np.array(vtk_img.GetExtent())
         spacing = np.array(vtk_img.GetSpacing())
         origin = np.array(vtk_img.GetOrigin())
-        self.lineCenter[0] = spacing[0] * (self.ui.ui_displays[0].slider.value()+extent[0]) + origin[0]
-        self.lineCenter[1] = spacing[1] * (self.ui.ui_displays[2].slider.value()+extent[2]) + origin[1]
-        self.lineCenter[2] = spacing[2] * (self.ui.ui_displays[3].slider.value()+extent[4]) + origin[2]
+        self.lineCenter[0] = spacing[2] * (self.ui.ui_displays[0].slider.value()+extent[4]) + origin[2]
+        self.lineCenter[1] = spacing[0] * (self.ui.ui_displays[2].slider.value()+extent[0]) + origin[0]
+        self.lineCenter[2] = spacing[1] * (self.ui.ui_displays[3].slider.value()+extent[2]) + origin[1]
         self.dicoms[self.current_visual_dicom_index].adjustActors(self.LUT2D, self.lineCenter)
+        # test_actor = landmark.landmark.createShereActor(self.lineCenter, 5)
+        # self.renderers[1].AddActor(test_actor)
         for view in self.views:
             view.update()
         pass

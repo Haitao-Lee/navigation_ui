@@ -561,12 +561,20 @@ class slot_functions():
                 sysman.renderers[i].AddActor(dicom.actors[i])
                 sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
                 sysman.renderers[i].ResetCamera()
-                # sysman.renderers[i].GetActiveCamera().SetParallelScale(config.ParallelScale)
             sysman.renderers[i].GetActiveCamera().Zoom(config.zoom)
             sysman.vtk_renderWindows[i].Render() 
-            sysman.views[i].update()
             cout = cout + 1
             sysman.showProgress(cout/len(config.VIEWORDER)*100)
+        # sysman.renderers[0].GetActiveCamera().SetViewUp(0,1,0)
+        # sysman.renderers[0].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
+        # sysman.renderers[0].GetActiveCamera().SetPosition(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2]+config.cam_dis)
+        # sysman.renderers[2].GetActiveCamera().SetViewUp(0,0,1)
+        # sysman.renderers[2].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
+        # sysman.renderers[2].GetActiveCamera().SetPosition(sysman.lineCenter[0]+config.cam_dis, sysman.lineCenter[1], sysman.lineCenter[2])
+        # sysman.renderers[3].GetActiveCamera().SetViewUp(0,0,1)
+        # sysman.renderers[3].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
+        # sysman.renderers[3].GetActiveCamera().SetPosition(sysman.lineCenter[0], sysman.lineCenter[1]-config.cam_dis, sysman.lineCenter[2])
+        sysman.views[i].update()
             
     def renderMeshes(self, mesh, sysman):
         sysman.renderers[1].AddActor(mesh.actor)

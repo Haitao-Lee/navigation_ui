@@ -14,14 +14,35 @@ class landmark():
     @staticmethod
     def createSpherePolydata(center, r=config.lm_radius):
         sphereSource = vtk.vtkSphereSource()
-        sphereSource.SetCenter(center)
+        sphereSource.SetCenter(center[0], center[1], center[2])
         sphereSource.SetRadius(r)
+        sphereSource.SetThetaResolution(30)  # 设置球体纬线分辨率
+        sphereSource.SetPhiResolution(30)  # 设置球体经线分辨率
         return sphereSource.GetOutput()
     
     @staticmethod
-    def createActor(polydata, color=(1, 1, 1), opacity=1, visible=1):   
+    def createActor(polydata, color=(1, 0, 0), opacity=1, visible=1):   
         mapper = vtk.vtkPolyDataMapper()
         mapper.SetInputData(polydata)
+        actor = vtk.vtkActor()
+        actor.SetMapper(mapper)
+        actor.GetProperty().SetColor(color)
+        actor.GetProperty().SetOpacity(opacity)
+        actor.SetVisibility(visible) 
+        return actor
+    
+    @staticmethod
+    def createShereActor(center, r=config.lm_radius, color=(1, 0, 0), opacity=1, visible=1):   
+        # 创建一个球体
+        sphere = vtk.vtkSphereSource()
+        sphere.SetRadius(r)  # 设置球体半径
+        sphere.SetCenter(center[0], center[1], center[2])  # 设置球体中心位置
+        sphere.SetThetaResolution(30)  # 设置球体纬线分辨率
+        sphere.SetPhiResolution(30)  # 设置球体经线分辨率
+
+        # 创建球体的映射器和 actor
+        mapper = vtk.vtkPolyDataMapper()
+        mapper.SetInputConnection(sphere.GetOutputPort())
         actor = vtk.vtkActor()
         actor.SetMapper(mapper)
         actor.GetProperty().SetColor(color)
