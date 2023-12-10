@@ -201,21 +201,32 @@ class slot_functions():
         # # 检查图像方向信息
         # direction = images.GetDirection()
         # print("Original image direction:", direction)
-        origin = images.GetOrigin() # 经过多个例子试出来的，暂时不清楚原因
-        if origin[1]:
-            image_array  = image_array[::-1,:,:]
-        print("Original image origin:", origin)
+        origin = images.GetOrigin() 
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
         vtk_image.SetDimensions(images.GetSize()[0],images.GetSize()[1],images.GetSize()[2])
         vtk_image.SetSpacing(images.GetSpacing())
-        vtk_image.SetOrigin(images.GetOrigin())
+        vtk_image.SetOrigin(origin)
         vtk_image.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
+        QCoreApplication.processEvents()
+        if origin[1] != 0: # 判定是否需要倒过来的判据, 经过多个例子试出来的，暂时不清楚原因
+            image_array  = image_array[::-1,:,:]
+            # 创建一个平移变换
+            transform = vtk.vtkTransform()
+            extent = vtk_image.GetExtent()
+            new_origin = (origin[0], origin[1], origin[2] + images.GetSpacing()[2]*(extent[4] - extent[5]))
+            vtk_image.SetOrigin(new_origin)
+            # transform.Translate(0, 0, extent[4] - extent[5])  
+            # # 创建一个 vtkTransformFilter 对象并应用变换
+            # transform_filter = vtk.vtkTransformFilter()
+            # transform_filter.SetInputData(vtk_image)
+            # transform_filter.SetTransform(transform)
+            # transform_filter.Update()
+            # vtk_image = transform_filter.GetOutput()
+        # image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
         vtk_array = numpy_support.numpy_to_vtk(image_array.ravel(), deep=True)
         vtk_image.GetPointData().SetScalars(vtk_array) # 将NumPy数组数据复制到VTK图像数据中
         vtk_image.SetSpacing(images.GetSpacing())
-        QCoreApplication.processEvents()
-        # image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
         QCoreApplication.processEvents()
         new_dicom = m_dicom.dicom(arrayData=image_array, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
         new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
