@@ -121,7 +121,6 @@ class system_manager():
             self.views.append(self.ui.ui_displays[i].view)
             self.vtk_renderWindows.append(self.ui.ui_displays[i].view.GetRenderWindow())
             self.renderers.append(vtk.vtkRenderer())
-            # self.irens.append(vtk.vtkRenderWindowInteractor())
             self.irens.append(self.vtk_renderWindows[i].GetInteractor())
             if i == 1:
                 self.styles.append(vtk.vtkInteractorStyleTrackballCamera()) 
@@ -130,25 +129,30 @@ class system_manager():
                 self.renderers[i].SetBackground(self.bot_color)              # 设置页面底部颜色值
                 self.renderers[i].SetBackground2(self.top_color)    # 设置页面顶部颜色值
                 self.renderers[i].SetGradientBackground(1)                  # 开启渐变色背景设置
+                # 设置方向widget
+                # 创建一个vtkNamedColors对象
+                colors = vtk.vtkNamedColors()
+                wheat_color = colors.GetColor3d("Wheat")
+                m_3DAxesActor = vtk.vtkAxesActor()
+                m_3DCubeActor = vtk.vtkAnnotatedCubeActor()	
+                probAssemble = vtk.vtkPropAssembly()
+                probAssemble.AddPart(m_3DAxesActor)
+                probAssemble.AddPart(m_3DCubeActor)
+                m_3DOrientationWidget = vtk.vtkOrientationMarkerWidget()
+                m_3DOrientationWidget.SetOrientationMarker(probAssemble)
+                m_3DOrientationWidget.SetInteractor(self.vtk_renderWindows[1].GetInteractor())
+                m_3DOrientationWidget.SetViewport(0, 0, 0.2, 0.2)
+                m_3DOrientationWidget.SetOutlineColor(wheat_color[0], wheat_color[1], wheat_color[2])
+                m_3DOrientationWidget.EnabledOn()
+                m_3DOrientationWidget.InteractiveOn()
             else: 
-                self.styles.append(m_interactorStyle.CustomInteractorStyle())
+                self.styles.append(vtk.vtkInteractorStyleImage())#.CustomInteractorStyle())
                 self.renderers[i].SetBackground(config.initial_2Dcolor)
             self.irens[i].SetInteractorStyle(self.styles[i])
             self.irens[i].SetRenderWindow(self.vtk_renderWindows[i])
             self.vtk_renderWindows[i].AddRenderer(self.renderers[i])
-            # self.vtk_renderWindows[i].Render()  
-        # 设置方向widget
-        m_3DAxesActor = vtk.vtkAxesActor()
-        m_3DCubeActor = vtk.vtkAnnotatedCubeActor()	
-        probAssemble = vtk.vtkPropAssembly()
-        probAssemble.AddPart(m_3DAxesActor)
-        probAssemble.AddPart(m_3DCubeActor)
-        m_3DOrientationWidget = vtk.vtkOrientationMarkerWidget()
-        m_3DOrientationWidget.SetOrientationMarker(probAssemble)
-        m_3DOrientationWidget.SetInteractor(self.vtk_renderWindows[1].GetInteractor())
-        m_3DOrientationWidget.SetViewport(0.85, 0, 1, 0.2)
-        m_3DOrientationWidget.EnabledOn()
-        m_3DOrientationWidget.InteractiveOn()
+            self.vtk_renderWindows[i].Render()  
+            self.irens[i].Start()
         self.LUT2D = vtk.vtkLookupTable()
         self.LUT2D.SetRange(config.lower2Dvalue, config.upper2Dvalue)
         self.LUT2D.SetValueRange(0.0, 1.0)
@@ -167,6 +171,13 @@ class system_manager():
         self.PWF3D.AddPoint(config.upper3Dvalue, config.volume_opacity)
         self.PWF3D.ClampingOff()
       
+    def resetCamera(self, renderer, ParallelProjection = 0, viewup = None):
+        renderer.GetActiveCamera().SetParallelProjection(ParallelProjection)
+        renderer.ResetCamera()
+        renderer.GetActiveCamera().Zoom(config.zoom)
+        if viewup is not None:
+            renderer.GetActiveCamera().SetViewUp(viewup)
+        
     # synchronization
     def updateLower2D(self, value):
         max_val = self.ui.upper2Dslider.value()
@@ -290,7 +301,7 @@ class system_manager():
         self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.adjust, self))
         self.ui.dicom_tw.cellClicked.connect(partial(self.slot_fs.on_dicom_table_clicked, self))
-        self.ui.dicom_tw.cellDoubleClicked.connect(partial(self.slot_fs.on_dicom_table_doubleClicked, self))    
+        self.ui.dicom_tw.itemDoubleClicked.connect(partial(self.slot_fs.on_dicom_table_doubleClicked, self))    
         self.ui.mesh_tw.cellClicked.connect(partial(self.slot_fs.on_mesh_table_clicked, self))  
         self.ui.landmark_tw.cellClicked.connect(partial(self.slot_fs.on_landmark_table_clicked, self))  
         self.ui.implant_tw.cellClicked.connect(partial(self.slot_fs.on_implant_table_clicked, self))  
@@ -300,6 +311,10 @@ class system_manager():
         self.ui.ui_displays[1].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera1, self))
         self.ui.ui_displays[2].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera2, self))
         self.ui.ui_displays[3].resetCamera_btn.clicked.connect(partial(self.slot_fs.resetCamera3, self))
+        self.ui.ui_displays[0].rotate90_btn.clicked.connect(partial(self.slot_fs.rotate_view0, self))
+        self.ui.ui_displays[1].rotate90_btn.clicked.connect(partial(self.slot_fs.rotate_view1, self))
+        self.ui.ui_displays[2].rotate90_btn.clicked.connect(partial(self.slot_fs.rotate_view2, self))
+        self.ui.ui_displays[3].rotate90_btn.clicked.connect(partial(self.slot_fs.rotate_view3, self))
         self.ui.volume_cbox.stateChanged.connect(partial(self.slot_fs.change_volume_visual_state, self))
         self.ui.mesh_cbox.stateChanged.connect(partial(self.slot_fs.change_mesh_visual_state, self))
         self.ui.color3D_btn_bot.clicked.connect(partial(self.slot_fs.set3DBackgroundBot, self))

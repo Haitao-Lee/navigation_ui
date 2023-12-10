@@ -26,6 +26,7 @@ import config
 import vtk
 import Visualization.createColorWidget as createColorWidget
 import Visualization.createVisibleWidget as createVisibleWidget
+import Adjustment.rotateImage as rotateImage
 
 
 class slot_functions():
@@ -197,6 +198,13 @@ class slot_functions():
         patient_name = str(dicom_series[0].PatientName)
         patient_age = str(dicom_series[0].PatientAge)
         image_array = sitk.GetArrayFromImage(images)
+        # # 检查图像方向信息
+        # direction = images.GetDirection()
+        # print("Original image direction:", direction)
+        origin = images.GetOrigin() # 经过多个例子试出来的，暂时不清楚原因
+        if origin[1]:
+            image_array  = image_array[::-1,:,:]
+        print("Original image origin:", origin)
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
         vtk_image.SetDimensions(images.GetSize()[0],images.GetSize()[1],images.GetSize()[2])
@@ -521,64 +529,47 @@ class slot_functions():
     def deleteLight(sysman):
         pass
         
-    def renderDicoms(self, dicom, sysman, last=None):
-        for i in range(len(sysman.dicoms)):
-            if dicom.getName() in sysman.dicoms[i].getName():
-                sysman.current_visual_dicom_index = i
+    def renderDicoms(self, dicom, sysman, row, last=None):
+        sysman.current_visual_dicom_index = row
         vtk_img = dicom.getImageData()
         extent = vtk_img.GetExtent()
         #                       axial                     sagittal                 cornal
         extent_range = [extent[5] - extent[4], 100, extent[1] - extent[0], extent[3] - extent[2]]
         cout = 0
         sysman.ui.volume_cbox.setChecked(True)
+        if last is not None:
+            sysman.renderers[1].RemoveVolume(sysman.dicoms[last].actors[1])
+            sysman.views[1].update()
+        for i in [0,2,3]:
+            sysman.renderers[i].RemoveAllViewProps()
+            sysman.views[i].update()
         for i in config.VIEWORDER:
             QCoreApplication.processEvents()
             if i == 1:
-                if last is not None:
-                    sysman.renderers[i].RemoveVolume(sysman.dicoms[last].actors[i])
                 QCoreApplication.processEvents()
                 sysman.renderers[i].AddVolume(dicom.actors[i])
                 QCoreApplication.processEvents()
-                sysman.renderers[i].GetActiveCamera().SetParallelProjection(0)
                 # 获取并输出当前渲染器中未被隐藏的 actor 数量
-                actors = sysman.renderers[i].GetActors()
-                actors.InitTraversal()
-                visible_actors = 0
-                while True:
-                    QCoreApplication.processEvents()
-                    actor = actors.GetNextItem()
-                    if actor:
-                        if actor.GetVisibility():
-                            visible_actors += 1
-                    else:
-                        break
-                if visible_actors == 0:
-                    sysman.renderers[i].ResetCamera()
+                num_of_actors  = sysman.renderers[i].GetActors().GetNumberOfItems()
+                if not num_of_actors:
+                    sysman.resetCamera(sysman.renderers[i], 0, config.viewUp[i])
             else:
+                QCoreApplication.processEvents()
                 sysman.ui.ui_displays[i].slider.setMaximum(extent_range[i])
+                QCoreApplication.processEvents()
                 sysman.ui.ui_displays[i].slider.setValue(extent_range[i]/2)
-                sysman.renderers[i].RemoveAllViewProps()
+                QCoreApplication.processEvents()
                 sysman.renderers[i].AddActor(dicom.actors[i])
-                sysman.renderers[i].GetActiveCamera().SetParallelProjection(1)
-                sysman.renderers[i].ResetCamera()
-            sysman.renderers[i].GetActiveCamera().Zoom(config.zoom)
-            sysman.vtk_renderWindows[i].Render() 
+                QCoreApplication.processEvents()
+                sysman.resetCamera(sysman.renderers[i], 1, config.viewUp[i])
+                QCoreApplication.processEvents()
             cout = cout + 1
             sysman.showProgress(cout/len(config.VIEWORDER)*100)
-        # sysman.renderers[0].GetActiveCamera().SetViewUp(0,1,0)
-        # sysman.renderers[0].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
-        # sysman.renderers[0].GetActiveCamera().SetPosition(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2]+config.cam_dis)
-        # sysman.renderers[2].GetActiveCamera().SetViewUp(0,0,1)
-        # sysman.renderers[2].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
-        # sysman.renderers[2].GetActiveCamera().SetPosition(sysman.lineCenter[0]+config.cam_dis, sysman.lineCenter[1], sysman.lineCenter[2])
-        # sysman.renderers[3].GetActiveCamera().SetViewUp(0,0,1)
-        # sysman.renderers[3].GetActiveCamera().SetFocalPoint(sysman.lineCenter[0], sysman.lineCenter[1], sysman.lineCenter[2])
-        # sysman.renderers[3].GetActiveCamera().SetPosition(sysman.lineCenter[0], sysman.lineCenter[1]-config.cam_dis, sysman.lineCenter[2])
-        sysman.views[i].update()
+            sysman.vtk_renderWindows[i].Render() 
+            sysman.views[i].update()
             
     def renderMeshes(self, mesh, sysman):
         sysman.renderers[1].AddActor(mesh.actor)
-        # sysman.renderers[1].ResetCamera()
         sysman.vtk_renderWindows[1].Render() 
         sysman.views[1].update()
     
@@ -586,11 +577,11 @@ class slot_functions():
         sysman.current_dicom_index = row
         pass
     
-    def on_dicom_table_doubleClicked(self, sysman, row, column):
-        sysman.current_dicom_index = row
-        if sysman.current_visual_dicom_index is not None and  sysman.current_visual_dicom_index == row:
+    def on_dicom_table_doubleClicked(self, sysman, item):
+        sysman.current_dicom_index = item.row()
+        if sysman.current_visual_dicom_index is not None and  sysman.current_visual_dicom_index == item.row():
             return
-        self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, sysman.current_visual_dicom_index)
+        self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, row=item.row(), last=sysman.current_visual_dicom_index)
         pass
     
     def on_mesh_table_clicked(self, sysman, row, column):
@@ -600,7 +591,6 @@ class slot_functions():
                 sysman.meshes[row].changeVisible()
                 visible_widget = createVisibleWidget.createVisibleWidget(sysman.meshes[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
                 sysman.ui.mesh_tw.setCellWidget(row, column, visible_widget)
-                # sysman.renderers[1].ResetCamera()
                 sysman.vtk_renderWindows[1].Render() 
                 sysman.views[1].update()
             if 'Color' in sysman.ui.mesh_tw.horizontalHeaderItem(i).text() and column == i:
@@ -623,7 +613,6 @@ class slot_functions():
                 sysman.implants[row].changeVisible()
                 visible_widget = createVisibleWidget.createVisibleWidget(sysman.implants[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
                 sysman.ui.implant_tw.setCellWidget(row, column, visible_widget)
-                sysman.renderers[1].ResetCamera()
                 sysman.vtk_renderWindows[1].Render() 
                 sysman.views[1].update()
             if 'Color' in sysman.ui.implant_tw.horizontalHeaderItem(i).text() and column == i:
@@ -646,8 +635,6 @@ class slot_functions():
                 sysman.landmarks[row].changeVisible()
                 visible_widget = createVisibleWidget.createVisibleWidget(sysman.landmarks[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
                 sysman.ui.landmark_tw.setCellWidget(row, column, visible_widget)
-                # sysman.renderers[1].ResetCamera()
-                # sysman.vtk_renderWindows[1].Render() 
                 sysman.views[1].update()
             if 'Color' in sysman.ui.landmark_tw.horizontalHeaderItem(i).text() and column == i:
                 # 设置初始颜色为RGB(255, 0, 0)
@@ -673,7 +660,6 @@ class slot_functions():
                 sysman.tools[row].changeVisible()
                 visible_widget = createVisibleWidget.createVisibleWidget(sysman.tools[row].visible)  # 创建一个新的小部件，设置布局并将其设置为单元格的部件
                 sysman.ui.tool_tw.setCellWidget(row, column, visible_widget)
-                sysman.renderers[1].ResetCamera()
                 sysman.vtk_renderWindows[1].Render() 
                 sysman.views[1].update()
             if 'Color' in sysman.ui.tool_tw.horizontalHeaderItem(i).text() and column == i:
@@ -690,24 +676,76 @@ class slot_functions():
         pass
     
     def resetCamera0(self, sysman):
-        sysman.renderers[0].ResetCamera()
+        print(sysman.renderers[0].GetActiveCamera().GetViewUp())
+        sysman.resetCamera(sysman.renderers[0], 1, config.viewUp[0])
         sysman.vtk_renderWindows[0].Render() 
         sysman.views[0].update()
     
     def resetCamera1(self, sysman):
-        sysman.renderers[1].ResetCamera()
+        sysman.resetCamera(sysman.renderers[1], 0, config.viewUp[1])
         sysman.vtk_renderWindows[1].Render() 
         sysman.views[1].update()
         
     def resetCamera2(self, sysman):
-        sysman.renderers[2].ResetCamera()
+        print(sysman.renderers[2].GetActiveCamera().GetViewUp())
+        sysman.resetCamera(sysman.renderers[2], 1, config.viewUp[2])
         sysman.vtk_renderWindows[2].Render() 
         sysman.views[2].update()
         
     def resetCamera3(self, sysman):
-        sysman.renderers[3].ResetCamera()
+        print(sysman.renderers[3].GetActiveCamera().GetViewUp())
+        sysman.resetCamera(sysman.renderers[3], 1, config.viewUp[3])
         sysman.vtk_renderWindows[3].Render() 
         sysman.views[3].update()
+        
+    def rotate_view0(self, sysman, angle = 90.0):
+        sysman.renderers[0].GetActiveCamera().Roll(angle)
+        sysman.vtk_renderWindows[0].Render() 
+        sysman.views[0].update()
+    
+    def rotate_view1(self, sysman, angle = 90.0):
+        sysman.renderers[1].GetActiveCamera().Roll(angle)
+        sysman.vtk_renderWindows[1].Render() 
+        sysman.views[1].update()
+        
+    def rotate_view2(self, sysman, angle = 90.0):
+        sysman.renderers[2].GetActiveCamera().Roll(angle)
+        sysman.vtk_renderWindows[2].Render() 
+        sysman.views[2].update()
+        
+    def rotate_view3(self, sysman, angle = 90.0):
+        sysman.renderers[3].GetActiveCamera().Roll(angle)
+        sysman.vtk_renderWindows[3].Render() 
+        sysman.views[3].update()
+    
+    # def rotate_view0(self, sysman, angle = 90):
+    #     if sysman.current_visual_dicom_index is None:
+    #         return
+    #     transform = rotateImage.GetrotateImageMTX([0,0,1], angle)
+    #     sysman.dicoms[sysman.current_visual_dicom_index].actors[0].SetUserTransform(transform)
+    #     sysman.vtk_renderWindows[0].Render() 
+    #     sysman.views[0].update()
+    
+    # def rotate_view1(self, sysman, angle = 90):
+    #     sysman.renderers[1].GetActiveCamera().Roll(angle)
+    #     sysman.vtk_renderWindows[1].Render() 
+    #     sysman.views[1].update()
+        
+    # def rotate_view2(self, sysman, angle = 90):
+    #     if sysman.current_visual_dicom_index is None:
+    #         return
+    #     transform = rotateImage.GetrotateImageMTX([1,0,0], angle)
+    #     sysman.dicoms[sysman.current_visual_dicom_index].actors[2].SetUserTransform(transform)
+    #     sysman.vtk_renderWindows[2].Render() 
+    #     sysman.views[2].update()
+        
+    # def rotate_view3(self, sysman, angle = 90):
+    #     if sysman.current_visual_dicom_index is None:
+    #         return
+    #     transform = rotateImage.GetrotateImageMTX([0,1,0], angle)
+    #     sysman.dicoms[sysman.current_visual_dicom_index].actors[3].SetUserTransform(transform)
+    #     sysman.vtk_renderWindows[3].Render() 
+    #     sysman.views[3].update()
         
     def change_volume_visual_state(self, sysman, state):
         if state: # checked

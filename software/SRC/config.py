@@ -10,7 +10,7 @@ AXIAL = 1
 SAGITA = 2
 CORNAL = 3
 VIEW3D = 4
-VIEWORDER = [0,2,3,1]
+VIEWORDER = [1,0,2,3]
 initial_2Dcolor = np.array([0,0,0])
 bottom_3Dcolor = np.array([1, 1, 1])
 top_3Dcolor = np.array([0.75294118, 0.75294118, 1 ])
@@ -34,7 +34,7 @@ volume_color3 = [1, 1, 1]
 volume_opacity = 1
 
 # dicoms
-axialMtx = np.array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+axialMtx = np.array([-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
 sagittalMtx = np.array(	[0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1])
 cornalMtx = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1])
 axialNormal = np.array([0, 0, 1])
@@ -45,6 +45,7 @@ ParallelScale = 120
 zoom = 1.2
 scroll_list = [0, 1, 2]
 cam_dis = 300
+viewUp = [[0, -1, 0], None, [0,1,0], [0,1,0]]
 
 # landmarks
 lm_color = [1, 0, 0] #red

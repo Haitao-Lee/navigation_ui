@@ -75,9 +75,9 @@ class dicom():
         # # 创建VTKVolumeMapper
         volume_mapper = vtk.vtkFixedPointVolumeRayCastMapper()
         volume_mapper.SetInputData(self.imageData)
-        # volume_mapper.SetCropping(1)	
-        # volume_mapper.SetCroppingRegionPlanes(self.imageData.GetBounds())
-        # volume_mapper.SetCroppingRegionFlags(0x0002000)
+        volume_mapper.SetCropping(1)	
+        volume_mapper.SetCroppingRegionPlanes(self.imageData.GetBounds())
+        volume_mapper.SetCroppingRegionFlags(0x0002000)
         # 创建VTKVolumeProperty
         volume_property = vtk.vtkVolumeProperty()
         volume_property.SetInterpolationTypeToLinear() # 设置线性插值
