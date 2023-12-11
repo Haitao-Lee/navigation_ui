@@ -1,26 +1,16 @@
-import vtk
+from PyQt5.QtCore import QThread, pyqtSignal
 
-# 创建一个 vtkRenderer
-renderer = vtk.vtkRenderer()
+class Worker(QThread):
+    finished = pyqtSignal()
 
-# 创建一个 vtkRenderWindow 和 vtkRenderWindowInteractor
-render_window = vtk.vtkRenderWindow()
-render_window.AddRenderer(renderer)
+    def run(self):
+        # 在这里编写需要在后台线程执行的任务
+        for i in range(5):
+            print(f"Working... {i}")
+            self.sleep(1)  # 模拟耗时任务
+        self.finished.emit()  # 发送任务完成的信号
 
-interactor = vtk.vtkRenderWindowInteractor()
-interactor.SetRenderWindow(render_window)
-
-# 创建一个 vtkAxesActor
-axes_actor = vtk.vtkAxesActor()
-
-# 设置 vtkOrientationMarkerWidget
-widget = vtk.vtkOrientationMarkerWidget()
-widget.SetOrientationMarker(axes_actor)
-widget.SetInteractor(interactor)
-widget.SetViewport(0.0, 0.0, 0.2, 0.2)
-widget.SetEnabled(1)
-widget.InteractiveOn()
-
-# 渲染和交互开始
-render_window.Render()
-interactor.Start()
+# 使用示例
+worker = Worker()
+worker.finished.connect(lambda: print("Task completed!"))  # 连接任务完成信号
+worker.start()  # 启动线程执行任务

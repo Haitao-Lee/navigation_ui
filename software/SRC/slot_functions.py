@@ -29,7 +29,7 @@ import Visualization.createVisibleWidget as createVisibleWidget
 import Adjustment.rotateImage as rotateImage
 
 
-class slot_functions():
+class slot_functions(QThread):
     def __init__(self):
         super(slot_functions, self).__init__()
         
@@ -194,45 +194,42 @@ class slot_functions():
         dicom_series, images = importDicom.importDicom(path)
         if images is None:
             sysman.printInfo("There is no dicom file in the folder:" + path)
-            return
-        patient_name = str(dicom_series[0].PatientName)
-        patient_age = str(dicom_series[0].PatientAge)
+            return False
+        # 获取患者姓名
+        patient_name = 'unknown'
+        patient_age = 'unknown'
+        if 'PatientName' in dicom_series[0]:
+            patient_name = str(dicom_series[0].PatientName)
+        # 获取患者年龄
+        if 'PatientAge' in dicom_series[0]:
+            patient_age = dicom_series[0].PatientAge
         image_array = sitk.GetArrayFromImage(images)
-        # # 检查图像方向信息
-        # direction = images.GetDirection()
-        # print("Original image direction:", direction)
         origin = images.GetOrigin() 
+        spacing = images.GetSpacing()
+        size = images.GetSize()
+        if (0x0018, 0x0050) in dicom_series[0]:
+            spacing = (spacing[0], spacing[1],  float(dicom_series[0][(0x0018, 0x0050)].value))
+            print(spacing)
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
-        vtk_image.SetDimensions(images.GetSize()[0],images.GetSize()[1],images.GetSize()[2])
-        vtk_image.SetSpacing(images.GetSpacing())
-        vtk_image.SetOrigin(origin)
+        vtk_image.SetDimensions(size[0],size[1],size[2])
         vtk_image.AllocateScalars(vtk.VTK_UNSIGNED_CHAR, 1)
         QCoreApplication.processEvents()
         if origin[1] != 0: # 判定是否需要倒过来的判据, 经过多个例子试出来的，暂时不清楚原因
             image_array  = image_array[::-1,:,:]
             # 创建一个平移变换
-            transform = vtk.vtkTransform()
             extent = vtk_image.GetExtent()
-            new_origin = (origin[0], origin[1], origin[2] + images.GetSpacing()[2]*(extent[4] - extent[5]))
-            vtk_image.SetOrigin(new_origin)
-            # transform.Translate(0, 0, extent[4] - extent[5])  
-            # # 创建一个 vtkTransformFilter 对象并应用变换
-            # transform_filter = vtk.vtkTransformFilter()
-            # transform_filter.SetInputData(vtk_image)
-            # transform_filter.SetTransform(transform)
-            # transform_filter.Update()
-            # vtk_image = transform_filter.GetOutput()
-        # image_array = get_pixels_hu.get_pixels_hu(image_array, dicom_series)
+            origin = (origin[0], origin[1], origin[2] + spacing[2]*(extent[4] - extent[5]))
+        vtk_image.SetOrigin(origin[0], origin[1], origin[2])
+        vtk_image.SetSpacing(spacing[0], spacing[1], spacing[2])
         vtk_array = numpy_support.numpy_to_vtk(image_array.ravel(), deep=True)
         vtk_image.GetPointData().SetScalars(vtk_array) # 将NumPy数组数据复制到VTK图像数据中
-        vtk_image.SetSpacing(images.GetSpacing())
         QCoreApplication.processEvents()
         new_dicom = m_dicom.dicom(arrayData=image_array, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_array.shape, filePath=path)
+        QCoreApplication.processEvents()
         new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
-        self.addTableDicoms(sysman, new_dicom)   
-        QCoreApplication.processEvents()     
-        # self.renderDicoms(new_dicom, sysman)
+        self.addTableDicoms(sysman, new_dicom)     
+        return True 
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)
@@ -456,10 +453,11 @@ class slot_functions():
             sysman.printInfo("Path:\""+path+"\" does not work!")
             return
         sysman.ProgressStart()
-        self.addSystemDicoms(path, sysman)
+        res = self.addSystemDicoms(path, sysman)
         sysman.ProgressMiddle()
         sysman.ProgressEnd()
-        sysman.printInfo("Successfully import dicoms in:" + path)
+        if res:
+            sysman.printInfo("Successfully import dicoms in:" + path)
         pass
         
     def deleteDicom(self, sysman):
@@ -549,9 +547,11 @@ class slot_functions():
         cout = 0
         sysman.ui.volume_cbox.setChecked(True)
         if last is not None:
+            QCoreApplication.processEvents()
             sysman.renderers[1].RemoveVolume(sysman.dicoms[last].actors[1])
             sysman.views[1].update()
         for i in [0,2,3]:
+            QCoreApplication.processEvents()
             sysman.renderers[i].RemoveAllViewProps()
             sysman.views[i].update()
         for i in config.VIEWORDER:

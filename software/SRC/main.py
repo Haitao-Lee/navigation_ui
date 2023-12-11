@@ -24,6 +24,6 @@ vtk.vtkObject.GlobalWarningDisplayOff()
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     navi_sys = system_manager.system_manager()
-    # navi_sys.ui.show()
+    navi_sys.start()
     navi_sys.ui.showMaximized()
     sys.exit(app.exec_())

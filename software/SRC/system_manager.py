@@ -13,7 +13,7 @@ import Interaction.m_interactorStyle as m_interactorStyle
 import landmark
 
 
-class system_manager():
+class system_manager(QThread):
     def __init__(self):
         super(system_manager, self).__init__()
         # ui
@@ -82,6 +82,9 @@ class system_manager():
         self.initVTKProperty()
         self.setupConnections()       
     
+    # def run(self):
+    #     self.ui.dicom_tw.moveToThread(self)
+        
     
     # infomation
     def printInfo(self, message):
@@ -230,8 +233,6 @@ class system_manager():
         self.lineCenter[1] = spacing[0] * (self.ui.ui_displays[2].slider.value()+extent[0]) + origin[0]
         self.lineCenter[2] = spacing[1] * (self.ui.ui_displays[3].slider.value()+extent[2]) + origin[1]
         self.dicoms[self.current_visual_dicom_index].adjustActors(self.LUT2D, self.lineCenter)
-        # test_actor = landmark.landmark.createShereActor(self.lineCenter, 5)
-        # self.renderers[1].AddActor(test_actor)
         for view in self.views:
             view.update()
         pass

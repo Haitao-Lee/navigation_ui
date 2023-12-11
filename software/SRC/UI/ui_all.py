@@ -28,6 +28,7 @@ class ui_all(QMainWindow, ui_interface):
         self.initAdjustment()
         self.initWidget()
         QApplication.processEvents()
+        self.setWindowFlags(self.windowFlags() | Qt.WindowContextHelpButtonHint)
     
     def initVTKview(self):
         self.views_layout = [self.view_box0.layout(), self.view_box1.layout(), self.view_box2.layout(), self.view_box3.layout()]
