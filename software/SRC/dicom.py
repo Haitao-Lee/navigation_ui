@@ -5,6 +5,7 @@ from vtk.util import numpy_support
 from PyQt5.QtCore import *
 import copy
 from functools import partial
+from concurrent.futures import ThreadPoolExecutor
 
 
 class dicom(QThread):
@@ -43,7 +44,7 @@ class dicom(QThread):
     def getResolution(self):
         return self.resolution
     
-    def createActors(self, LUT2D, CTF3D, PWF3D):
+    def createActorsInThreads(self, LUT2D, CTF3D, PWF3D):
         # 创建图像 actor, 分别为axial、体绘制、sagittal和0cornal 的actor/volume
         # 2D
         # 创建三个切片器，分别用于三个方向的切片
@@ -96,6 +97,12 @@ class dicom(QThread):
         volume.SetMapper(volume_mapper)
         volume.SetProperty(self.volume_property)
         self.actors.insert(1, volume)
+    
+    def createActors(self, LUT2D, CTF3D, PWF3D):
+        with ThreadPoolExecutor() as executor:
+            # 提交任务给线程池执行（带参数）
+            executor.submit(self.createActorsInThreads, LUT2D, CTF3D, PWF3D)
+        
         
     def adjustActors(self, LUT2D, current_center):
         # 创建图像 actor, 分别为axial、体绘制、sagittal和0cornal 的actor/volume

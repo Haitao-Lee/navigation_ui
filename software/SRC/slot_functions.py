@@ -27,6 +27,7 @@ import vtk
 import Visualization.createColorWidget as createColorWidget
 import Visualization.createVisibleWidget as createVisibleWidget
 import Adjustment.rotateImage as rotateImage
+from concurrent.futures import ThreadPoolExecutor
 
 
 class slot_functions(QThread):
@@ -191,7 +192,9 @@ class slot_functions(QThread):
             sysman.ui.rom_tw.setColumnWidth(j, max(max_width, config.min_margin))
             
     def addSystemDicoms(self, path, sysman):
+        sysman.ui.setEnabled(False)
         dicom_series, images = importDicom.importDicom(path)
+        sysman.ui.setEnabled(True)
         if images is None:
             sysman.printInfo("There is no dicom file in the folder:" + path)
             return False
@@ -209,7 +212,6 @@ class slot_functions(QThread):
         size = images.GetSize()
         if (0x0018, 0x0050) in dicom_series[0]:
             spacing = (spacing[0], spacing[1],  float(dicom_series[0][(0x0018, 0x0050)].value))
-            print(spacing)
         # 创建VTK图像数据
         vtk_image = vtk.vtkImageData()
         vtk_image.SetDimensions(size[0],size[1],size[2])
@@ -454,7 +456,6 @@ class slot_functions(QThread):
             return
         sysman.ProgressStart()
         res = self.addSystemDicoms(path, sysman)
-        sysman.ProgressMiddle()
         sysman.ProgressEnd()
         if res:
             sysman.printInfo("Successfully import dicoms in:" + path)
@@ -538,6 +539,9 @@ class slot_functions(QThread):
     def deleteLight(sysman):
         pass
         
+    def Render(self, renderWindows):
+        renderWindows.render()     
+    
     def renderDicoms(self, dicom, sysman, row, last=None):
         sysman.current_visual_dicom_index = row
         vtk_img = dicom.getImageData()
@@ -545,7 +549,7 @@ class slot_functions(QThread):
         #                       axial                     sagittal                 cornal
         extent_range = [extent[5] - extent[4], 100, extent[1] - extent[0], extent[3] - extent[2]]
         cout = 0
-        sysman.ui.volume_cbox.setChecked(True)
+        sysman.ui.volume_cbox.setChecked(True) 
         if last is not None:
             QCoreApplication.processEvents()
             sysman.renderers[1].RemoveVolume(sysman.dicoms[last].actors[1])
@@ -554,6 +558,7 @@ class slot_functions(QThread):
             QCoreApplication.processEvents()
             sysman.renderers[i].RemoveAllViewProps()
             sysman.views[i].update()
+        
         for i in config.VIEWORDER:
             QCoreApplication.processEvents()
             if i == 1:
@@ -576,7 +581,11 @@ class slot_functions(QThread):
                 QCoreApplication.processEvents()
             cout = cout + 1
             sysman.showProgress(cout/len(config.VIEWORDER)*100)
-            sysman.vtk_renderWindows[i].Render() 
+            with ThreadPoolExecutor() as executor:
+                # 提交任务给线程池执行（带参数）
+                executor.submit(self.Render, sysman.vtk_renderWindows[i])
+            # sysman.vtk_renderWindows[i].Render() 
+        for i in range(4):
             sysman.views[i].update()
             
     def renderMeshes(self, mesh, sysman):
@@ -592,7 +601,9 @@ class slot_functions(QThread):
         sysman.current_dicom_index = item.row()
         if sysman.current_visual_dicom_index is not None and  sysman.current_visual_dicom_index == item.row():
             return
+        sysman.ui.setEnabled(False)
         self.renderDicoms(sysman.dicoms[sysman.current_dicom_index], sysman, row=item.row(), last=sysman.current_visual_dicom_index)
+        sysman.ui.setEnabled(True)
         pass
     
     def on_mesh_table_clicked(self, sysman, row, column):
@@ -687,7 +698,6 @@ class slot_functions(QThread):
         pass
     
     def resetCamera0(self, sysman):
-        print(sysman.renderers[0].GetActiveCamera().GetViewUp())
         sysman.resetCamera(sysman.renderers[0], 1, config.viewUp[0])
         sysman.vtk_renderWindows[0].Render() 
         sysman.views[0].update()
@@ -698,13 +708,11 @@ class slot_functions(QThread):
         sysman.views[1].update()
         
     def resetCamera2(self, sysman):
-        print(sysman.renderers[2].GetActiveCamera().GetViewUp())
         sysman.resetCamera(sysman.renderers[2], 1, config.viewUp[2])
         sysman.vtk_renderWindows[2].Render() 
         sysman.views[2].update()
         
     def resetCamera3(self, sysman):
-        print(sysman.renderers[3].GetActiveCamera().GetViewUp())
         sysman.resetCamera(sysman.renderers[3], 1, config.viewUp[3])
         sysman.vtk_renderWindows[3].Render() 
         sysman.views[3].update()
