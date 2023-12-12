@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 import os
 import numpy as np
 from vtk.util import numpy_support
+import itk
 from config import ALLWIN, AXIAL, SAGITA, VIEW3D
 import ImportAndSave.importDicom as importDicom
 import ImportAndSave.importImplant as importImplant
@@ -232,6 +233,45 @@ class slot_functions(QThread):
         new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
         self.addTableDicoms(sysman, new_dicom)     
         return True 
+    
+    # def addSystemDicoms(self, path, sysman):
+    #     sysman.ui.setEnabled(False)
+    #     itk_reader = importDicom.importDicom(path)
+    #     sysman.ui.setEnabled(True)
+    #     # if not itk_reader.Update():
+    #     #     sysman.printInfo("There is no dicom file in the folder:" + path)
+    #     #     return False
+    #     # 获取第一个文件的元数据字典
+    #     meta_data_dict = itk_reader.GetMetaDataDictionaryArray()[0]
+    #     patient_name = 'unknown'
+    #     patient_age = 'unknown'
+    #     # 检查特定的标签是否存在于字典中
+    #     name_key = "0010|0010"  # 例如，这里检查"0010|0010"（患者姓名）标签是否存在
+    #     if name_key in meta_data_dict:
+    #         patient_name = itk.MetaDataObject[str](meta_data_dict[name_key])
+    #     age_key = "0010|1010" 
+    #     if age_key in meta_data_dict:
+    #         patient_age = itk.MetaDataObject[str](meta_data_dict[age_key])
+    #     # 读取像素间距
+    #     spacing = itk_reader.GetOutput().GetSpacing()
+    #     # 读取起始位置（origin）
+    #     origin = itk_reader.GetOutput().GetOrigin()
+    #     # 读取图像尺寸
+    #     size = itk_reader.GetOutput().GetLargestPossibleRegion().GetSize()
+    #     # 创建VTK图像数据
+    #     # 转换为VTKImageData
+    #     itk_to_vtk_filter = itk.ImageToVTKImageFilter[itk.Image[itk.SS, 3]].New()
+    #     itk_to_vtk_filter.SetInput(itk_reader.GetOutput())
+    #     itk_to_vtk_filter.Update()
+    #     # 获取转换后的VTKImageData
+    #     vtk_image = itk_to_vtk_filter.GetOutput()
+    #     image_size = itk_reader.GetOutput().GetLargestPossibleRegion().GetSize()
+    #     QCoreApplication.processEvents()
+    #     new_dicom = m_dicom.dicom(arrayData=None, imageData=vtk_image, Name=patient_name, Age=patient_age, resolution=image_size, filePath=path)
+    #     QCoreApplication.processEvents()
+    #     new_dicom.createActors(sysman.LUT2D, sysman.CTF3D, sysman.PWF3D)
+    #     self.addTableDicoms(sysman, new_dicom)     
+    #     return True 
     
     def addSystemSTL(self, path, sysman):
         new_stl = importMesh.importSTL(path)

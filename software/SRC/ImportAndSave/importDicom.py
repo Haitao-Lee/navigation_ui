@@ -1,36 +1,51 @@
 import SimpleITK as sitk
+import itk
 import pydicom
 import os
 from PyQt5.QtCore import *
 
 
-'''之所以用2个库来读取dicom。是因为simpleITK和pydicom在当前版本下和numpy、vtk等都有兼容问题,单个无法满足要求，只能妥协点读取时间了'''
+# '''之所以用2个库来读取dicom。是因为simpleITK和pydicom在当前版本下和numpy、vtk等都有兼容问题,单个无法满足要求，只能妥协点读取时间了'''
+# def importDicom(path):
+#     # 获取文件夹中的所有文件名
+#     if not os.path.isdir(path):
+#         return None, None
+#     files = os.listdir(path)
+#     # 用于存储DICOM文件的列表
+#     dicom_files = []
+#     # 遍历文件夹中的文件
+#     for file_name in files:
+#         file_path = os.path.join(path, file_name).replace("\\","/")
+#         # 检查文件是否是DICOM格式
+#         if os.path.isfile(file_path) and file_name.lower().endswith('.dcm'):
+#             dicom_files.append(file_path)
+#             QCoreApplication.processEvents() # 防止卡顿
+#     # 读取DICOM文件
+#     if len(dicom_files) == 0:
+#         return None, None
+#     dicom_data = [pydicom.dcmread(file) for file in dicom_files]
+#     reader = sitk.ImageSeriesReader()
+#     QCoreApplication.processEvents()
+#     reader.SetFileNames(dicom_files)
+#     # reader.LoadPrivateTagsOn()
+#     QCoreApplication.processEvents()
+#     image = reader.Execute()
+#     QCoreApplication.processEvents()
+#     return dicom_data, image
+
+
 def importDicom(path):
-    # 获取文件夹中的所有文件名
-    if not os.path.isdir(path):
-        return None, None
-    files = os.listdir(path)
-    # 用于存储DICOM文件的列表
-    dicom_files = []
-    # 遍历文件夹中的文件
-    for file_name in files:
-        file_path = os.path.join(path, file_name).replace("\\","/")
-        # 检查文件是否是DICOM格式
-        if os.path.isfile(file_path) and file_name.lower().endswith('.dcm'):
-            dicom_files.append(file_path)
-            QCoreApplication.processEvents() # 防止卡顿
-    # 读取DICOM文件
-    if len(dicom_files) == 0:
-        return None, None
-    dicom_data = [pydicom.dcmread(file) for file in dicom_files]
-    reader = sitk.ImageSeriesReader()
-    QCoreApplication.processEvents()
-    reader.SetFileNames(dicom_files)
-    # reader.LoadPrivateTagsOn()
-    QCoreApplication.processEvents()
-    image = reader.Execute()
-    QCoreApplication.processEvents()
-    return dicom_data, image
+    # 定义DICOM文件名序列
+    file_names = itk.GDCMSeriesFileNames.New()
+    file_names.SetDirectory(path)
+
+    # 创建ImageSeriesReader
+    reader_type = itk.Image[itk.SS, 3]
+    reader = itk.ImageSeriesReader[reader_type].New()
+    reader.SetFileNames(file_names.GetInputFileNames())
+    reader.Update()
+    return reader
+
 
 # # 获取DICOM序列中的一些信息
     # for tag in dicom_data[0].dir():
